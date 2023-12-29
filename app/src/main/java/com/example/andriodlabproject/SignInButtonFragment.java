@@ -1,5 +1,6 @@
 package com.example.andriodlabproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -53,10 +54,23 @@ public class SignInButtonFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         Button btnOpenSignIn = (Button) getActivity().findViewById(R.id.btnOpenSignIn);
+        Button btnOpenSignUp = (Button) getActivity().findViewById(R.id.btnOpenSignUp);
         btnOpenSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((SignInActivity)getActivity()).addSignInFragment();
+            }
+        });
+
+        // open the sign up activity
+        btnOpenSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SignUpActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+
+
             }
         });
     }

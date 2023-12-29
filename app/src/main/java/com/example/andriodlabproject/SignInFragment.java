@@ -1,12 +1,15 @@
 package com.example.andriodlabproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +47,21 @@ public class SignInFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Button button_signUp = (Button) getActivity().findViewById(R.id.button_signUp);
+
+        button_signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SignUpActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
     }
 
     @Override

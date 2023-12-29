@@ -90,7 +90,7 @@
         app:layout_constraintVertical_bias="0.528" />
 
     <Button
-        android:id="@+id/b"
+        android:id="@+id/button_signUp"
         android:layout_width="56dp"
         android:layout_height="19dp"
         android:background="#FFFFFF"
