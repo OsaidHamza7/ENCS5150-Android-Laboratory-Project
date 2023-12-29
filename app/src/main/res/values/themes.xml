@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.AndriodLabProject" parent="Base.Theme.AndriodLabProject" />
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/spinner_theme</item>
+    </style>
 </resources>
