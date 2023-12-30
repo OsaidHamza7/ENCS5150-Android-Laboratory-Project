@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -96,6 +97,35 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         EditText editText_password = (EditText) findViewById(R.id.editText_registerPassword);
         EditText editText_confirmPassword = (EditText) findViewById(R.id.editText_registerConfirmPassword);
         EditText editText_phoneNumber = (EditText) findViewById(R.id.editText_registerPhoneNumber);
+
+//        editText_email.setOnKeyListener((view, i, keyEvent) -> {
+//            // check if the email is valid
+//            if (!editText_email.getText().toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")){
+//
+//                editText_email.setError("Please enter a valid email");
+//            } else {
+//                // show the email icon
+//                //imageView_emailIcon.setVisibility(View.VISIBLE);
+//            }
+//            return false;
+//        });
+//
+//        editText_password.setOnKeyListener((view, i, keyEvent) -> {
+//            // check if passowrd contain at least 5 characters and (1 character and 1 number and 1 special character)
+//            if (editText_password.getText().toString().length() < 5){
+//                editText_password.setError("Password must contain at least 5 characters");
+//            } else if (!editText_password.getText().toString().matches(".*[a-zA-Z]+.*")){
+//                editText_password.setError("Password must contain at least 1 character");
+//            } else if (!editText_password.getText().toString().matches(".*[0-9]+.*")){
+//                editText_password.setError("Password must contain at least 1 number");
+//            } else if (!editText_password.getText().toString().matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+.*")){
+//                editText_password.setError("Password must contain at least 1 special character");
+//            } else {
+//
+//            }
+//            return false;
+//        });
+
         button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +137,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 String phoneNumber = editText_phoneNumber.getText().toString();
                 String gender = genderSpinner.getSelectedItem().toString();
                 String country = countrySpinner.getSelectedItem().toString();
+                String city = citySpinner.getSelectedItem().toString();
 
                 // check if the user entered all the required data
                 if (firstName.replaceAll(" ", "").isEmpty()){
@@ -119,6 +150,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                     editText_email.setError("Please enter your email");
                 } // cehck if the email is valid
                 else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")){
+
                     editText_email.setError("Please enter a valid email");
                 }
 

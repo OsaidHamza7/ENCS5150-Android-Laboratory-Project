@@ -101,11 +101,19 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/plaintext_grey_theme"
+            android:drawableStart="@drawable/baseline_email_24"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="10dp"
+
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+
+
             android:paddingLeft="10dp"
             android:paddingRight="15dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
@@ -161,6 +169,10 @@
             android:inputType="textPassword"
             android:paddingLeft="10dp"
             android:paddingRight="15dp"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/baseline_lock_24"
+            android:paddingStart="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
@@ -307,17 +319,6 @@
             app:srcCompat="@drawable/leftarrow" />
 
         <ImageView
-            android:layout_width="28dp"
-            android:layout_height="25dp"
-            android:src="@drawable/emailicon"
-            app:layout_constraintBottom_toBottomOf="@+id/editText_registerEmail"
-            app:layout_constraintEnd_toEndOf="@+id/editText_registerEmail"
-            app:layout_constraintHorizontal_bias="0.968"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editText_registerEmail"
-            app:layout_constraintVertical_bias="0.48" />
-
-        <ImageView
             android:layout_width="144dp"
             android:layout_height="103dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -326,17 +327,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.081"
             app:srcCompat="@drawable/signupicon" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/passwordicom"
-            app:layout_constraintBottom_toBottomOf="@+id/editText_registerPassword"
-            app:layout_constraintEnd_toEndOf="@+id/editText_registerPassword"
-            app:layout_constraintHorizontal_bias="0.971"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editText_registerPassword" />
 
         <Space
             android:layout_width="20dp"
