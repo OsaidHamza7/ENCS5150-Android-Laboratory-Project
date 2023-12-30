@@ -10,6 +10,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -86,6 +87,79 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         countrySpinner.setOnItemSelectedListener(this);
         // set the listener for the city spinner
         citySpinner.setOnItemSelectedListener(this);
+
+
+        Button button_signup = (Button) findViewById(R.id.button_registerSignUp);
+        EditText editText_firstName = (EditText) findViewById(R.id.editText_registerFirstName);
+        EditText editText_lastName = (EditText) findViewById(R.id.editText_registerLastName);
+        EditText editText_email = (EditText) findViewById(R.id.editText_registerEmail);
+        EditText editText_password = (EditText) findViewById(R.id.editText_registerPassword);
+        EditText editText_confirmPassword = (EditText) findViewById(R.id.editText_registerConfirmPassword);
+        EditText editText_phoneNumber = (EditText) findViewById(R.id.editText_registerPhoneNumber);
+        button_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String firstName = editText_firstName.getText().toString();
+                String lastName = editText_lastName.getText().toString();
+                String email = editText_email.getText().toString();
+                String password = editText_password.getText().toString();
+                String confirmPassword = editText_confirmPassword.getText().toString();
+                String phoneNumber = editText_phoneNumber.getText().toString();
+                String gender = genderSpinner.getSelectedItem().toString();
+                String country = countrySpinner.getSelectedItem().toString();
+
+                // check if the user entered all the required data
+                if (firstName.replaceAll(" ", "").isEmpty()){
+                    editText_firstName.setError("Please enter your first name");
+                }
+                if (lastName.replaceAll(" ", "").isEmpty()){
+                    editText_lastName.setError("Please enter your last name");
+                }
+                if (email.replaceAll(" ", "").isEmpty()){
+                    editText_email.setError("Please enter your email");
+                } // cehck if the email is valid
+                else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")){
+                    editText_email.setError("Please enter a valid email");
+                }
+
+                // check if passowrd contain at least 5 characters and (1 character and 1 number and 1 special character)
+                if (password.replaceAll(" ", "").isEmpty()){
+                    editText_password.setError("Please enter your password");
+                } else if (password.length() < 5){
+                    editText_password.setError("Password must contain at least 5 characters");
+                } else if (!password.matches(".*[a-zA-Z]+.*")){
+                    editText_password.setError("Password must contain at least 1 character");
+                } else if (!password.matches(".*[0-9]+.*")){
+                    editText_password.setError("Password must contain at least 1 number");
+                } else if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+.*")){
+                    editText_password.setError("Password must contain at least 1 special character");
+                }
+                // check if the user confirmed the password and if it matches the password
+                if (confirmPassword.replaceAll(" ", "").isEmpty()){
+                    editText_confirmPassword.setError("Please confirm your password");
+                } else if (!confirmPassword.equals(password)){
+                    editText_confirmPassword.setError("Password doesn't match");
+                }
+
+                if (phoneNumber.replaceAll(" ", "").isEmpty()){
+                    editText_phoneNumber.setError("Please enter your phone number");
+                }
+
+                // check if the user selected all the required data for the spinners
+                if (genderSpinner.getSelectedItemPosition() == 0){
+                    Toast.makeText(SignUpActivity.this, "Please select the Gender", Toast.LENGTH_SHORT).show();
+                }
+                else if (countrySpinner.getSelectedItemPosition() == 0){
+                    Toast.makeText(SignUpActivity.this, "Please select a Country", Toast.LENGTH_SHORT).show();
+                }
+                else if (citySpinner.getSelectedItemPosition() == 0){
+                    Toast.makeText(SignUpActivity.this, "Please select a City", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+        });
 
 
 

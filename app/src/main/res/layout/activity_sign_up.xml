@@ -84,6 +84,7 @@
             android:hint="First Name"
             android:inputType="textPersonName|textCapWords"
             android:paddingLeft="10dp"
+            android:paddingRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
@@ -104,6 +105,7 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:paddingLeft="10dp"
+            android:paddingRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
@@ -158,6 +160,7 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:paddingLeft="10dp"
+            android:paddingRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
@@ -178,6 +181,7 @@
             android:hint="Confirm Password"
             android:inputType="textPassword"
             android:paddingLeft="10dp"
+            android:paddingRight="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.474"
@@ -265,7 +269,8 @@
             app:layout_constraintHorizontal_bias="0.474"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.29" />
+            app:layout_constraintVertical_bias="0.29"
+            android:paddingRight="15dp" />
 
         <Space
             android:layout_width="20dp"
@@ -361,6 +366,7 @@
                 android:hint="Phone Number"
                 android:inputType="phone"
                 android:paddingLeft="10dp"
+                android:paddingRight="15dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_CountryCode"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
