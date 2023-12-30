@@ -74,7 +74,7 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_signIn"
         android:layout_width="340dp"
         android:layout_height="51dp"
         android:background="@drawable/black_button"
@@ -90,7 +90,7 @@
         app:layout_constraintVertical_bias="0.528" />
 
     <Button
-        android:id="@+id/button_signUp"
+        android:id="@+id/bottun_OpenSignUp"
         android:layout_width="56dp"
         android:layout_height="19dp"
         android:background="#FFFFFF"

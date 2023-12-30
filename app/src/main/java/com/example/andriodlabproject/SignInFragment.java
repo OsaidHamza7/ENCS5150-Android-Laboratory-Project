@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SignInFragment#newInstance} factory method to
@@ -49,20 +50,6 @@ public class SignInFragment extends Fragment {
         return fragment;
     }
 
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Button button_signUp = (Button) getActivity().findViewById(R.id.button_signUp);
-
-        button_signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SignUpActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().finish();
-            }
-        });
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,11 +59,43 @@ public class SignInFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Button button_signIn = (Button) getActivity().findViewById(R.id.button_signIn);
+        Button btnOpenSignUp = (Button) getActivity().findViewById(R.id.bottun_OpenSignUp);
+
+        button_signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((SignInActivity)getActivity()).removeSignInFragment();
+                Intent intent = new Intent(getActivity(), HomeNormalCustomerActivity.class);
+                SignInFragment.this.startActivity(intent);
+
+            }
+        });
+
+
+        btnOpenSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SignUpActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+
+
+            }
+        });
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_sign_in, container, false);
+
+        return view;
     }
 }

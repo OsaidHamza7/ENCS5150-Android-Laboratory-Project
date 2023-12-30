@@ -23,8 +23,6 @@ public class SignInActivity extends AppCompatActivity {
 
         fragmentTransaction.add(R.id.root_layout, signInButtonFragment, "SignInButtonFrag");
         fragmentTransaction.commit();
-
-
     }
 
     @Override
@@ -48,15 +46,17 @@ public class SignInActivity extends AppCompatActivity {
 
     public void addSignInFragment(){
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        if (fragmentManager.findFragmentByTag("SignInButtonFrag") != null) {
-            fragmentTransaction.remove(signInButtonFragment);
-        }
+        fragmentTransaction.remove(signInButtonFragment);
 
         fragmentTransaction.add(R.id.root_layout, signInFragment, "SignInFrag");
         fragmentTransaction.commit();
     }
+    public void removeSignInFragment(){
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        fragmentTransaction.remove(signInFragment);
+        fragmentTransaction.commit();
+    }
 
 
 }

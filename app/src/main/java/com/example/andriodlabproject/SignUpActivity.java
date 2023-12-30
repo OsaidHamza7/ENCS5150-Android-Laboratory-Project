@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(View view) {
                 // open the main activity
-                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                 SignUpActivity.this.startActivity(intent);
                 finish();
             }
