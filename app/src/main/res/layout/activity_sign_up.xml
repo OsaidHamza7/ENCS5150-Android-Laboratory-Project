@@ -355,7 +355,7 @@
             <EditText
                 android:id="@+id/editText_registerPhoneNumber"
                 android:layout_width="233dp"
-                android:layout_height="51dp"
+                android:layout_height="50dp"
                 android:background="@drawable/plaintext_grey_theme"
                 android:ems="10"
                 android:hint="Phone Number"
