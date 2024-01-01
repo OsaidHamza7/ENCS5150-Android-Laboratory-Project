@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button_SignIn"
+        android:id="@+id/button_Connect"
         android:layout_width="319dp"
         android:layout_height="54dp"
         android:background="@drawable/blue_button"
