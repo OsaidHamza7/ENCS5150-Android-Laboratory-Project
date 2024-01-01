@@ -142,13 +142,15 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
                 String firstName = editText_firstName.getText().toString();
                 String lastName = editText_lastName.getText().toString();
-                String email = editText_email.getText().toString();
+                String email = editText_email.getText().toString().toLowerCase();
                 String password = editText_password.getText().toString();
                 String confirmPassword = editText_confirmPassword.getText().toString();
                 String phoneNumber = editText_phoneNumber.getText().toString();
                 String gender = genderSpinner.getSelectedItem().toString();
                 String country = countrySpinner.getSelectedItem().toString();
                 String city = citySpinner.getSelectedItem().toString();
+
+
 
                 // check if the user entered all the required data and if it is valid
                 boolean isValid = isUserDataValid(firstName, lastName, email, password, confirmPassword, phoneNumber);
@@ -161,6 +163,11 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                     return;
                 }
                 else{
+                    // convert first letter of first name and last name to upper case and the rest to lower case
+                    firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
+                    lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
+
+
                     User user = new User(firstName, lastName, gender, email, password, country, city, phoneNumber, permission, null);
                     // add the user to the database
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(SignUpActivity.this);
@@ -174,7 +181,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                         SignUpActivity.this.startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(SignUpActivity.this, "User not added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Email is already Exist", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -204,7 +211,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         if (email.replaceAll(" ", "").isEmpty()) {
             editText_email.setError("Please enter your email");
             isValid = false;
-        } // cehck if the email is valid
+        } // check if the email is valid
         else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
             editText_email.setError("Please enter a valid email");
             isValid = false;
@@ -238,6 +245,10 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
         if (phoneNumber.replaceAll(" ", "").isEmpty()) {
             editText_phoneNumber.setError("Please enter your phone number");
+            isValid = false;
+            // check if all the phone number digits are numbers
+        } else if (!phoneNumber.matches("[0-9]+")) {
+            editText_phoneNumber.setError("Please enter a valid phone number");
             isValid = false;
         }
 

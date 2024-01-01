@@ -12,6 +12,7 @@
         <show-object-details value="false" />
       </general>
       <filters>
+        <object-type-filter>
           <object-type name="SCHEMA" enabled="true" />
           <object-type name="USER" enabled="true" />
           <object-type name="ROLE" enabled="true" />
