@@ -63,10 +63,10 @@ public class SignInFragment extends Fragment {
         }
     }
 
-    protected void onResume() {
-        super.onResume();
-
-    }
+//    protected void onResume() {
+//        super.onResume();
+//
+//    }
 
 
     @Override
@@ -82,12 +82,12 @@ public class SignInFragment extends Fragment {
         // check if the user checked the remember me checkbox
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getActivity());
         String email = sharedPrefManager.readString("email", "noValue");
-        String password = sharedPrefManager.readString("password", "noValue");
-        if (!email.equals("noValue") && !password.equals("noValue")){
+
+        if (!email.equals("noValue")){
             // if the user checked the remember me checkbox
             // set the email and password in the edit texts
             editText_email.setText(email);
-            editText_password.setText(password);
+            editText_password.setText("");
             checkBox_rememberMe.setChecked(true);
         } else {
             // if the user didn't check the remember me checkbox
@@ -127,14 +127,12 @@ public class SignInFragment extends Fragment {
                     // save the email and password in the shared preferences
                     SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getActivity());
                     sharedPrefManager.writeString("email", email);
-                    sharedPrefManager.writeString("password", password);
                 }
                 else {
                     // if the user didn't check the remember me checkbox
                     // save the email and password in the shared preferences as empty strings
                     SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getActivity());
                     sharedPrefManager.writeString("email", "noValue");
-                    sharedPrefManager.writeString("password", "noValue");
                 }
 
 
