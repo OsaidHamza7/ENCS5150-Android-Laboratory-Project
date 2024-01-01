@@ -54,19 +54,19 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             carPrice = itemView.findViewById(R.id.carPrice);
             imgFav = itemView.findViewById(R.id.imgFav);
 
-//            imgFav.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    // Handle the click event for imgFav
-//                    int position = getAdapterPosition();
-//                    if (position != RecyclerView.NO_POSITION) {
-//                        imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
+            imgFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Handle the click event for imgFav
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
 //                        car currentCar = carList.get(position);
 //                        carsFavorites.add(currentCar);
-//
-//                    }
-//                }
-//            });
+
+                    }
+                }
+            });
 
         }
 
