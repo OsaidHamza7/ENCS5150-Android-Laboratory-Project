@@ -18,17 +18,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    public static String permission = "User";
+    private Button button_signup;
+    private EditText editText_firstName;
+    private EditText editText_lastName;
+    private EditText editText_email;
+    private EditText editText_password;
+    private EditText editText_confirmPassword;
+    private EditText editText_phoneNumber;
 
     private Spinner countrySpinner;
     private Spinner citySpinner;
     private Spinner genderSpinner;
-    private String [] cities = null;
+    private String[] cities = null;
     private ImageView imageViewCountryFlag;
     private TextView textViewCountryCode;
     private boolean firstCountry = true;
     private boolean firstGender = true;
     private boolean firstCity = true;
+    private int previousCountry = 1;
+    private int previousCity = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +72,9 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
         // set the gender spinner
         String[] genders = {"Gender", "Male", "Female"};
-        genderSpinner =(Spinner) findViewById(R.id.spinner_registerGender);
+        genderSpinner = (Spinner) findViewById(R.id.spinner_registerGender);
         ArrayAdapter<String> objGenderArr = new
-                ArrayAdapter<>(this,android.R.layout.simple_spinner_item, genders);
+                ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genders);
         genderSpinner.setAdapter(objGenderArr);
         genderSpinner.setOnItemSelectedListener(this);
 
@@ -71,17 +82,17 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         textViewCountryCode = (TextView) findViewById(R.id.textView_CountryCode);
 
         // set the country spinner
-        String [] countries = {"Country", "Palestine", "Jordan", "Yemen", "Lebanon", "Syria"};
-        countrySpinner =(Spinner) findViewById(R.id.spinner_registerCountry);
+        String[] countries = {"Country", "Palestine", "Jordan", "Yemen", "Lebanon", "Syria"};
+        countrySpinner = (Spinner) findViewById(R.id.spinner_registerCountry);
         ArrayAdapter<String> objCountryArr = new
-                ArrayAdapter<>(this,android.R.layout.simple_spinner_item, countries);
+                ArrayAdapter<>(this, android.R.layout.simple_spinner_item, countries);
         countrySpinner.setAdapter(objCountryArr);
 
         // set the city spinner
-        citySpinner =(Spinner) findViewById(R.id.spinner_registerCity);
+        citySpinner = (Spinner) findViewById(R.id.spinner_registerCity);
         cities = new String[]{"City"};
         ArrayAdapter<String> objCityArr = new
-                ArrayAdapter<>(this,android.R.layout.simple_spinner_item, cities);
+                ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cities);
         citySpinner.setAdapter(objCityArr);
 
         // set the listener for the country spinner to change the cities when the country is changed
@@ -90,13 +101,13 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         citySpinner.setOnItemSelectedListener(this);
 
 
-        Button button_signup = (Button) findViewById(R.id.button_registerSignUp);
-        EditText editText_firstName = (EditText) findViewById(R.id.editText_registerFirstName);
-        EditText editText_lastName = (EditText) findViewById(R.id.editText_registerLastName);
-        EditText editText_email = (EditText) findViewById(R.id.editText_registerEmail);
-        EditText editText_password = (EditText) findViewById(R.id.editText_registerPassword);
-        EditText editText_confirmPassword = (EditText) findViewById(R.id.editText_registerConfirmPassword);
-        EditText editText_phoneNumber = (EditText) findViewById(R.id.editText_registerPhoneNumber);
+        button_signup = (Button) findViewById(R.id.button_registerSignUp);
+        editText_firstName = (EditText) findViewById(R.id.editText_registerFirstName);
+        editText_lastName = (EditText) findViewById(R.id.editText_registerLastName);
+        editText_email = (EditText) findViewById(R.id.editText_registerEmail);
+        editText_password = (EditText) findViewById(R.id.editText_registerPassword);
+        editText_confirmPassword = (EditText) findViewById(R.id.editText_registerConfirmPassword);
+        editText_phoneNumber = (EditText) findViewById(R.id.editText_registerPhoneNumber);
 
 //        editText_email.setOnKeyListener((view, i, keyEvent) -> {
 //            // check if the email is valid
@@ -139,64 +150,116 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 String country = countrySpinner.getSelectedItem().toString();
                 String city = citySpinner.getSelectedItem().toString();
 
-                // check if the user entered all the required data
-                if (firstName.replaceAll(" ", "").isEmpty()){
-                    editText_firstName.setError("Please enter your first name");
-                }
-                if (lastName.replaceAll(" ", "").isEmpty()){
-                    editText_lastName.setError("Please enter your last name");
-                }
-                if (email.replaceAll(" ", "").isEmpty()){
-                    editText_email.setError("Please enter your email");
-                } // cehck if the email is valid
-                else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")){
+                // check if the user entered all the required data and if it is valid
+                boolean isValid = isUserDataValid(firstName, lastName, email, password, confirmPassword, phoneNumber);
 
-                    editText_email.setError("Please enter a valid email");
-                }
+                // hash the password
+                password = User.hashPassword(password);
 
-                // check if passowrd contain at least 5 characters and (1 character and 1 number and 1 special character)
-                if (password.replaceAll(" ", "").isEmpty()){
-                    editText_password.setError("Please enter your password");
-                } else if (password.length() < 5){
-                    editText_password.setError("Password must contain at least 5 characters");
-                } else if (!password.matches(".*[a-zA-Z]+.*")){
-                    editText_password.setError("Password must contain at least 1 character");
-                } else if (!password.matches(".*[0-9]+.*")){
-                    editText_password.setError("Password must contain at least 1 number");
-                } else if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+.*")){
-                    editText_password.setError("Password must contain at least 1 special character");
+                // if the data is valid or not
+                if (!isValid){
+                    return;
                 }
-                // check if the user confirmed the password and if it matches the password
-                if (confirmPassword.replaceAll(" ", "").isEmpty()){
-                    editText_confirmPassword.setError("Please confirm your password");
-                } else if (!confirmPassword.equals(password)){
-                    editText_confirmPassword.setError("Password doesn't match");
-                }
+                else{
+                    User user = new User(firstName, lastName, gender, email, password, country, city, phoneNumber, permission, null);
+                    // add the user to the database
+                    DataBaseHelper dataBaseHelper = new DataBaseHelper(SignUpActivity.this);
 
-                if (phoneNumber.replaceAll(" ", "").isEmpty()){
-                    editText_phoneNumber.setError("Please enter your phone number");
+                    // check if the user is added successfully
+                    boolean isInserted = dataBaseHelper.insertUser(user);
+                    if (isInserted){
+                        Toast.makeText(SignUpActivity.this, "User Registered successfully", Toast.LENGTH_SHORT).show();
+                        // open the sign in activity
+                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                        SignUpActivity.this.startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "User not added", Toast.LENGTH_SHORT).show();
+                    }
                 }
-
-                // check if the user selected all the required data for the spinners
-                if (genderSpinner.getSelectedItemPosition() == 0){
-                    Toast.makeText(SignUpActivity.this, "Please select the Gender", Toast.LENGTH_SHORT).show();
-                }
-                else if (countrySpinner.getSelectedItemPosition() == 0){
-                    Toast.makeText(SignUpActivity.this, "Please select a Country", Toast.LENGTH_SHORT).show();
-                }
-                else if (citySpinner.getSelectedItemPosition() == 0){
-                    Toast.makeText(SignUpActivity.this, "Please select a City", Toast.LENGTH_SHORT).show();
-                }
-
 
 
             }
         });
 
 
+    }
 
+
+
+    // this method is used to check if the user entered all the required data and if it is valid
+    private boolean isUserDataValid(String firstName, String lastName, String email,
+                                    String password, String confirmPassword, String phoneNumber) {
+
+        boolean isValid = true;
+        // check if the user entered all the required data
+        if (firstName.replaceAll(" ", "").isEmpty()) {
+            editText_firstName.setError("Please enter your first name");
+            isValid = false;
+        }
+        if (lastName.replaceAll(" ", "").isEmpty()) {
+            editText_lastName.setError("Please enter your last name");
+            isValid = false;
+        }
+        if (email.replaceAll(" ", "").isEmpty()) {
+            editText_email.setError("Please enter your email");
+            isValid = false;
+        } // cehck if the email is valid
+        else if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")) {
+            editText_email.setError("Please enter a valid email");
+            isValid = false;
+        }
+
+        // check if passowrd contain at least 5 characters and (1 character and 1 number and 1 special character)
+        if (password.replaceAll(" ", "").isEmpty()) {
+            editText_password.setError("Please enter your password");
+            isValid = false;
+        } else if (password.length() < 5) {
+            editText_password.setError("Password must contain at least 5 characters");
+            isValid = false;
+        } else if (!password.matches(".*[a-zA-Z]+.*")) {
+            editText_password.setError("Password must contain at least 1 character");
+            isValid = false;
+        } else if (!password.matches(".*[0-9]+.*")) {
+            editText_password.setError("Password must contain at least 1 number");
+            isValid = false;
+        } else if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+.*")) {
+            editText_password.setError("Password must contain at least 1 special character");
+            isValid = false;
+        }
+        // check if the user confirmed the password and if it matches the password
+        if (confirmPassword.replaceAll(" ", "").isEmpty()) {
+            editText_confirmPassword.setError("Please confirm your password");
+            isValid = false;
+        } else if (!confirmPassword.equals(password)) {
+            editText_confirmPassword.setError("Password doesn't match");
+            isValid = false;
+        }
+
+        if (phoneNumber.replaceAll(" ", "").isEmpty()) {
+            editText_phoneNumber.setError("Please enter your phone number");
+            isValid = false;
+        }
+
+        // check if the user selected all the required data for the spinners
+        if (genderSpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(SignUpActivity.this, "Please select the Gender", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        } else if (countrySpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(SignUpActivity.this, "Please select a Country", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        } else if (citySpinner.getSelectedItemPosition() == 0) {
+            Toast.makeText(SignUpActivity.this, "Please select a City", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        }
+
+        return isValid;
 
     }
+
+
+
+
 
 
 
@@ -212,6 +275,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // if this for the country spinner
         if (parent.getId()==R.id.spinner_registerCountry){
+
             if (firstCountry) {
                 // change the color of the hint
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.grey));
@@ -220,8 +284,9 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
             } else{
                 if (pos == 0) {
                     // show toast to select a country
+                    countrySpinner.setSelection(previousCountry);
                     Toast.makeText(this, "Please select a country", Toast.LENGTH_SHORT).show();
-                    countrySpinner.setSelection(1);
+                    return;
                 }
                 if (pos == 1) { // Palestine
                     // add cities of Palestine and set the country code and flag
@@ -257,7 +322,9 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 ArrayAdapter<String> objCityArr = new
                         ArrayAdapter<>(this,android.R.layout.simple_spinner_item, cities);
                 citySpinner.setAdapter(objCityArr);
+                previousCountry = pos;
                 firstCity = true;
+
 
             }
 
@@ -268,13 +335,17 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 // change the color of the hint
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.grey));
                 firstCity = false;
+                return;
             } else {
                 if (pos == 0) {
                     // show toast to select a city
                     Toast.makeText(this, "Please select a city", Toast.LENGTH_SHORT).show();
-                    citySpinner.setSelection(1);
+                    citySpinner.setSelection(previousCity);
+                    return;
                 }
             }
+            previousCity = pos;
+
         }
         // if this for the gender spinner
         else if (parent.getId() == R.id.spinner_registerGender){

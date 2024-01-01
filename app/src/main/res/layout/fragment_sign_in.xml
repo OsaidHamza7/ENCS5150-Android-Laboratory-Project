@@ -8,12 +8,14 @@
     tools:context=".SignInFragment">
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress3"
+        android:id="@+id/editText_email"
         android:layout_width="308dp"
         android:layout_height="58dp"
+        android:background="@drawable/plaintext_grey_theme"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +23,7 @@
         app:layout_constraintVertical_bias="0.104" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_rememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remember Me"
@@ -33,12 +35,14 @@
         app:layout_constraintVertical_bias="0.36" />
 
     <EditText
-        android:id="@+id/editTextTextPassword4"
+        android:id="@+id/editText_password"
         android:layout_width="308dp"
         android:layout_height="58dp"
+        android:background="@drawable/plaintext_grey_theme"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
@@ -54,9 +58,9 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="13dp"
         android:src="@drawable/emailicon"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextEmailAddress3"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress3"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextEmailAddress3"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_email"
+        app:layout_constraintEnd_toEndOf="@+id/editText_email"
+        app:layout_constraintTop_toTopOf="@+id/editText_email"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
@@ -67,9 +71,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="14dp"
         android:src="@drawable/passwordicom"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPassword4"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword4"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPassword4"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_password"
+        app:layout_constraintEnd_toEndOf="@+id/editText_password"
+        app:layout_constraintTop_toTopOf="@+id/editText_password"
         app:layout_constraintVertical_bias="0.0" />
 
 
@@ -100,7 +104,7 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.63"
+        app:layout_constraintHorizontal_bias="0.648"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.607" />
@@ -109,7 +113,7 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have an accoun"
+        android:text="Don't have an account?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.35"

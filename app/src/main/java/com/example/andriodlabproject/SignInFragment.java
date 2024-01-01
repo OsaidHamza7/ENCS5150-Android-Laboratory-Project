@@ -1,6 +1,7 @@
 package com.example.andriodlabproject;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 
 /**
@@ -59,18 +62,98 @@ public class SignInFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Button button_signIn = (Button) getActivity().findViewById(R.id.button_signIn);
         Button btnOpenSignUp = (Button) getActivity().findViewById(R.id.bottun_OpenSignUp);
 
+        EditText editText_email = (EditText) getActivity().findViewById(R.id.editText_email);
+        EditText editText_password = (EditText) getActivity().findViewById(R.id.editText_password);
+        CheckBox checkBox_rememberMe = (CheckBox) getActivity().findViewById(R.id.checkBox_rememberMe);
+
+        // check if the user checked the remember me checkbox
+        SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getActivity());
+        String email = sharedPrefManager.readString("email", "noValue");
+        String password = sharedPrefManager.readString("password", "noValue");
+        if (!email.equals("noValue") && !password.equals("noValue")){
+            // if the user checked the remember me checkbox
+            // set the email and password in the edit texts
+            editText_email.setText(email);
+            editText_password.setText(password);
+            checkBox_rememberMe.setChecked(true);
+        } else {
+            // if the user didn't check the remember me checkbox
+            // set the email and password in the edit texts to empty strings
+            editText_email.setText("");
+            editText_password.setText("");
+            checkBox_rememberMe.setChecked(false);
+        }
+
         button_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((SignInActivity)getActivity()).removeSignInFragment();
-                Intent intent = new Intent(getActivity(), HomeNormalCustomerActivity.class);
-                SignInFragment.this.startActivity(intent);
+                String email = editText_email.getText().toString();
+                String password = editText_password.getText().toString();
+
+
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
+                Cursor cursor = dataBaseHelper.getUserByEmail(email);
+
+                // check if the email is found in the database
+                if (cursor.getCount() == 0){
+                    editText_email.setError("Email is not found");
+                    return;
+                } else {
+                    // check if the password is correct
+                    cursor.moveToFirst();
+                    String passwordFromDB = cursor.getString(4);
+
+                    if (User.checkPassword(password, passwordFromDB) == false){
+                        editText_password.setError("Password is incorrect");
+                        return;
+                    }
+                }
+                // check the remember me checkbox
+                if (checkBox_rememberMe.isChecked()){
+                    // if the user checked the remember me checkbox
+                    // save the email and password in the shared preferences
+                    SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getActivity());
+                    sharedPrefManager.writeString("email", email);
+                    sharedPrefManager.writeString("password", password);
+                }
+                else {
+                    // if the user didn't check the remember me checkbox
+                    // save the email and password in the shared preferences as empty strings
+                    SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(getActivity());
+                    sharedPrefManager.writeString("email", "noValue");
+                    sharedPrefManager.writeString("password", "noValue");
+                }
+
+
+                if (cursor.getString(8).equals("Admin")){
+                    // if the user is admin
+                    /*
+                        TODO: open the admin activity
+                     */
+
+                } else{
+                    // if the user is normal customer
+                    ((SignInActivity)getActivity()).removeSignInFragment();
+                    Intent intent = new Intent(getActivity(), HomeNormalCustomerActivity.class);
+                    SignInFragment.this.startActivity(intent);
+                    return;
+                }
+
+
+
 
             }
         });
