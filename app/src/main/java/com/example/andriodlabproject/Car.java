@@ -50,6 +50,9 @@ public class Car {
 
     public void setImageResourceId(int imageResourceId) { this.imageResourceId = imageResourceId;}
 
+    public void setImageFavResourceId(int imageFavResourceId) { this.imgFav = imageFavResourceId;}
+
+
 
 
 }

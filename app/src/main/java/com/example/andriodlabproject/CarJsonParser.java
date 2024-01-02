@@ -38,6 +38,7 @@ public class CarJsonParser {
                 String TYPE =jsonObject.getString("type");
                 CAR.setID(jsonObject.getInt("id"));
                 CAR.setPrice("$974,000");
+                CAR.setImageFavResourceId(R.drawable.ic_favorite_border);
                 for (Map.Entry<String, List<String>> entry : cars.entrySet()) {
 
                     if (entry.getKey().equals("Chevrolet") && entry.getValue().contains(TYPE)){

@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +25,8 @@ public class FavoriteCarsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView recyclerView;
+    private CarAdapter adapter;
 
     public FavoriteCarsFragment() {
         // Required empty public constructor
@@ -53,7 +58,16 @@ public class FavoriteCarsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        recyclerView = getActivity().findViewById(R.id.recycler_favorite_cars);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
+
+        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.favCars);
+        recyclerView.setAdapter(adapter);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

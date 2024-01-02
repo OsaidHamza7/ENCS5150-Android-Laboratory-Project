@@ -60,11 +60,15 @@ public class CarMenuFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
         recyclerView = getActivity().findViewById(R.id.recycler_car_menu);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-
-        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.carListss);
+        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
         recyclerView.setAdapter(adapter);
     }
     @Override

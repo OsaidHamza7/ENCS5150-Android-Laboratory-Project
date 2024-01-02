@@ -32,7 +32,7 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
         if (!isConnectionSuccessful || s == null) {
             Toast.makeText(activity, "the connection is unsuccessful", Toast.LENGTH_LONG).show();
         } else {
-            HomeNormalCustomerActivity.carListss = CarJsonParser.getObjectFromJson(s);
+            HomeNormalCustomerActivity.allCars = CarJsonParser.getObjectFromJson(s);
         }
     }
     @Override

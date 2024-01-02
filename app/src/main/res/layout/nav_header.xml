@@ -8,20 +8,22 @@
     android:padding="16dp">
 
     <ImageView
+        android:id="@+id/imgProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher_round" />
 
 
     <TextView
+        android:id="@+id/viewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Coding in Flow"
 
-        />
+        android:text="Coding in Flow" />
 
     <TextView
+        android:id="@+id/viewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="info@codinginflow.com" />

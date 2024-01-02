@@ -18,7 +18,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
     private List<Car> carList;
     private LayoutInflater inflater;
-    private List<Car> carsFavorites;
 
     public CarAdapter(Context context, List<Car> carList) {
         this.inflater = LayoutInflater.from(context);
@@ -38,6 +37,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.carType.setText(currentCar.getType());
         holder.carPrice.setText(currentCar.getPrice());
         holder.carImage.setImageResource(currentCar.getImageResourceId());
+        holder.imgFav.setImageResource(currentCar.getImageFavResourceId());
+
     }
 
     @Override
@@ -63,11 +64,23 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                     // Handle the click event for imgFav
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
-//                        car currentCar = carList.get(position);
-//                        carsFavorites.add(currentCar);
-
+                        Car currentCar = carList.get(position);
+                        if (currentCar.getImageFavResourceId()==R.drawable.ic_favorite) {
+                            imgFav.setImageResource(R.drawable.ic_favorite_border); // Set your favorite icon here
+                            currentCar.setImageFavResourceId(R.drawable.ic_favorite_border);
+                            if(HomeNormalCustomerActivity.favCars.contains(currentCar)) {
+                                HomeNormalCustomerActivity.favCars.remove(currentCar);
+                            }
+                        }
+                        else{
+                            imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
+                            currentCar.setImageFavResourceId(R.drawable.ic_favorite);
+                            if(!HomeNormalCustomerActivity.favCars.contains(currentCar)) {
+                                HomeNormalCustomerActivity.favCars.add(currentCar);
+                            }
+                        }
                     }
+                    notifyDataSetChanged();
                 }
             });
 
@@ -90,7 +103,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                 .setMessage(details.toString())
                                 .setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
+                                     //   imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
 
 
                                     }

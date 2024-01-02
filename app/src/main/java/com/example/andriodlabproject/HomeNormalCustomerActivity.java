@@ -24,15 +24,18 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     final Handler handler = new Handler();
     private CarAdapter adapter;
 
-    public static List<Car> carListss = new ArrayList<>();
+    public static List<Car> allCars = new ArrayList<>();
+    public static List<Car> favCars = new ArrayList<>();
+    public Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_normal_customer);
+        NavigationView navHeader =findViewById(R.id.nav_view);
+//        TextView viewName = navHeader.get
 
-
-        Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("Car Dealer");
+        toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("HOME");
         setSupportActionBar(toolbar);
         drawer=findViewById(R.id.drawer_layout);
 
@@ -63,10 +66,11 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId()==R.id.nav_profile){
+            toolbar.setTitle("PROFILE");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileCustomerFragment()).commit();
         }
         if (item.getItemId()==R.id.nav_home){
-
+            toolbar.setTitle("HOME");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeCustomerFragment()).commit();
         }
         if (item.getItemId()==R.id.nav_logout){
@@ -75,10 +79,16 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
             finish();
         }
         if (item.getItemId()==R.id.nav_call_find_us){
+            toolbar.setTitle("CALL US OR FIND US");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CallOrFindUsFragment()).commit();
         }
         if (item.getItemId()==R.id.nav_carMenu){
+            toolbar.setTitle("CAR MENU");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CarMenuFragment()).commit();
+        }
+        if (item.getItemId()==R.id.nav_yourFavorites){
+            toolbar.setTitle("FAVORITE CARS");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FavoriteCarsFragment()).commit();
         }
 
         drawer.closeDrawer(GravityCompat.START);
