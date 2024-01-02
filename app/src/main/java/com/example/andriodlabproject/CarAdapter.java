@@ -2,12 +2,15 @@ package com.example.andriodlabproject;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
@@ -63,6 +66,39 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                         imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
 //                        car currentCar = carList.get(position);
 //                        carsFavorites.add(currentCar);
+
+                    }
+                }
+            });
+
+            carImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Handle the click event for imgFav
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                     Car currentCar = carList.get(position);
+
+                        StringBuilder details = new StringBuilder();
+//                        details.append(currentCar.getImageResourceId()).append("\n");
+                        details.append("Id:").append(currentCar.getID()).append("\n");
+                        details.append("Type: ").append(currentCar.getType()).append("\n");
+                        details.append("Price: ").append(currentCar.getPrice()).append("\n");
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setTitle("Car Details")
+                                .setMessage(details.toString())
+                                .setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
+
+
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", null)
+                                .create()
+                                .show();
+
 
                     }
                 }

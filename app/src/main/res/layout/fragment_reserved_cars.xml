@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarMenuFragment">
+    tools:context=".ReservedCarsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_car_menu"
+        android:id="@+id/recycler_reserved_cars"
         android:layout_width="439dp"
         android:layout_height="684dp"
         app:layout_constraintBottom_toBottomOf="parent"
