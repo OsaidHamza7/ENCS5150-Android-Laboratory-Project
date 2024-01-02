@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/plaintext_grey_theme"
         android:gravity="center_horizontal"
-        android:background="#E8E3E3"
         android:orientation="horizontal">
 
         <ImageView

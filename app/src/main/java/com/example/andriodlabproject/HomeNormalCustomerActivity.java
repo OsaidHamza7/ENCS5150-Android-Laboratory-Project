@@ -63,7 +63,7 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId()==R.id.nav_profile){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new profileCustomerFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileCustomerFragment()).commit();
         }
         if (item.getItemId()==R.id.nav_home){
 

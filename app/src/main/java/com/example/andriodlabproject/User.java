@@ -1,10 +1,14 @@
 package com.example.andriodlabproject;
 
+import android.database.Cursor;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Arrays;
 
 public class User {
+
+    public static Cursor currentUser;
 
     private String firstName;
     private String lastName;
