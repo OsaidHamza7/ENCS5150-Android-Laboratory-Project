@@ -344,7 +344,7 @@
             app:layout_constraintVertical_bias="0.862">
 
             <EditText
-                android:id="@+id/editText_registerPhoneNumber"
+                android:id="@+id/editText_editPhoneNumber"
                 android:layout_width="233dp"
                 android:layout_height="50dp"
                 android:background="@drawable/plaintext_grey_theme"
@@ -353,15 +353,15 @@
                 android:inputType="phone"
                 android:paddingLeft="10dp"
                 android:paddingRight="15dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView_CountryCode"
+                app:layout_constraintBottom_toBottomOf="@+id/textView_editCountryCode"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView_CountryCode"
+                app:layout_constraintTop_toTopOf="@+id/textView_editCountryCode"
                 app:layout_constraintVertical_bias="0.521" />
 
             <ImageView
-                android:id="@+id/imageView_registerCountryFlag"
+                android:id="@+id/imageView_editCountryFlag"
                 android:layout_width="46dp"
                 android:layout_height="37dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -373,17 +373,17 @@
                 app:srcCompat="@drawable/palestine" />
 
             <TextView
-                android:id="@+id/textView_CountryCode"
+                android:id="@+id/textView_editCountryCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+970"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView_registerCountryFlag"
-                app:layout_constraintEnd_toEndOf="@+id/editText_registerPhoneNumber"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_editCountryFlag"
+                app:layout_constraintEnd_toEndOf="@+id/editText_editPhoneNumber"
                 app:layout_constraintHorizontal_bias="0.166"
-                app:layout_constraintStart_toStartOf="@+id/imageView_registerCountryFlag"
-                app:layout_constraintTop_toTopOf="@+id/imageView_registerCountryFlag" />
+                app:layout_constraintStart_toStartOf="@+id/imageView_editCountryFlag"
+                app:layout_constraintTop_toTopOf="@+id/imageView_editCountryFlag" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

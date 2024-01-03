@@ -100,11 +100,30 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM User WHERE Email = '"+email+"'",null);
     }
 
-    // get user by email and password
-    public Cursor getUserByEmailAndPassword(String email, String password){
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        return sqLiteDatabase.rawQuery("SELECT * FROM User WHERE Email = '"+email+"' AND Password = '"+password+"'",null);
+    // Update user info (First name, last name, and phone number)
+    public void updateUserInfo(User user){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("FirstName",user.getFirstName());
+        contentValues.put("LastName",user.getLastName());
+        contentValues.put("PhoneNumber", user.getPhoneNumber());
+        sqLiteDatabase.update("User",contentValues,"Email = '"+user.getEmail()+"'",null);
     }
+
+    // Update the user Password
+    public void updateUserPassword(String email, String password){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Password",password);
+
+        sqLiteDatabase.update("User",contentValues,"Email = '"+email+"'",null);
+
+
+    }
+
+
+
+
 
 
 

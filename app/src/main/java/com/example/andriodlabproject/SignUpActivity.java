@@ -3,11 +3,8 @@ package com.example.andriodlabproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -78,8 +75,8 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         genderSpinner.setAdapter(objGenderArr);
         genderSpinner.setOnItemSelectedListener(this);
 
-        imageViewCountryFlag = (ImageView) findViewById(R.id.imageView_registerCountryFlag);
-        textViewCountryCode = (TextView) findViewById(R.id.textView_CountryCode);
+        imageViewCountryFlag = (ImageView) findViewById(R.id.imageView_editCountryFlag);
+        textViewCountryCode = (TextView) findViewById(R.id.textView_editCountryCode);
 
         // set the country spinner
         String[] countries = {"Country", "Palestine", "Jordan", "Yemen", "Lebanon", "Syria"};
@@ -107,7 +104,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         editText_email = (EditText) findViewById(R.id.editText_registerEmail);
         editText_password = (EditText) findViewById(R.id.editText_registerPassword);
         editText_confirmPassword = (EditText) findViewById(R.id.editText_registerConfirmPassword);
-        editText_phoneNumber = (EditText) findViewById(R.id.editText_registerPhoneNumber);
+        editText_phoneNumber = (EditText) findViewById(R.id.editText_editPhoneNumber);
 
 //        editText_email.setOnKeyListener((view, i, keyEvent) -> {
 //            // check if the email is valid
@@ -239,7 +236,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
             editText_confirmPassword.setError("Please confirm your password");
             isValid = false;
         } else if (!confirmPassword.equals(password)) {
-            editText_confirmPassword.setError("Password doesn't match");
+            editText_confirmPassword.setError("Passwords doesn't match");
             isValid = false;
         }
 
