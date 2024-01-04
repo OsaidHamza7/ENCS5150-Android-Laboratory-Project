@@ -1,4 +1,4 @@
-pluginManagement {
+    pluginManagement {
     repositories {
         google()
         mavenCentral()
@@ -16,4 +16,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndriodLabProject"
 include(":app")
- 

@@ -53,4 +53,14 @@
             android:text="Price"
             android:textColor="#3E3C3C" />
     </LinearLayout>
+    <Button
+        android:id="@+id/button_reserve"
+        android:layout_width="201dp"
+        android:layout_height="36dp"
+        android:background="@drawable/black_button"
+        android:text="RESERVE"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+
 </LinearLayout>

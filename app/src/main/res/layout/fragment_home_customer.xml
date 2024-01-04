@@ -4,9 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#7CA884"
     tools:context=".HomeCustomerFragment">
 
 
+    <TextView
+        android:id="@+id/textView_history"
+        android:layout_width="436dp"
+        android:layout_height="406dp"
+        android:text="This app is for our car dealing company,with over 20 years of experience and high-quality services.\nWe hope that you will have a good experience with it."
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.958" />
 
+    <ImageView
+        android:id="@+id/imgCarHistory"
+        android:layout_width="590dp"
+        android:layout_height="315dp"
+        android:src="@drawable/car_history"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

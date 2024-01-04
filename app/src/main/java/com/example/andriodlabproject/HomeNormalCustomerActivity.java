@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -31,16 +33,22 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_normal_customer);
-        NavigationView navHeader =findViewById(R.id.nav_view);
-//        TextView viewName = navHeader.get
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //set nav header based on information of user
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
+        TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
+        navUsername.setText(User.currentUser.getString(0) +" " +User.currentUser.getString(1));
+        navEmail.setText(User.currentUser.getString(3));
 
         toolbar=findViewById(R.id.toolbar);
         toolbar.setTitle("HOME");
         setSupportActionBar(toolbar);
         drawer=findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
