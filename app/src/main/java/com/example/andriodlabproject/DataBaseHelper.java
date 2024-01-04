@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.sql.Blob;
+
 public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     private static final String dbName = "CarRentalDB";
@@ -118,8 +120,18 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
         sqLiteDatabase.update("User",contentValues,"Email = '"+email+"'",null);
 
+    }
+
+    // update the user profile image
+    public void updateUserProfilePicture(String email, byte[] profilePicture){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ProfilePicture",profilePicture);
+        sqLiteDatabase.update("User",contentValues,"Email = '"+email+"'",null);
+
 
     }
+
 
 
 

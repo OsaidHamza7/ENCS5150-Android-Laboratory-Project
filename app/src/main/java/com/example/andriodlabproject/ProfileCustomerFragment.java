@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 
 import kotlin.Unit;
 
@@ -52,6 +59,7 @@ public class ProfileCustomerFragment extends Fragment {
     private  boolean changePass = false;
     private ImageView profileImage;
     private ImageView changeProfileImage;
+    private boolean isImageChanged = false;
 
 
     DataBaseHelper dataBaseHelper;
@@ -100,11 +108,9 @@ public class ProfileCustomerFragment extends Fragment {
     public void onResume(){
         super.onResume();
 
-        // get the current user
-        currentUser = User.currentUser;
 
-        // assign the user info to Text fields
-        assignInfoToInputFields(currentUser);
+
+
 
     }
 
@@ -125,6 +131,10 @@ public class ProfileCustomerFragment extends Fragment {
         profileImage = getActivity().findViewById(R.id.imageView_profileImage);
         changeProfileImage = getActivity().findViewById(R.id.imageView_changeProfileImage);
 
+        // get the current user
+        currentUser = User.currentUser;
+        // assign the user info to Text fields
+        assignInfoToInputFields(currentUser);
 
         // access the database
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
@@ -151,6 +161,17 @@ public class ProfileCustomerFragment extends Fragment {
                 if (!checkInputFields(user, confirmPassword)){
                     changePass = false;
                     return;
+                }
+
+                // Inside your onClickListener for the save button
+                if (isImageChanged && profileImage.getDrawable() != null) {
+                    BitmapDrawable drawable = (BitmapDrawable) profileImage.getDrawable();
+                    Bitmap bitmap = drawable.getBitmap();
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+                    byte[] data = outputStream.toByteArray();
+                    dataBaseHelper.updateUserProfilePicture(email, data);
+
                 }
 
                 if (changePass){
@@ -184,9 +205,10 @@ public class ProfileCustomerFragment extends Fragment {
         // listener for the change profile image button
         changeProfileImage.setOnClickListener(e->{
             ImagePicker.with(this)
-                    .crop()
-                    .compress(1024)         // Final image size will be less than 1 MB (Optional)
-                    .maxResultSize(1080, 1080)  // Final image resolution will be less than 1080 x 1080 (Optional)
+                    .crop(1f, 1f)  // Set aspect ratio to 1:1 for square crop
+                    .cropSquare()  // Alternatively, some libraries provide a shortcut method for square crop
+                    .compress(1024)         // Final image size will be less than 1 MB
+                    .maxResultSize(1080, 1080)  // Final image resolution
                     .createIntent(a->{
                          startForProfileImageResult.launch(a);
                         return Unit.INSTANCE;
@@ -198,26 +220,6 @@ public class ProfileCustomerFragment extends Fragment {
 
 
     }
-
-    // method to get the result of the image picker
-    private ActivityResultLauncher<Intent> startForProfileImageResult =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                    new ActivityResultCallback<ActivityResult>() {
-                        @Override
-                        public void onActivityResult(ActivityResult result) {
-                            Intent data = result.getData();
-                            if (result.getResultCode() == Activity.RESULT_OK) {
-                                if (data != null && data.getData() != null) {
-                                    Uri fileUri = data.getData();
-                                    profileImage.setImageURI(fileUri); // Update your ImageView
-                                }
-                            } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
-                                Toast.makeText(getActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
 
 
 
@@ -288,10 +290,18 @@ public class ProfileCustomerFragment extends Fragment {
         } else {
             Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.baseline_female_35);
             editText_firstName.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
-
         }
 
+        // assign the profile image
+        if (currentUser.getBlob(9) != null){
+            byte[] blobImage = currentUser.getBlob(9);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(blobImage,0,blobImage.length);
+            profileImage.setImageBitmap(bitmap);
+
+        }
     }
+
+
 
     // function to check return the flag resource according to the country and assign the country code
     private int getFlagResource(String country) {
@@ -313,6 +323,32 @@ public class ProfileCustomerFragment extends Fragment {
         }
         return 0;
     }
+
+
+
+    // method to get the result of the image picker
+    private ActivityResultLauncher<Intent> startForProfileImageResult =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            Intent data = result.getData();
+                            if (result.getResultCode() == Activity.RESULT_OK) {
+                                if (data != null && data.getData() != null) {
+
+                                    Uri fileUri = data.getData();
+
+                                    profileImage.setImageURI(fileUri); // Update  ImageView
+                                    isImageChanged = true;
+                                }
+                            } else if (result.getResultCode() == ImagePicker.RESULT_ERROR) {
+                                Toast.makeText(getActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
 
 
 
