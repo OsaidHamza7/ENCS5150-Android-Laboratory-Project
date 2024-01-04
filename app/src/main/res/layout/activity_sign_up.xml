@@ -352,6 +352,7 @@
                 android:hint="Phone Number"
                 android:inputType="phone"
                 android:paddingLeft="10dp"
+                android:paddingTop="1dp"
                 android:paddingRight="15dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_editCountryCode"
                 app:layout_constraintEnd_toEndOf="parent"
