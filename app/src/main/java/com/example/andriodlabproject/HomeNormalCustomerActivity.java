@@ -28,13 +28,24 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
 
     public static List<Car> allCars = new ArrayList<>();
     public static List<Car> favCars = new ArrayList<>();
+    public static List<Car> reserveCars = new ArrayList<>();
+    public static List<Car> chevroletCars = new ArrayList<>();
+    public static List<Car> jeepCars = new ArrayList<>();
+    public static List<Car> fordCars = new ArrayList<>();
+    public static List<Car> dodgeCars = new ArrayList<>();
+    public static List<Car> lamborghiniCars = new ArrayList<>();
+    public static List<Car> teslaCars = new ArrayList<>();
+    public static List<Car> hondaCars = new ArrayList<>();
+    public static List<Car> toyotaCars = new ArrayList<>();
+    public static List<Car> koenigseggCars = new ArrayList<>();
     public Toolbar toolbar;
+    public static NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_normal_customer);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //set nav header based on information of user
@@ -98,7 +109,10 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
             toolbar.setTitle("FAVORITE CARS");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FavoriteCarsFragment()).commit();
         }
-
+        if (item.getItemId()==R.id.nav_yourReservations){
+            toolbar.setTitle("RESERVED CARS");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ReservedCarsFragment()).commit();
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

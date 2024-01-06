@@ -1,7 +1,6 @@
 package com.example.andriodlabproject;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,16 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.IntentSenderRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +18,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.sql.Blob;
 
 import kotlin.Unit;
 
@@ -198,6 +193,14 @@ public class ProfileCustomerFragment extends Fragment {
                 editText_password.setText("");
                 editText_confirmPassword.setText("");
                 changePass = false;
+                //update nav header with the new (first name and last name)
+                currentUser=User.currentUser;
+                View headerView = HomeNormalCustomerActivity.navigationView.getHeaderView(0);
+                TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
+                TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
+                navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
+                navEmail.setText(User.currentUser.getString(3));
+
 
             }
         });

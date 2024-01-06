@@ -1,9 +1,11 @@
 package com.example.andriodlabproject;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,7 @@ public class CarMenuFragment extends Fragment {
     private String mParam2;
     private RecyclerView recyclerView;
     private CarAdapter adapter;
+    public Button lastButtonPressed;
     public CarMenuFragment() {
         // Required empty public constructor
     }
@@ -70,6 +73,143 @@ public class CarMenuFragment extends Fragment {
 
         adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
         recyclerView.setAdapter(adapter);
+
+        Button button_all =(Button) getActivity().findViewById(R.id.button_all);
+        Button button_chevrolet =(Button) getActivity().findViewById(R.id.button_chevrolet);
+        Button button_ford =(Button) getActivity().findViewById(R.id.button_ford);
+        Button button_dodge =(Button) getActivity().findViewById(R.id.button_dodge);
+        Button button_honda =(Button) getActivity().findViewById(R.id.button_honda);
+        Button button_jeep =(Button) getActivity().findViewById(R.id.button_jeep);
+        Button button_lamborghini =(Button) getActivity().findViewById(R.id.button_lamborghini);
+        Button button_koenigsegg =(Button) getActivity().findViewById(R.id.button_koenigsegg);
+        Button button_tesla =(Button) getActivity().findViewById(R.id.button_tesla);
+        Button button_toyota =(Button) getActivity().findViewById(R.id.button_toyota);
+
+        lastButtonPressed = button_all;
+
+        button_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_all);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_all;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+        button_chevrolet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_chevrolet);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_chevrolet;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.chevroletCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        button_ford.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_ford);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_ford;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.fordCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        button_dodge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_dodge);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_dodge;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.dodgeCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        button_honda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_honda);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_honda;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.hondaCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+
+        button_jeep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_jeep);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_jeep;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.jeepCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        button_lamborghini.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_lamborghini);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_lamborghini;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.lamborghiniCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        button_koenigsegg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_koenigsegg);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_koenigsegg;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.koenigseggCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+
+        button_tesla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_tesla);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_tesla;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.teslaCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+        button_toyota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeTextWhiteAndMakeBackgroundBlack(button_toyota);
+                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                lastButtonPressed=button_toyota;
+                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.toyotaCars);
+                recyclerView.setAdapter(adapter);
+            }
+        });
+
+
+
+    }
+
+    public void makeTextBlackMakeBackgroundWhite(Button button){
+        button.setTextColor(Color.BLACK);
+        button.setBackground(getResources().getDrawable(R.drawable.white_button));
+    }
+    public void makeTextWhiteAndMakeBackgroundBlack(Button button){
+        button.setTextColor(Color.WHITE);
+        button.setBackground(getResources().getDrawable(R.drawable.black_button));
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -43,47 +43,56 @@ public class CarJsonParser {
 
                     if (entry.getKey().equals("Chevrolet") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngegg);
-                        CAR.setType("Chevrolet"+TYPE);
+                        CAR.setType("Chevrolet"+" "+TYPE);
+                        HomeNormalCustomerActivity.chevroletCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Ford") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngwingg);
-                        CAR.setType("Ford"+TYPE);
+                        CAR.setType("Ford"+" "+TYPE);
+                        HomeNormalCustomerActivity.fordCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Jeep") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngwing);
-                        CAR.setType("Jeep"+TYPE);
+                        CAR.setType("Jeep"+" "+TYPE);
+                        HomeNormalCustomerActivity.jeepCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Dodge") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngwinggg);
-                        CAR.setType("Dodge"+TYPE);
+                        CAR.setType("Dodge"+" "+TYPE);
+                        HomeNormalCustomerActivity.dodgeCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Lamborghini") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngegg);
-                        CAR.setType("Lamborghini"+TYPE);
+                        CAR.setType("Lamborghini"+" "+TYPE);
+                        HomeNormalCustomerActivity.lamborghiniCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Tesla") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngwingg);
-                        CAR.setType("Tesla"+TYPE);
+                        CAR.setType("Tesla"+" "+TYPE);
+                        HomeNormalCustomerActivity.teslaCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Honda") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngwing);
-                        CAR.setType("Honda"+TYPE);
+                        CAR.setType("Honda"+" "+TYPE);
+                        HomeNormalCustomerActivity.hondaCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Toyota") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngwinggg);
-                        CAR.setType("Toyota"+TYPE);
+                        CAR.setType("Toyota"+" "+TYPE);
+                        HomeNormalCustomerActivity.toyotaCars.add(CAR);
                         break;
                     }
                     if (entry.getKey().equals("Koenigsegg") && entry.getValue().contains(TYPE)){
                         CAR.setImageResourceId(R.drawable.pngegg);
-                        CAR.setType("Koenigsegg"+TYPE);
+                        CAR.setType("Koenigsegg"+" "+TYPE);
+                        HomeNormalCustomerActivity.koenigseggCars.add(CAR);
                         break;
                     }
 

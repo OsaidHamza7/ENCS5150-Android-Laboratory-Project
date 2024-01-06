@@ -55,7 +55,7 @@
     </LinearLayout>
     <Button
         android:id="@+id/button_reserve"
-        android:layout_width="201dp"
+        android:layout_width="180dp"
         android:layout_height="36dp"
         android:background="@drawable/black_button"
         android:text="RESERVE"
