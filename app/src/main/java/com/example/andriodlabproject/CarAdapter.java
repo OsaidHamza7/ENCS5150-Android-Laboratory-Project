@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
@@ -36,10 +38,13 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     @Override
     public void onBindViewHolder(CarViewHolder holder, int position) {
         Car currentCar = carList.get(position);
-        holder.carType.setText(currentCar.getType());
+        holder.carName.setText(currentCar.getFactoryName()+currentCar.getType());
         holder.carPrice.setText(currentCar.getPrice());
-        holder.carImage.setImageResource(currentCar.getImageResourceId());
-        holder.imgFav.setImageResource(currentCar.getImageFavResourceId());
+        holder.carImage.setImageResource(currentCar.getImgCar());
+        holder.imgFav.setImageResource(currentCar.getImgFavButton());
+        holder.reserve.setVisibility(currentCar.getVisibleReserveButton());
+        holder.viewDate.setVisibility(currentCar.getVisibleDate());
+        holder.viewDate.setText(currentCar.getDate());
     }
 
     @Override
@@ -49,17 +54,19 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
     class CarViewHolder extends RecyclerView.ViewHolder {
         private ImageView carImage;
-        private TextView carType;
+        private TextView carName;
         private TextView carPrice;
+        private TextView viewDate;
         private ImageButton imgFav;
         private Button reserve;
         public CarViewHolder(View itemView) {
             super(itemView);
             carImage = itemView.findViewById(R.id.imgCar);
-            carType = itemView.findViewById(R.id.carType);
+            carName = itemView.findViewById(R.id.carType);
             carPrice = itemView.findViewById(R.id.carPrice);
             imgFav = itemView.findViewById(R.id.imgFav);
             reserve=itemView.findViewById(R.id.button_reserve);
+            viewDate=itemView.findViewById(R.id.viewDate);
             imgFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -67,16 +74,16 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         Car currentCar = carList.get(position);
-                        if (currentCar.getImageFavResourceId()==R.drawable.ic_favorite) {
+                        if (currentCar.getImgFavButton()==R.drawable.ic_favorite) {
                             imgFav.setImageResource(R.drawable.ic_favorite_border); // Set your favorite icon here
-                            currentCar.setImageFavResourceId(R.drawable.ic_favorite_border);
+                            currentCar.setImgFavButton(R.drawable.ic_favorite_border);
                             if(HomeNormalCustomerActivity.favCars.contains(currentCar)) {
                                 HomeNormalCustomerActivity.favCars.remove(currentCar);
                             }
                         }
                         else{
                             imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
-                            currentCar.setImageFavResourceId(R.drawable.ic_favorite);
+                            currentCar.setImgFavButton(R.drawable.ic_favorite);
                             if(!HomeNormalCustomerActivity.favCars.contains(currentCar)) {
                                 HomeNormalCustomerActivity.favCars.add(currentCar);
                             }
@@ -97,8 +104,11 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                         StringBuilder details = new StringBuilder();
 //                        details.append(currentCar.getImageResourceId()).append("\n");
                         details.append("Id:").append(currentCar.getID()).append("\n");
-                        details.append("Type: ").append(currentCar.getType()).append("\n");
+                        details.append("Car Type: ").append(currentCar.getType()).append("\n");
                         details.append("Price: ").append(currentCar.getPrice()).append("\n");
+                        details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
+                        details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
+                        details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                         builder.setTitle("Car Details")
@@ -121,17 +131,33 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                         Car currentCar = carList.get(position);
 
                         StringBuilder details = new StringBuilder();
-//                        details.append(currentCar.getImageResourceId()).append("\n");
                         details.append("Id:").append(currentCar.getID()).append("\n");
                         details.append("Type: ").append(currentCar.getType()).append("\n");
                         details.append("Price: ").append(currentCar.getPrice()).append("\n");
+                        details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
+                        details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
+                        details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                         builder.setTitle("Car Details")
                                 .setMessage(details.toString())
-                                .setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        HomeNormalCustomerActivity.reserveCars.add(currentCar);
+                                        Car currentCar0 = new Car() ;
+
+                                        currentCar0.setVisibleReserveButton(View.INVISIBLE);
+                                        currentCar0.setID(currentCar.getID());
+                                        currentCar0.setType(currentCar.getType());
+                                        currentCar0.setFactoryName(currentCar.getFactoryName()+" ");
+                                        currentCar0.setImgCar(currentCar.getImgCar());
+                                        currentCar0.setPrice(currentCar.getPrice());
+                                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                                        LocalDateTime now = LocalDateTime.now();
+                                        currentCar0.setVisibleDate(View.VISIBLE);
+                                        currentCar0.setDate(dtf.format(now));
+                                        notifyDataSetChanged();
+
+                                        HomeNormalCustomerActivity.reserveCars.add(currentCar0);
                                     }
                                 })
                                 .setNegativeButton("CANCEL", null)
@@ -139,6 +165,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                 .show();
 
                     }
+                    notifyDataSetChanged();
 
                 }
 

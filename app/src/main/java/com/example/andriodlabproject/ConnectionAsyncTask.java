@@ -11,15 +11,18 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
         String> {
     private WeakReference<Activity> weakActivity;
     public static boolean isConnectionSuccessful = true;
-    public ConnectionAsyncTask(Activity activity) {
+    private AsyncTaskCallback callback;
+
+    public ConnectionAsyncTask(Activity activity, AsyncTaskCallback callback) {
         this.weakActivity = new WeakReference<>(activity);
+        this.callback = callback;
+
     }
     @Override
     protected String doInBackground(String... params) {
         try {
             return HttpManager.getData(params[0]);
         } catch (Exception e) {
-            isConnectionSuccessful = false;
             return null;
         }
     }
@@ -29,10 +32,14 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
         Activity activity = weakActivity.get();
         if (activity == null || activity.isFinishing()) return;
 
-        if (!isConnectionSuccessful || s == null) {
+        if (s == null) {
             Toast.makeText(activity, "the connection is unsuccessful", Toast.LENGTH_LONG).show();
-        } else {
+            callback.onTaskComplete(false);
+        }
+        else {
+            Toast.makeText(activity, "the connection is successful", Toast.LENGTH_LONG).show();
             HomeNormalCustomerActivity.allCars = CarJsonParser.getObjectFromJson(s);
+            callback.onTaskComplete(true);
         }
     }
     @Override

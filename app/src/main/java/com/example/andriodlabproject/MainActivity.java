@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AsyncTaskCallback{
 
     String httpRequest="https://658582eb022766bcb8c8c86e.mockapi.io/api/mock/rest-apis/encs5150/car-types";
     @Override
@@ -20,16 +20,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ConnectionAsyncTask connectionAsyncTask = new
-                        ConnectionAsyncTask(MainActivity.this);
+                        ConnectionAsyncTask(MainActivity.this,MainActivity.this);
                 connectionAsyncTask.execute(httpRequest);
-                //if the connection is succssful
-                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-                MainActivity.this.startActivity(intent);
-
 
             }
 
-
         });
+
+
+    }
+    @Override
+    public void onTaskComplete(boolean success) {
+        if (success) {
+            // if the connection is succeeded
+            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            MainActivity.this.startActivity(intent);
+        }
     }
 }

@@ -1,58 +1,117 @@
 package com.example.andriodlabproject;
 
+import android.view.View;
+
 public class Car {
-    private String price;
-    private int imageResourceId; // Assuming drawable IDs will be used for car images
-    private int imgFav;
     private int ID;
     private String type;
+    private String factoryName;
+    private String price;
+    private String fuelType;
+    private String transmission;
+    private String mileage;
+    private int imgCar; // Assuming drawable IDs will be used for car images
+    private int imgFavButton;
+    private int visibleReserveButton= View.VISIBLE;
+    private String date;
+    private int visibleDate=View.INVISIBLE;
     public Car() {
 
-    }
-
-//    public Car(String name, String price, int imageResourceId) {
-//        this.name = name;
-//        this.price = price;
-//        this.imageResourceId = imageResourceId;
-//    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public int getImageResourceId() {
-        return imageResourceId;
-    }
-
-    public int getImageFavResourceId() {
-        return imgFav;
     }
 
     public int getID() {
         return ID;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
-    public void setImageResourceId(int imageResourceId) { this.imageResourceId = imageResourceId;}
+    public String getFactoryName() {
+        return factoryName;
+    }
 
-    public void setImageFavResourceId(int imageFavResourceId) { this.imgFav = imageFavResourceId;}
+    public void setFactoryName(String factoryName) {
+        this.factoryName = factoryName;
+    }
 
+    public String getPrice() {
+        return price;
+    }
 
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
+    public String getFuelType() {
+        return fuelType;
+    }
 
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(String transmission) {
+        this.transmission = transmission;
+    }
+
+    public String getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(String mileage) {
+        this.mileage = mileage;
+    }
+
+    public int getImgCar() {
+        return imgCar;
+    }
+
+    public void setImgCar(int imgCar) {
+        this.imgCar = imgCar;
+    }
+
+    public int getImgFavButton() {
+        return imgFavButton;
+    }
+
+    public void setImgFavButton(int imgFavButton) {
+        this.imgFavButton = imgFavButton;
+    }
+
+    public int getVisibleReserveButton() {
+        return visibleReserveButton;
+    }
+
+    public void setVisibleReserveButton(int visibleReserveButton) {
+        this.visibleReserveButton = visibleReserveButton;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getVisibleDate() {
+        return visibleDate;
+    }
+
+    public void setVisibleDate(int visibleDate) {
+        this.visibleDate = visibleDate;
+    }
 }
