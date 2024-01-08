@@ -65,6 +65,7 @@ public class CarAdapterSpecialOffers extends RecyclerView.Adapter<CarAdapterSpec
             offer=itemView.findViewById(R.id.offer);
 
 
+
         }
 
 
