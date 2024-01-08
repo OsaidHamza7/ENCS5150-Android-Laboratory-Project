@@ -38,7 +38,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     @Override
     public void onBindViewHolder(CarViewHolder holder, int position) {
         Car currentCar = carList.get(position);
-        holder.carName.setText(currentCar.getFactoryName()+currentCar.getType());
+        holder.carName.setText(currentCar.getFactoryName()+" "+currentCar.getType());
         holder.carPrice.setText(currentCar.getPrice());
         holder.carImage.setImageResource(currentCar.getImgCar());
         holder.imgFav.setImageResource(currentCar.getImgFavButton());

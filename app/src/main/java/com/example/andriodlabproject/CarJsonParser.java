@@ -43,6 +43,8 @@ public class CarJsonParser {
                 CAR.setID(jsonObject.getInt("id"));
                 CAR.setType(TYPE);
                 int randomPrice = 100000 + random.nextInt(200001); // Random value between 100,000 and 300,000
+                int randomOffer = 10 + random.nextInt(71);
+                CAR.setOffer(randomOffer+"%");
                 CAR.setPrice("$"+String.valueOf(randomPrice));
                 String randomFuelType = fuelTypes.get(random.nextInt(fuelTypes.size()));
                 CAR.setFuelType(randomFuelType);

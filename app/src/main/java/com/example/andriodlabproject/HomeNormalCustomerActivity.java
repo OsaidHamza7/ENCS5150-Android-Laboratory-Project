@@ -29,6 +29,7 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     public static List<Car> allCars = new ArrayList<>();
     public static List<Car> favCars = new ArrayList<>();
     public static List<Car> reserveCars = new ArrayList<>();
+    public static List<Car> carSpecialOffers = new ArrayList<>();
     public static List<Car> chevroletCars = new ArrayList<>();
     public static List<Car> jeepCars = new ArrayList<>();
     public static List<Car> fordCars = new ArrayList<>();
@@ -112,6 +113,11 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
             toolbar.setTitle("RESERVED CARS");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ReservedCarsFragment()).commit();
         }
+        if (item.getItemId()==R.id.nav_specialOffers){
+            toolbar.setTitle("SPECIAL OFFERS");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SpecialOffersFragment()).commit();
+        }
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

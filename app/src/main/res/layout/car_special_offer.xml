@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="142dp"
+        android:background="@drawable/plaintext_grey_theme"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="169dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/offer"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:elegantTextHeight="true"
+                android:text="20%"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="127dp"
+                android:layout_height="40dp"
+                android:text="Weak Deals!"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textV2"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:text="Get a new car discound,\nonly valid in this weak"
+                android:textColor="#191818"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgCarView"
+            android:layout_width="261dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/pngegg" />
+
+        <ImageButton
+            android:id="@+id/imgFavView"
+            android:layout_width="wrap_content"
+            android:layout_height="78dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:backgroundTint="#E7E2E2"
+            app:srcCompat="@drawable/ic_favorite_border" />
+
+        <Space
+            android:layout_width="46dp"
+            android:layout_height="23dp"
+            android:layout_weight="2" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="313dp"
+        android:layout_height="33dp"
+        android:background="@drawable/black_button"
+        android:text="RESERVE"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+
+</LinearLayout>

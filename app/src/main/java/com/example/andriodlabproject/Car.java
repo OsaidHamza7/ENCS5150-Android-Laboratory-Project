@@ -15,6 +15,7 @@ public class Car {
     private int visibleReserveButton= View.VISIBLE;
     private String date;
     private int visibleDate=View.INVISIBLE;
+    private String offer;
     public Car() {
 
     }
@@ -114,4 +115,9 @@ public class Car {
     public void setVisibleDate(int visibleDate) {
         this.visibleDate = visibleDate;
     }
+
+    public String getOffer() {return offer;}
+
+    public void setOffer(String offer) {this.offer = offer;}
+
 }

@@ -22,7 +22,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -100,18 +99,8 @@ public class ProfileCustomerFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-
-
-
-
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         textView_email = getActivity().findViewById(R.id.textView_email);
         editText_password = getActivity().findViewById(R.id.editText_editPassword);
         editText_confirmPassword = getActivity().findViewById(R.id.editText_editConfirmPassword);

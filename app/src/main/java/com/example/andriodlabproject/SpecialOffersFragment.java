@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FavoriteCarsFragment#newInstance} factory method to
+ * Use the {@link SpecialOffersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavoriteCarsFragment extends Fragment {
+public class SpecialOffersFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,9 +25,8 @@ public class FavoriteCarsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerView;
-    private CarAdapter adapter;
-
-    public FavoriteCarsFragment() {
+    private CarAdapterSpecialOffers adapter;
+    public SpecialOffersFragment() {
         // Required empty public constructor
     }
 
@@ -37,11 +36,11 @@ public class FavoriteCarsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FavoriteCarsFragment.
+     * @return A new instance of fragment SpecialOffersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FavoriteCarsFragment newInstance(String param1, String param2) {
-        FavoriteCarsFragment fragment = new FavoriteCarsFragment();
+    public static SpecialOffersFragment newInstance(String param1, String param2) {
+        SpecialOffersFragment fragment = new SpecialOffersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -57,29 +56,20 @@ public class FavoriteCarsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        recyclerView = getActivity().findViewById(R.id.recycler_favorite_cars);
-//        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-//
-//
-//        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.favCars);
-//        recyclerView.setAdapter(adapter);
-//    }
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        recyclerView = getActivity().findViewById(R.id.recycler_favorite_cars);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView = getActivity().findViewById(R.id.recycler_special_offers);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.favCars);
+        adapter = new CarAdapterSpecialOffers(getActivity(),HomeNormalCustomerActivity.allCars);
         recyclerView.setAdapter(adapter);
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_cars, container, false);
+        return inflater.inflate(R.layout.fragment_special_offers, container, false);
     }
 }
