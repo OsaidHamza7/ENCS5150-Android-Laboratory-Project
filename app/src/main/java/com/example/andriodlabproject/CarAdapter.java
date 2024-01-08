@@ -75,7 +75,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                     if (position != RecyclerView.NO_POSITION) {
                         Car currentCar = carList.get(position);
                         if (currentCar.getImgFavButton()==R.drawable.ic_favorite) {
-                            imgFav.setImageResource(R.drawable.ic_favorite_border); // Set your favorite icon here
+                            imgFav.setImageResource(R.drawable.ic_favorite_border);
+                            CarMenuFragment.makeFavouriteAlertAnimation("Removed from Favourites");
                             currentCar.setImgFavButton(R.drawable.ic_favorite_border);
                             if(HomeNormalCustomerActivity.favCars.contains(currentCar)) {
                                 HomeNormalCustomerActivity.favCars.remove(currentCar);
@@ -83,7 +84,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                         }
                         else{
                             imgFav.setImageResource(R.drawable.ic_favorite);
-                            CarMenuFragment.makeFavouriteAlertAnimation();
+                            CarMenuFragment.makeFavouriteAlertAnimation("Added to Favourites");
                             currentCar.setImgFavButton(R.drawable.ic_favorite);
                             if(!HomeNormalCustomerActivity.favCars.contains(currentCar)) {
                                 HomeNormalCustomerActivity.favCars.add(currentCar);
@@ -145,6 +146,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                 .setMessage(details.toString())
                                 .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+
                                         Car currentCar0 = new Car() ;
 
                                         currentCar0.setVisibleReserveButton(View.INVISIBLE);
@@ -157,6 +159,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                         LocalDateTime now = LocalDateTime.now();
                                         currentCar0.setVisibleDate(View.VISIBLE);
                                         currentCar0.setDate(dtf.format(now));
+                                        CarMenuFragment.makeFavouriteAlertAnimation("Car has been reserved successfully");
                                         notifyDataSetChanged();
 
                                         HomeNormalCustomerActivity.reserveCars.add(currentCar0);

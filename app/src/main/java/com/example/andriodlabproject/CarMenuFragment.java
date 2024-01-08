@@ -222,8 +222,9 @@ public class CarMenuFragment extends Fragment {
 
     }
 
-    public static void makeFavouriteAlertAnimation() {
+    public static void makeFavouriteAlertAnimation(String message){
         // transtion animation for textview_favourite_alert
+        textView_favourite_alert.setText(message);
         textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.favourite_alert_animation));
 
     }
