@@ -82,11 +82,13 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                             }
                         }
                         else{
-                            imgFav.setImageResource(R.drawable.ic_favorite); // Set your favorite icon here
+                            imgFav.setImageResource(R.drawable.ic_favorite);
+                            CarMenuFragment.makeFavouriteAlertAnimation();
                             currentCar.setImgFavButton(R.drawable.ic_favorite);
                             if(!HomeNormalCustomerActivity.favCars.contains(currentCar)) {
                                 HomeNormalCustomerActivity.favCars.add(currentCar);
                             }
+
                         }
                     }
                     notifyDataSetChanged();

@@ -186,5 +186,24 @@
 
     </HorizontalScrollView>
 
+    <TextView
+        android:id="@+id/textView_favouriteAlert"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#CB000000"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Added to Favourite"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.077" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

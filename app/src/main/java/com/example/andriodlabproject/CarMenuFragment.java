@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
  * create an instance of this fragment.
  */
 public class CarMenuFragment extends Fragment {
+
+    public static TextView textView_favourite_alert;
+    public static FragmentActivity activity;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,6 +69,10 @@ public class CarMenuFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // transtion animation for textview_favourite_alert
+        textView_favourite_alert = getActivity().findViewById(R.id.textView_favouriteAlert);
+        textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.favourite_alert_initial));
+        activity = getActivity();
 
     }
     @Override
@@ -211,6 +221,13 @@ public class CarMenuFragment extends Fragment {
         button.setBackground(getResources().getDrawable(R.drawable.black_button));
 
     }
+
+    public static void makeFavouriteAlertAnimation() {
+        // transtion animation for textview_favourite_alert
+        textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.favourite_alert_animation));
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
