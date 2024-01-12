@@ -6,7 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,12 +21,19 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CarMenuFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CarMenuFragment extends Fragment {
+public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     public static TextView textView_favourite_alert;
     public static FragmentActivity activity;
@@ -36,6 +49,15 @@ public class CarMenuFragment extends Fragment {
     private RecyclerView recyclerView;
     private CarAdapter adapter;
     public Button lastButtonPressed;
+    String[] RangeMilages = {
+            "0","1-999","1,000-9,999","10,000-19,999","20,000-29,999",
+            "30,000-39,999","40,000-49,999","50,000-59,999","60,000-69,999",
+            "70,000-79,999", "80,000-89,999","90,000-99,999", "100,000-109,999",
+            "110,000-119,999","120,000-129,999", "130,000-139,999","140,000-149,999",
+            "150,000-159,999","160,000-169,999", "170,000-179,999", "180,000-189,999",
+            "190,000-199,999","+200,000",
+    };
+    int counter = 0;
     public CarMenuFragment() {
         // Required empty public constructor
     }
@@ -69,20 +91,7 @@ public class CarMenuFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // transtion animation for textview_favourite_alert
-        textView_favourite_alert = getActivity().findViewById(R.id.textView_favouriteAlert);
-        textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.favourite_alert_initial));
-        activity = getActivity();
-
-    }
-    @Override
-    public void onResume(){
-        super.onResume();
-        recyclerView = getActivity().findViewById(R.id.recycler_car_menu);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-
-        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
-        recyclerView.setAdapter(adapter);
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
 
         Button button_all =(Button) getActivity().findViewById(R.id.button_all);
         Button button_chevrolet =(Button) getActivity().findViewById(R.id.button_chevrolet);
@@ -94,6 +103,8 @@ public class CarMenuFragment extends Fragment {
         Button button_koenigsegg =(Button) getActivity().findViewById(R.id.button_koenigsegg);
         Button button_tesla =(Button) getActivity().findViewById(R.id.button_tesla);
         Button button_toyota =(Button) getActivity().findViewById(R.id.button_toyota);
+
+        ImageButton OpenBottomSheet =(ImageButton) getActivity().findViewById(R.id.button_filter);
 
         lastButtonPressed = button_all;
 
@@ -185,7 +196,6 @@ public class CarMenuFragment extends Fragment {
             }
         });
 
-
         button_tesla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,7 +218,124 @@ public class CarMenuFragment extends Fragment {
             }
         });
 
+        OpenBottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+                View bottomSheetView = LayoutInflater.from(getActivity())
+                        .inflate(R.layout.modal_bottom_sheet,
+                                (LinearLayout) getActivity().findViewById(R.id.modalBottomSheetContainer));
+                List<Button> clickedButtons = new ArrayList<>();
 
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+                Button btn_auto = bottomSheetView.findViewById(R.id.btn_automatic);
+                Button btn_manual = bottomSheetView.findViewById(R.id.btn_manual);
+
+                Button btn_diesel = bottomSheetView.findViewById(R.id.btn_diesel);
+                Button btn_petrol = bottomSheetView.findViewById(R.id.btn_petrol);
+                Button btn_electric = bottomSheetView.findViewById(R.id.btn_electric);
+                Button btn_hybrid = bottomSheetView.findViewById(R.id.btn_hybrid);
+
+                Button btn_applay = bottomSheetView.findViewById(R.id.btn_applay);
+                Button btn_reset = bottomSheetView.findViewById(R.id.btn_reset);
+
+                btn_applay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ProgressBar pb = (ProgressBar) bottomSheetView.findViewById(R.id.progressBar);
+                        prog(pb);
+                    }
+
+                });
+
+
+                Spinner spin = bottomSheetView.findViewById(R.id.fromPrice);
+                spin.setOnItemSelectedListener(CarMenuFragment.this);
+
+
+                ArrayAdapter ad = new ArrayAdapter(getActivity(),
+                        android.R.layout.simple_spinner_item, RangeMilages);
+
+                ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spin.setAdapter(ad);
+
+                btn_auto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        makeTextWhiteAndMakeBackgroundBlack(btn_auto);
+                        clickedButtons.add(btn_auto);
+                    }
+                });
+
+                btn_diesel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        makeTextWhiteAndMakeBackgroundBlack(btn_diesel);
+                        clickedButtons.add(btn_diesel);
+                    }
+                });
+
+                btn_manual.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        makeTextWhiteAndMakeBackgroundBlack(btn_manual);
+                        clickedButtons.add(btn_manual);
+                    }
+                });
+
+                btn_petrol.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        makeTextWhiteAndMakeBackgroundBlack(btn_petrol);
+                        clickedButtons.add(btn_petrol);
+                    }
+                });
+
+                btn_electric.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        makeTextWhiteAndMakeBackgroundBlack(btn_electric);
+                        clickedButtons.add(btn_electric);
+                    }
+                });
+
+                btn_hybrid.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        makeTextWhiteAndMakeBackgroundBlack(btn_hybrid);
+                        clickedButtons.add(btn_hybrid);
+                    }
+                });
+
+                btn_reset.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       for(int i=0;i<clickedButtons.size();i++){
+                           makeTextBlackMakeBackgroundWhite(clickedButtons.get(i));
+                       }
+                        clickedButtons.clear();
+                    }
+                });
+            }
+        });
+
+
+        // transtion animation for textview_favourite_alert
+        textView_favourite_alert = getActivity().findViewById(R.id.textView_favouriteAlert);
+        textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.favourite_alert_initial));
+        activity = getActivity();
+        //adapter.notifyDataSetChanged();
+
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        recyclerView = getActivity().findViewById(R.id.recycler_car_menu);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -234,5 +361,30 @@ public class CarMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_car_menu, container, false);
+    }
+    public void prog(ProgressBar pb) {
+        final Timer t = new Timer();
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                counter++;
+                pb.setProgress(counter);
+
+                if (counter == 100)
+                    t.cancel();
+
+            }
+        };
+        t.schedule(tt, 0, 50);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

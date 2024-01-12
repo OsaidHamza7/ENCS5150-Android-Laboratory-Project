@@ -6,185 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".CarMenuFragment">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_car_menu"
-        android:layout_width="414dp"
-        android:layout_height="654dp"
+        android:layout_width="415dp"
+        android:layout_height="612dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.887" />
+        app:layout_constraintVertical_bias="0.759" />
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="438dp"
+    <ImageButton
+        android:id="@+id/button_filter"
+        android:layout_width="46dp"
         android:layout_height="42dp"
+        android:src="@android:drawable/ic_menu_sort_by_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_all"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/black_button"
-                android:text="All"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
-
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_chevrolet"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Chevrolet"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_jeep"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Jeep"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_ford"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Ford"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_dodge"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Dodge"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_lamborghini"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Lamborghini"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_tesla"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Tesla"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_honda"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Honda"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_toyota"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Toyota"
-                android:textAllCaps="false"
-
-                />
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="15dp"
-                tools:layout_editor_absoluteX="381dp"
-                tools:layout_editor_absoluteY="621dp" />
-            <Button
-                android:id="@+id/button_koenigsegg"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_button"
-                android:textColor="@color/black"
-                android:text="Koenigsegg"
-                android:textAllCaps="false"
-                />
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView_favouriteAlert"
@@ -200,10 +44,196 @@
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077" />
+        app:layout_constraintVertical_bias="0.118" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="438dp"
+        android:layout_height="42dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.833"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.062">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_all"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/black_button"
+                android:text="All"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_chevrolet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Chevrolet"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_jeep"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Jeep"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_ford"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Ford"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_dodge"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/white_button"
+                android:text="Dodge"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_lamborghini"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Lamborghini"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_tesla"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Tesla"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_honda"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Honda"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_toyota"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Toyota"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+
+                />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="15dp"
+                tools:layout_editor_absoluteX="381dp"
+                tools:layout_editor_absoluteY="621dp" />
+
+            <Button
+                android:id="@+id/button_koenigsegg"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_button"
+                android:text="Koenigsegg"
+                android:textAllCaps="false"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

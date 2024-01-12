@@ -62,7 +62,7 @@ public class SpecialOffersFragment extends Fragment {
         recyclerView = getActivity().findViewById(R.id.recycler_special_offers);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        adapter = new CarAdapterSpecialOffers(getActivity(),HomeNormalCustomerActivity.allCars);
+        adapter = new CarAdapterSpecialOffers(getActivity(),HomeNormalCustomerActivity.carSpecialOffers);
         recyclerView.setAdapter(adapter);
 
     }

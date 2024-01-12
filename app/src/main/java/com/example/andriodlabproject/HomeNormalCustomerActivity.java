@@ -46,6 +46,9 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_normal_customer);
 
+        for (int i=0;i < 10;i++){
+            carSpecialOffers.add(allCars.get(i));
+        }
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 

@@ -16,7 +16,7 @@ public class CarJsonParser {
     public static List<Car> CARS;
     static Random random = new Random();
     static List<String> fuelTypes = Arrays.asList("Petrol", "Diesel", "Electric", "Hybrid");
-    static List<String> transmissionTypes = Arrays.asList("Automatic", "Manual", "Semi-Automatic", "CVT");
+    static List<String> transmissionTypes = Arrays.asList("Automatic", "Manual");
 
     public static List<Car> getObjectFromJson(String json) {
         Map<String, List<String>> cars = new HashMap<>();
