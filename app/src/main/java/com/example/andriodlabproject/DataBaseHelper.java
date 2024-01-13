@@ -143,6 +143,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     public boolean insertCar(Car car){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put("CarID",car.getID());
         contentValues.put("FactoryName",car.getFactoryName());
         contentValues.put("Type",car.getType());
         contentValues.put("Price", car.getPrice());

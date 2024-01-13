@@ -34,6 +34,7 @@ public class CarJsonParser {
         cars.put("Honda", Arrays.asList("Accord", "Civic", "Element"));
         cars.put("Toyota", Arrays.asList("Prius"));
         cars.put("Koenigsegg", Arrays.asList("1"));
+        cars.put("volkswagen", Arrays.asList("Volks"));
 
         //To print the map, you can iterate over it
         try {
@@ -98,6 +99,10 @@ public class CarJsonParser {
                             case "Koenigsegg":
                                 CAR.setImgCar(R.drawable.pngwingg);
                                 CAR.setFactoryName("Koenigsegg");
+                                break;
+                            case "volkswagen":
+                                CAR.setImgCar(R.drawable.pngwinggg);
+                                CAR.setFactoryName("volkswagen");
                                 break;
                         }
                     }

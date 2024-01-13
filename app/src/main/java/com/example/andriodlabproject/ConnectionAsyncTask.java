@@ -50,7 +50,6 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
                 dataBaseHelper.insertCar(car);
             }
 
-            cars.clear();
             // get all cars from the database
             Cursor cursor = dataBaseHelper.getAllCars();
             while (cursor.moveToNext()) {
@@ -63,9 +62,11 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
                 car.setTransmission(cursor.getString(5));
                 car.setMileage(cursor.getString(6));
                 car.setImgCar(cursor.getInt(7));
-                HomeNormalCustomerActivity.allCars.add(car);
                 addCarToCategory(car);
+                HomeNormalCustomerActivity.allCars.add(car);
+
             }
+
 
         }
     }
