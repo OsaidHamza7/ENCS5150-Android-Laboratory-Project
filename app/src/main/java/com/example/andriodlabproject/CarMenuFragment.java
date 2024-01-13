@@ -328,6 +328,9 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
         //adapter.notifyDataSetChanged();
 
     }
+
+
+
     @Override
     public void onResume(){
         super.onResume();
@@ -380,8 +383,10 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
 
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
