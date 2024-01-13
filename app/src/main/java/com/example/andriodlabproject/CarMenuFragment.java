@@ -124,7 +124,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
                 makeTextWhiteAndMakeBackgroundBlack(button_chevrolet);
                 makeTextBlackMakeBackgroundWhite(lastButtonPressed);
                 lastButtonPressed=button_chevrolet;
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.chevroletCars);
+
+                adapter = new CarAdapter(getActivity(), HomeNormalCustomerActivity.chevroletCars);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -339,6 +340,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
 
         adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
         recyclerView.setAdapter(adapter);
+
+
 
     }
 

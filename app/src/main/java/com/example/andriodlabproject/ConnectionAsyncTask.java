@@ -2,10 +2,13 @@ package com.example.andriodlabproject;
 
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectionAsyncTask extends AsyncTask<String, String,
         String> {
@@ -38,10 +41,67 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
         }
         else {
             Toast.makeText(activity, "the connection is successful", Toast.LENGTH_LONG).show();
-            HomeNormalCustomerActivity.allCars = CarJsonParser.getObjectFromJson(s);
+            List<Car> cars = CarJsonParser.getObjectFromJson(s);
             callback.onTaskComplete(true);
+
+            DataBaseHelper dataBaseHelper = ((MainActivity)activity).getDatabaseHelper();
+            // insert all cars into the database
+            for (Car car : cars) {
+                dataBaseHelper.insertCar(car);
+            }
+
+            cars.clear();
+            // get all cars from the database
+            Cursor cursor = dataBaseHelper.getAllCars();
+            while (cursor.moveToNext()) {
+                Car car = new Car();
+                car.setID(cursor.getInt(0));
+                car.setFactoryName(cursor.getString(1));
+                car.setType(cursor.getString(2));
+                car.setPrice(cursor.getString(3));
+                car.setFuelType(cursor.getString(4));
+                car.setTransmission(cursor.getString(5));
+                car.setMileage(cursor.getString(6));
+                car.setImgCar(cursor.getInt(7));
+                HomeNormalCustomerActivity.allCars.add(car);
+                addCarToCategory(car);
+            }
+
         }
     }
+
+    void addCarToCategory(Car car) {
+        switch (car.getFactoryName()) {
+            case "Chevrolet":
+                HomeNormalCustomerActivity.chevroletCars.add(car);
+                break;
+            case "Jeep":
+                HomeNormalCustomerActivity.jeepCars.add(car);
+                break;
+            case "Ford":
+                HomeNormalCustomerActivity.fordCars.add(car);
+                break;
+            case "Dodge":
+                HomeNormalCustomerActivity.dodgeCars.add(car);
+                break;
+            case "Lamborghini":
+                HomeNormalCustomerActivity.lamborghiniCars.add(car);
+                break;
+            case "Tesla":
+                HomeNormalCustomerActivity.teslaCars.add(car);
+                break;
+            case "Honda":
+                HomeNormalCustomerActivity.hondaCars.add(car);
+                break;
+            case "Toyota":
+                HomeNormalCustomerActivity.toyotaCars.add(car);
+                break;
+            case "Koenigsegg":
+                HomeNormalCustomerActivity.koenigseggCars.add(car);
+                break;
+        }
+    }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();

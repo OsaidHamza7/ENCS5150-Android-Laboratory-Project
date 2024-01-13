@@ -25,11 +25,14 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "ProfilePicture BLOB);";
 
     private static final String CREATE_CAR_TABLE = "CREATE TABLE Car (" +
-            "CarID INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "CarID INTEGER PRIMARY KEY," +
             "FactoryName TEXT," +
             "Type TEXT," +
             "Price REAL," +
-            "Image BLOB);";
+            "FuelType TEXT," +
+            "TransmissionType TEXT," +
+            "Mileage REAL," +
+            "Image INTEGER);";
 
     private static final String CREATE_RESERVATION_TABLE = "CREATE TABLE Reservation (" +
             "ReservationID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -59,9 +62,9 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER_TABLE);
-        //db.execSQL(CREATE_CAR_TABLE);
-        //db.execSQL(CREATE_RESERVATION_TABLE);
-        //db.execSQL(CREATE_FAVORITES_TABLE);
+        db.execSQL(CREATE_CAR_TABLE);
+        db.execSQL(CREATE_RESERVATION_TABLE);
+        db.execSQL(CREATE_FAVORITES_TABLE);
         //db.execSQL(CREATE_SPECIAL_OFFERS_TABLE);
 
         // add a static admin user using insertInto query
@@ -128,10 +131,83 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("ProfilePicture",profilePicture);
         sqLiteDatabase.update("User",contentValues,"Email = '"+email+"'",null);
+    }
 
+    // delete user by email
+    public void deleteUserByEmail(String email){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.delete("User","Email = '"+email+"'",null);
+    }
+
+    // add a new car to the database
+    public boolean insertCar(Car car){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("FactoryName",car.getFactoryName());
+        contentValues.put("Type",car.getType());
+        contentValues.put("Price", car.getPrice());
+        contentValues.put("FuelType", car.getFuelType());
+        contentValues.put("TransmissionType", car.getTransmission());
+        contentValues.put("Mileage", car.getMileage());
+        contentValues.put("Image", car.getImgCar());
+        if (sqLiteDatabase.insert("Car",null,contentValues) == -1)
+            return false;
+        else
+            return true;
 
     }
 
+    // get all cars from the database
+    public Cursor getAllCars(){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Car",null);
+    }
+
+    // add a new reservation to the database
+    public boolean insertReservation(Reservation reservation){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("UserID",reservation.getUserID());
+        contentValues.put("CarID",reservation.getCarID());
+        contentValues.put("ReservationDate", reservation.getReservationDate());
+        contentValues.put("ReservationTime", reservation.getReservationTime());
+        if (sqLiteDatabase.insert("Reservation",null,contentValues) == -1)
+            return false;
+        else
+            return true;
+
+    }
+
+    // get all reservations from the database
+    public Cursor getAllReservations(){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Reservation",null);
+    }
+
+    // get reservations by user email
+    public Cursor getReservationsByEmail(String email){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Reservation WHERE Email = '"+email+"'",null);
+    }
+
+    // add a new favorite to the database
+    public boolean insertFavorite(int userID, int carID){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("UserID", userID);
+        contentValues.put("CarID", carID);
+        if (sqLiteDatabase.insert("Favorites",null,contentValues) == -1)
+            return false;
+        else
+            return true;
+
+    }
+
+    // get favorites by user email
+    public Cursor getFavoritesByEmail(String email){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Favorites WHERE Email = '"+email+"'",null);
+    }
 
 
 

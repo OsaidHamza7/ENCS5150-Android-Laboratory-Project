@@ -167,7 +167,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
                     User user = new User(firstName, lastName, gender, email, password, country, city, phoneNumber, permission, null);
                     // add the user to the database
-                    DataBaseHelper dataBaseHelper = new DataBaseHelper(SignUpActivity.this);
+                            DataBaseHelper dataBaseHelper = new DataBaseHelper(SignUpActivity.this);
 
                     // check if the user is added successfully
                     boolean isInserted = dataBaseHelper.insertUser(user);

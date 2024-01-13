@@ -1,6 +1,9 @@
 package com.example.andriodlabproject;
 
 
+import android.content.Context;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +20,7 @@ public class CarJsonParser {
     static Random random = new Random();
     static List<String> fuelTypes = Arrays.asList("Petrol", "Diesel", "Electric", "Hybrid");
     static List<String> transmissionTypes = Arrays.asList("Automatic", "Manual");
+
 
     public static List<Car> getObjectFromJson(String json) {
         Map<String, List<String>> cars = new HashMap<>();
@@ -53,69 +57,56 @@ public class CarJsonParser {
                 String randomTransmissionType = transmissionTypes.get(random.nextInt(transmissionTypes.size()));
                 CAR.setTransmission(randomTransmissionType);
                 CAR.setImgFavButton(R.drawable.ic_favorite_border);
+
+                // check the factory name and set the image of the car
                 for (Map.Entry<String, List<String>> entry : cars.entrySet()) {
-
-                    if (entry.getKey().equals("Chevrolet") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngegg);
-                        CAR.setFactoryName("Chevrolet");
-                        HomeNormalCustomerActivity.chevroletCars.add(CAR);
-                        break;
+                    if (entry.getValue().contains(TYPE)) {
+                        CAR.setFactoryName(entry.getKey());
+                        switch (entry.getKey()) {
+                            case "Chevrolet":
+                                CAR.setImgCar(R.drawable.pngegg);
+                                CAR.setFactoryName("Chevrolet");
+                                break;
+                            case "Jeep":
+                                CAR.setImgCar(R.drawable.pngwing);
+                                CAR.setFactoryName("Jeep");
+                                break;
+                            case "Ford":
+                                CAR.setImgCar(R.drawable.pngwingg);
+                                CAR.setFactoryName("Ford");
+                                break;
+                            case "Dodge":
+                                CAR.setImgCar(R.drawable.pngwinggg);
+                                CAR.setFactoryName("Dodge");
+                                break;
+                            case "Lamborghini":
+                                CAR.setImgCar(R.drawable.pngegg);
+                                CAR.setFactoryName("Lamborghini");
+                                break;
+                            case "Tesla":
+                                CAR.setImgCar(R.drawable.pngwingg);
+                                CAR.setFactoryName("Tesla");
+                                break;
+                            case "Honda":
+                                CAR.setImgCar(R.drawable.pngwinggg);
+                                CAR.setFactoryName("Honda");
+                                break;
+                            case "Toyota":
+                                CAR.setImgCar(R.drawable.pngegg);
+                                CAR.setFactoryName("Toyota");
+                                break;
+                            case "Koenigsegg":
+                                CAR.setImgCar(R.drawable.pngwingg);
+                                CAR.setFactoryName("Koenigsegg");
+                                break;
+                        }
                     }
-                    if (entry.getKey().equals("Ford") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngwingg);
-                        CAR.setFactoryName("Ford");
-                        HomeNormalCustomerActivity.fordCars.add(CAR);
-                        break;
-                    }
-                    if (entry.getKey().equals("Jeep") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngwing);
-                        CAR.setFactoryName("Jeep");
-                        HomeNormalCustomerActivity.jeepCars.add(CAR);
-                        break;
-                    }
-                    if (entry.getKey().equals("Dodge") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngwinggg);
-                        CAR.setFactoryName("Dodge");
-                        HomeNormalCustomerActivity.dodgeCars.add(CAR);
-                        break;
-                    }
-                    if (entry.getKey().equals("Lamborghini") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngegg);
-                        CAR.setFactoryName("Lamborghini");
-                        HomeNormalCustomerActivity.lamborghiniCars.add(CAR);
-                        break;
-                    }
-                    if (entry.getKey().equals("Tesla") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngwingg);
-                        CAR.setFactoryName("Tesla");
-                        HomeNormalCustomerActivity.teslaCars.add(CAR);
-                        break;
-                    }
-                    if (entry.getKey().equals("Honda") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngwing);
-                        CAR.setFactoryName("Honda");
-                        HomeNormalCustomerActivity.hondaCars.add(CAR);
-                        break;
-                    }
-                    if (entry.getKey().equals("Toyota") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngwinggg);
-                        CAR.setFactoryName("Toyota");
-                        HomeNormalCustomerActivity.toyotaCars.add(CAR);
-                        break;
-                    }
-                    if (entry.getKey().equals("Koenigsegg") && entry.getValue().contains(TYPE)){
-                        CAR.setImgCar(R.drawable.pngegg);
-                        CAR.setFactoryName("Koenigsegg");
-                        HomeNormalCustomerActivity.koenigseggCars.add(CAR);
-                        break;
-                    }
-
-
                 }
 
                 CARS.add(CAR);
 
             }
+
 
 
         } catch (JSONException e) {
