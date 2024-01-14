@@ -184,11 +184,20 @@ public class ProfileCustomerFragment extends Fragment {
                 changePass = false;
                 //update nav header with the new (first name and last name)
                 currentUser=User.currentUser;
-                View headerView = HomeNormalCustomerActivity.navigationView.getHeaderView(0);
-                TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
-                TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
-                navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
-                navEmail.setText(User.currentUser.getString(3));
+                if (currentUser.getString(8).equals("User")){
+                    View headerView = HomeNormalCustomerActivity.navigationView.getHeaderView(0);
+                    TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
+                    TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
+                    navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
+                    navEmail.setText(User.currentUser.getString(3));
+                } else {
+                    View headerView = HomeAdminActivity.navigationView.getHeaderView(0);
+                    TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
+                    TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
+                    navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
+                    navEmail.setText(User.currentUser.getString(3));
+                }
+
 
 
             }
