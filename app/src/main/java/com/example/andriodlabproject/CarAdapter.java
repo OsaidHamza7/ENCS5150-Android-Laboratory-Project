@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
-
     private List<Car> carList;
     private LayoutInflater inflater;
 
@@ -78,6 +77,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                             imgFav.setImageResource(R.drawable.ic_favorite_border);
                             CarMenuFragment.makeFavouriteAlertAnimation("Removed from Favourites");
                             currentCar.setImgFavButton(R.drawable.ic_favorite_border);
+                            // remove the car from the favorite cars list in the database
+                            removeCarFromFavorites(currentCar.getID());
                             if(HomeNormalCustomerActivity.favCars.contains(currentCar)) {
                                 HomeNormalCustomerActivity.favCars.remove(currentCar);
                             }
@@ -86,6 +87,9 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                             imgFav.setImageResource(R.drawable.ic_favorite);
                             CarMenuFragment.makeFavouriteAlertAnimation("Added to Favourites");
                             currentCar.setImgFavButton(R.drawable.ic_favorite);
+                            // add the car to the favorite cars list in the database
+                            addCarToFavorites(currentCar.getID());
+
                             if(!HomeNormalCustomerActivity.favCars.contains(currentCar)) {
                                 HomeNormalCustomerActivity.favCars.add(currentCar);
                             }
@@ -106,7 +110,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
                         StringBuilder details = new StringBuilder();
 //                        details.append(currentCar.getImageResourceId()).append("\n");
-                        details.append("Id:").append(currentCar.getID()).append("\n");
+                        details.append("ID: ").append(currentCar.getID()).append("\n");
                         details.append("Car Type: ").append(currentCar.getType()).append("\n");
                         details.append("Price: ").append(currentCar.getPrice()).append("\n");
                         details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
@@ -134,7 +138,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                         Car currentCar = carList.get(position);
 
                         StringBuilder details = new StringBuilder();
-                        details.append("Id:").append(currentCar.getID()).append("\n");
+                        details.append("ID:").append(currentCar.getID()).append("\n");
                         details.append("Type: ").append(currentCar.getType()).append("\n");
                         details.append("Price: ").append(currentCar.getPrice()).append("\n");
                         details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
@@ -161,6 +165,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                         currentCar0.setDate(dtf.format(now));
                                         CarMenuFragment.makeFavouriteAlertAnimation("Car has been reserved successfully");
                                         notifyDataSetChanged();
+                                        // add reservation to database
+                                        addReservationToDatabase(currentCar0, now);
 
                                         HomeNormalCustomerActivity.reserveCars.add(currentCar0);
                                     }
@@ -179,6 +185,39 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
         }
 
+        public void addReservationToDatabase(Car car, LocalDateTime now) {
+            DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();
+            Reservation reservation = new Reservation();
+            reservation.setUserEmail(User.currentUser.getString(3));
+            reservation.setCarID(car.getID());
+            reservation.setReservationDate(now.toString());
+            reservation.setReservationTime(now.toString());
+            dataBaseHelper.insertReservation(reservation);
+
+        }
+
+        // function to add the car to the favorite cars list in the database
+        public void addCarToFavorites(int carID){
+
+            DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();
+            if (!dataBaseHelper.isFavorite(User.currentUser.getString(3),carID)){
+                dataBaseHelper.insertFavorite(User.currentUser.getString(3), carID);
+            }
+
+        }
+
+        // function to remove the car from the favorite cars list in the database
+        public void removeCarFromFavorites(int carID){
+
+            DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();
+            if (dataBaseHelper.isFavorite(User.currentUser.getString(3),carID)){
+                dataBaseHelper.deleteFavorite(User.currentUser.getString(3), carID);
+            }
+
+        }
+
 
     }
+
+
 }

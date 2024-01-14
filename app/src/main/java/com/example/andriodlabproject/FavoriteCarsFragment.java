@@ -1,5 +1,6 @@
 package com.example.andriodlabproject;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,8 +74,37 @@ public class FavoriteCarsFragment extends Fragment {
         recyclerView = getActivity().findViewById(R.id.recycler_favorite_cars);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
+        // get the favorite cars from the database
+        getFavoriteCars();
+
         adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.favCars);
         recyclerView.setAdapter(adapter);
+    }
+
+    // function to get the favorite cars from the database
+    public void getFavoriteCars(){
+        HomeNormalCustomerActivity.favCars.clear();
+        DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)getActivity()).getDatabaseHelper();
+        String userEmail = User.currentUser.getString(3);
+
+        // get the favorite cars from the database
+        Cursor cursor = dataBaseHelper.getFavoritesWithCarInfoByEmail(userEmail);
+
+        while (cursor.moveToNext()) {
+            Car car = new Car();
+            car.setID(cursor.getInt(2));
+            car.setFactoryName(cursor.getString(4));
+            car.setType(cursor.getString(5));
+            car.setPrice(cursor.getString(6));
+            car.setFuelType(cursor.getString(7));
+            car.setTransmission(cursor.getString(8));
+            car.setMileage(cursor.getString(9));
+            car.setImgCar(cursor.getInt(10));
+            car.setImgFavButton(R.drawable.ic_favorite);
+            HomeNormalCustomerActivity.favCars.add(car);
+
+        }
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

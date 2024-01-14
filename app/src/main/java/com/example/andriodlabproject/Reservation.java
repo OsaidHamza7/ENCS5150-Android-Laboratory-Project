@@ -1,8 +1,12 @@
 package com.example.andriodlabproject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Reservation {
+
     private int reservationID;
-    private int userID;
+    private String userEmail;
     private int carID;
     private String reservationDate;
     private String reservationTime;
@@ -11,9 +15,9 @@ public class Reservation {
 
     }
 
-    public Reservation(int reservationID, int userID, int carID, String reservationDate, String reservationTime) {
+    public Reservation(int reservationID, String userEmail, int carID, String reservationDate, String reservationTime) {
         this.reservationID = reservationID;
-        this.userID = userID;
+        this.userEmail = userEmail;
         this.carID = carID;
         this.reservationDate = reservationDate;
         this.reservationTime = reservationTime;
@@ -23,8 +27,8 @@ public class Reservation {
         return reservationID;
     }
 
-    public int getUserID() {
-        return userID;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     public int getCarID() {
@@ -43,8 +47,8 @@ public class Reservation {
         this.reservationID = reservationID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public void setCarID(int carID) {
@@ -58,4 +62,6 @@ public class Reservation {
     public void setReservationTime(String reservationTime) {
         this.reservationTime = reservationTime;
     }
+
+
 }

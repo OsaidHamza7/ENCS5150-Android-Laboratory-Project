@@ -1,5 +1,6 @@
 package com.example.andriodlabproject;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.Console;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,10 +66,45 @@ public class ReservedCarsFragment extends Fragment {
         recyclerView = getActivity().findViewById(R.id.recycler_reserved_cars);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
+        // get the reserved cars from the database
+        getReservedCars();
 
         adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.reserveCars);
         recyclerView.setAdapter(adapter);
     }
+
+    // function to get the reserved cars from the database
+    public void getReservedCars(){
+        // get the database helper
+        DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)getActivity()).getDatabaseHelper();
+        // get the user email
+        String userEmail = User.currentUser.getString(3);
+        // get the reserved cars from the database
+        Cursor cursor = dataBaseHelper.getReservationWithCarInfoByEmail(userEmail);
+
+        // clear the reserved cars list
+        HomeNormalCustomerActivity.reserveCars.clear();
+
+        // add the reserved cars to the reserved cars list
+        while (cursor.moveToNext()){
+            Car car = new Car();
+            car.setID(cursor.getInt(2));
+            car.setDate(cursor.getString(3));
+            car.setFactoryName(cursor.getString(5));
+            car.setType(cursor.getString(6));
+            car.setPrice(cursor.getString(7));
+            car.setFuelType(cursor.getString(8));
+            car.setTransmission(cursor.getString(9));
+            car.setMileage(cursor.getString(10));
+            car.setImgCar(cursor.getInt(11));
+            car.setVisibleDate(View.VISIBLE);
+            car.setVisibleReserveButton(View.INVISIBLE);
+            HomeNormalCustomerActivity.reserveCars.add(car);
+        }
+
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

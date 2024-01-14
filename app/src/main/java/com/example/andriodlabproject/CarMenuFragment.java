@@ -37,6 +37,7 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
 
     public static TextView textView_favourite_alert;
     public static FragmentActivity activity;
+    private DataBaseHelper dataBaseHelper;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,6 +92,16 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+    }
+
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        dataBaseHelper = ((HomeNormalCustomerActivity)getActivity()).getDatabaseHelper();
+
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
 
         Button button_all =(Button) getActivity().findViewById(R.id.button_all);
@@ -222,7 +233,7 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
         OpenBottomSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
                 View bottomSheetView = LayoutInflater.from(getActivity())
                         .inflate(R.layout.modal_bottom_sheet,
                                 (LinearLayout) getActivity().findViewById(R.id.modalBottomSheetContainer));
@@ -312,9 +323,9 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
                 btn_reset.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       for(int i=0;i<clickedButtons.size();i++){
-                           makeTextBlackMakeBackgroundWhite(clickedButtons.get(i));
-                       }
+                        for(int i=0;i<clickedButtons.size();i++){
+                            makeTextBlackMakeBackgroundWhite(clickedButtons.get(i));
+                        }
                         clickedButtons.clear();
                     }
                 });
@@ -328,20 +339,26 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
         activity = getActivity();
         //adapter.notifyDataSetChanged();
 
-    }
 
-
-
-    @Override
-    public void onResume(){
-        super.onResume();
         recyclerView = getActivity().findViewById(R.id.recycler_car_menu);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        checkFavoriteCarsList();
 
         adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
         recyclerView.setAdapter(adapter);
 
 
+    }
+
+    // check the favorite cars list and change the favorite button image
+    public void checkFavoriteCarsList(){
+        for (Car car : HomeNormalCustomerActivity.allCars) {
+            if (dataBaseHelper.isFavorite(User.currentUser.getString(3), car.getID())) {
+                car.setImgFavButton(R.drawable.ic_favorite);
+            } else {
+                car.setImgFavButton(R.drawable.ic_favorite_border);
+            }
+        }
 
     }
 

@@ -26,6 +26,7 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     final Handler handler = new Handler();
     private CarAdapter adapter;
 
+    private DataBaseHelper dataBaseHelper;
     public static List<Car> allCars = new ArrayList<>();
     public static List<Car> favCars = new ArrayList<>();
     public static List<Car> reserveCars = new ArrayList<>();
@@ -45,6 +46,9 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_normal_customer);
+
+        dataBaseHelper = new DataBaseHelper(this);
+
 
         for (int i=0;i < 10;i++){
             carSpecialOffers.add(allCars.get(i));
@@ -123,6 +127,10 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public DataBaseHelper getDatabaseHelper() {
+        return dataBaseHelper;
     }
 
 }

@@ -28,26 +28,25 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "CarID INTEGER PRIMARY KEY," +
             "FactoryName TEXT," +
             "Type TEXT," +
-            "Price REAL," +
+            "Price TEXT," +
             "FuelType TEXT," +
             "TransmissionType TEXT," +
-            "Mileage REAL," +
+            "Mileage TEXT," +
             "Image INTEGER);";
 
     private static final String CREATE_RESERVATION_TABLE = "CREATE TABLE Reservation (" +
             "ReservationID INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "UserID INTEGER," +
+            "Email INTEGER," +
             "CarID INTEGER," +
             "ReservationDate TEXT," +
-            "ReservationTime TEXT," +
-            "FOREIGN KEY(UserID) REFERENCES User(UserID)," +
+            "FOREIGN KEY(Email) REFERENCES User(Email)," +
             "FOREIGN KEY(CarID) REFERENCES Car(CarID));";
 
     private static final String CREATE_FAVORITES_TABLE = "CREATE TABLE Favorites (" +
             "FavoriteID INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "UserID INTEGER," +
+            "Email INTEGER," +
             "CarID INTEGER," +
-            "FOREIGN KEY(UserID) REFERENCES User(UserID)," +
+            "FOREIGN KEY(Email) REFERENCES User(Email)," +
             "FOREIGN KEY(CarID) REFERENCES Car(CarID));";
 
     private static final String CREATE_SPECIAL_OFFERS_TABLE = "CREATE TABLE SpecialOffers (" +
@@ -158,6 +157,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     }
 
+    // get car by id
+    public Cursor getCarByID(int id){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Car WHERE CarID = '"+id+"'",null);
+    }
+
     // get all cars from the database
     public Cursor getAllCars(){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
@@ -168,10 +173,9 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     public boolean insertReservation(Reservation reservation){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("UserID",reservation.getUserID());
+        contentValues.put("Email",reservation.getUserEmail());
         contentValues.put("CarID",reservation.getCarID());
         contentValues.put("ReservationDate", reservation.getReservationDate());
-        contentValues.put("ReservationTime", reservation.getReservationTime());
         if (sqLiteDatabase.insert("Reservation",null,contentValues) == -1)
             return false;
         else
@@ -191,23 +195,44 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM Reservation WHERE Email = '"+email+"'",null);
     }
 
+    // get reservation with car info by user email
+    public Cursor getReservationWithCarInfoByEmail(String email){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Reservation INNER JOIN Car ON Reservation.CarID = Car.CarID WHERE Email = '"+email+"'",null);
+    }
+
     // add a new favorite to the database
-    public boolean insertFavorite(int userID, int carID){
+    public boolean insertFavorite(String userEmail, int carID){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("UserID", userID);
+        contentValues.put("Email", userEmail);
         contentValues.put("CarID", carID);
         if (sqLiteDatabase.insert("Favorites",null,contentValues) == -1)
             return false;
         else
             return true;
-
     }
 
-    // get favorites by user email
-    public Cursor getFavoritesByEmail(String email){
+    // delete a favorite from the database
+    public void deleteFavorite(String userEmail, int carID){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.delete("Favorites","Email = '"+userEmail+"' AND CarID = '"+carID+"'",null);
+    }
+
+    // get favorites with car info by user email
+    public Cursor getFavoritesWithCarInfoByEmail(String email){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        return sqLiteDatabase.rawQuery("SELECT * FROM Favorites WHERE Email = '"+email+"'",null);
+        return sqLiteDatabase.rawQuery("SELECT * FROM Favorites INNER JOIN Car ON Favorites.CarID = Car.CarID WHERE Email = '"+email+"'",null);
+    }
+
+    // check if the car is favorite or not
+    public boolean isFavorite(String userEmail, int carID){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Favorites WHERE Email = '"+userEmail+"' AND CarID = '"+carID+"'",null);
+        if (cursor.getCount() == 0)
+            return false;
+        else
+            return true;
     }
 
 

@@ -47,6 +47,10 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
             DataBaseHelper dataBaseHelper = ((MainActivity)activity).getDatabaseHelper();
             // insert all cars into the database
             for (Car car : cars) {
+                // check if the car is already in the database
+                if (dataBaseHelper.getCarByID(car.getID()) != null) {
+                    continue;
+                }
                 dataBaseHelper.insertCar(car);
             }
 
@@ -62,6 +66,7 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
                 car.setTransmission(cursor.getString(5));
                 car.setMileage(cursor.getString(6));
                 car.setImgCar(cursor.getInt(7));
+                car.setImgFavButton(R.drawable.ic_favorite_border);
                 addCarToCategory(car);
                 HomeNormalCustomerActivity.allCars.add(car);
 
@@ -100,6 +105,7 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
             case "Koenigsegg":
                 HomeNormalCustomerActivity.koenigseggCars.add(car);
                 break;
+
         }
     }
 
