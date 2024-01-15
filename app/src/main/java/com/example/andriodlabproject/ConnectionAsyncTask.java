@@ -48,9 +48,10 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
             // insert all cars into the database
             for (Car car : cars) {
                 // check if the car is already in the database
-                if (dataBaseHelper.getCarByID(car.getID()) != null) {
+                Cursor cursor = dataBaseHelper.getCarByID(car.getID());
+                if (cursor.getCount() > 0)
                     continue;
-                }
+
                 dataBaseHelper.insertCar(car);
             }
 

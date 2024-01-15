@@ -39,14 +39,14 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "Email INTEGER," +
             "CarID INTEGER," +
             "ReservationDate TEXT," +
-            "FOREIGN KEY(Email) REFERENCES User(Email)," +
+            "FOREIGN KEY(Email) REFERENCES User(Email) ON DELETE CASCADE," +
             "FOREIGN KEY(CarID) REFERENCES Car(CarID));";
 
     private static final String CREATE_FAVORITES_TABLE = "CREATE TABLE Favorites (" +
             "FavoriteID INTEGER PRIMARY KEY AUTOINCREMENT," +
             "Email INTEGER," +
             "CarID INTEGER," +
-            "FOREIGN KEY(Email) REFERENCES User(Email)," +
+            "FOREIGN KEY(Email) REFERENCES User(Email) ON DELETE CASCADE," +
             "FOREIGN KEY(CarID) REFERENCES Car(CarID));";
 
     private static final String CREATE_SPECIAL_OFFERS_TABLE = "CREATE TABLE SpecialOffers (" +
@@ -54,7 +54,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "CarID INTEGER," +
             "StartDate TEXT," +
             "EndDate TEXT," +
-            "FOREIGN KEY(CarID) REFERENCES Car(CarID));";
+            "FOREIGN KEY(CarID) REFERENCES Car(CarID)) ON DELETE CASCADE;";
 
 
 
@@ -91,6 +91,10 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             return true;
 
     }
+
+    /*
+    User Queries
+     */
 
     // get all users from the database
     public Cursor getAllUsers(){
@@ -138,6 +142,10 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         sqLiteDatabase.delete("User","Email = '"+email+"'",null);
     }
 
+    /*
+    Car Queries
+     */
+
     // add a new car to the database
     public boolean insertCar(Car car){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
@@ -169,6 +177,10 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM Car",null);
     }
 
+    /*
+    Reservation Queries
+     */
+
     // add a new reservation to the database
     public boolean insertReservation(Reservation reservation){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
@@ -189,10 +201,10 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM Reservation",null);
     }
 
-    // get reservations by user email
-    public Cursor getReservationsByEmail(String email){
+    // get all reservations with car info and user info from the database
+    public Cursor getAllReservationsWithCarInfoAndUserInfo(){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        return sqLiteDatabase.rawQuery("SELECT * FROM Reservation WHERE Email = '"+email+"'",null);
+        return sqLiteDatabase.rawQuery("SELECT * FROM Reservation INNER JOIN Car ON Reservation.CarID = Car.CarID INNER JOIN User ON Reservation.Email = User.Email",null);
     }
 
     // get reservation with car info by user email
@@ -201,6 +213,10 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM Reservation INNER JOIN Car ON Reservation.CarID = Car.CarID WHERE Email = '"+email+"'",null);
     }
 
+
+    /*
+    Favorites Queries
+     */
     // add a new favorite to the database
     public boolean insertFavorite(String userEmail, int carID){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();

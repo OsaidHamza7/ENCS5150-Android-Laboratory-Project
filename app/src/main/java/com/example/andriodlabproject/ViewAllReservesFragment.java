@@ -54,6 +54,11 @@ public class ViewAllReservesFragment extends Fragment {
         }
     }
 
+//    public void onResume() {
+//        super.onResume();
+//
+//    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

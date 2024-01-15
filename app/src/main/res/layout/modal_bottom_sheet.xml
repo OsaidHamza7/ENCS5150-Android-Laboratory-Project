@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:background="@drawable/white_button"
             android:insetRight="5dp"
-            android:text="Automatic "
+            android:text="Automatic"
             android:textColor="@color/black" />
 
         <Button
@@ -154,7 +154,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editTextNumber"
+            android:id="@+id/editTextNumber_priceFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -166,7 +166,7 @@
             android:textColor="#000000" />
 
         <EditText
-            android:id="@+id/editTextNumber2"
+            android:id="@+id/editTextNumber_priceTo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -202,7 +202,7 @@
             android:textColor="@color/black" />
 
         <Button
-            android:id="@+id/btn_applay"
+            android:id="@+id/btn_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
