@@ -145,6 +145,7 @@ public class SignInFragment extends Fragment {
 
                 if (cursor.getString(8).equals("Admin")){
                     // if the user is admin
+                    ((SignInActivity)getActivity()).removeSignInFragment();
                     Intent intent = new Intent(getActivity(), HomeAdminActivity.class);
                     SignInFragment.this.startActivity(intent);
 

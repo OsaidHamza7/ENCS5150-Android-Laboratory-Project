@@ -8,12 +8,15 @@
 
     <TextView
         android:id="@+id/textView_deleteCustomerAlert"
-        android:layout_width="410dp"
-        android:layout_height="30dp"
+        android:layout_width="436dp"
+        android:layout_height="38dp"
         android:background="#CB000000"
+        android:foregroundGravity="center_vertical"
+        android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="customer deleted successfully"
+        android:text="Customer Deleted Successfully"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,16 +56,16 @@
 
     <EditText
         android:id="@+id/editText_emailCustomer"
-        android:layout_width="393dp"
-        android:layout_height="59dp"
+        android:layout_width="344dp"
+        android:layout_height="58dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintHorizontal_bias="0.397"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintVertical_bias="0.17" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -61,6 +61,9 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
         if (item.getItemId()==R.id.navAdmin_viewAllReserves){
             toolbar.setTitle("VIEW ALL RESERVES");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_admin,new ViewAllReservesFragment()).commit();
+        } if (item.getItemId()==R.id.navAdmin_addAdmin){
+            toolbar.setTitle("ADD ADMIN");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_admin,new SignUpFragment()).commit();
         }
 
         if (item.getItemId()==R.id.navAdmin_logout){

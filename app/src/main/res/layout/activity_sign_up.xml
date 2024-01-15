@@ -9,6 +9,7 @@
     tools:context=".SignUpActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,12 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
         tools:context=".SignUpActivity">
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="621dp" />
 
         <TextView
             android:id="@+id/text3"
@@ -53,239 +48,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.99" />
 
-        <Button
-            android:id="@+id/button_registerSignUp"
-            android:layout_width="330dp"
-
-            android:layout_height="58dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/black_button"
-            android:text="Sign up"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.956" />
-
-        <EditText
-            android:id="@+id/editText_registerFirstName"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:background="@drawable/plaintext_grey_theme"
-            android:ems="10"
-            android:hint="First Name"
-            android:inputType="textPersonName|textCapWords"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.219" />
-
-        <EditText
-            android:id="@+id/editText_registerEmail"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/plaintext_grey_theme"
-            android:drawableStart="@drawable/baseline_email_24"
-            android:drawableLeft="@drawable/baseline_email_24"
-            android:drawablePadding="10dp"
-
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:paddingStart="10dp"
-
-
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.455" />
-
-        <Spinner
-            android:id="@+id/spinner_registerGender"
-            style="@style/SpinnerTheme"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.372"
-            android:spinnerMode="dropdown"/>
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="359dp" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="294dp" />
-
-        <EditText
-            android:id="@+id/editText_registerPassword"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/plaintext_grey_theme"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="10dp"
-            android:drawableStart="@drawable/baseline_lock_24"
-            android:paddingStart="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.537" />
-
-        <EditText
-            android:id="@+id/editText_registerConfirmPassword"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/plaintext_grey_theme"
-            android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.618" />
-
-        <Spinner
-            android:id="@+id/spinner_registerCountry"
-            style="@style/SpinnerTheme"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/black"
-            android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.702" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="555dp" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="489dp" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="424dp" />
-
-        <Spinner
-            android:id="@+id/spinner_registerCity"
-            style="@style/SpinnerTheme"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/black"
-            android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.789" />
-
-        <EditText
-            android:id="@+id/editText_registerLastName"
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/plaintext_grey_theme"
-            android:ems="10"
-            android:hint="Last Name"
-            android:inputType="textPersonName|textCapWords"
-            android:paddingLeft="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.29"
-            android:paddingRight="15dp" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="229dp" />
-
         <TextView
             android:id="@+id/textView_registerFill"
             android:layout_width="wrap_content"
@@ -314,79 +76,18 @@
             app:layout_constraintVertical_bias="0.028"
             app:srcCompat="@drawable/leftarrow" />
 
-        <ImageView
-            android:layout_width="144dp"
-            android:layout_height="103dp"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/SignUpFragment"
+            android:name="com.example.andriodlabproject.SignUpFragment"
+            android:layout_width="430dp"
+            android:layout_height="720dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.081"
-            app:srcCompat="@drawable/signupicon" />
-
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            tools:layout_editor_absoluteX="381dp"
-            tools:layout_editor_absoluteY="687dp" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="335dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/plaintext_grey_theme"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.37"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.862">
-
-            <EditText
-                android:id="@+id/editText_editPhoneNumber"
-                android:layout_width="233dp"
-                android:layout_height="50dp"
-                android:background="@drawable/plaintext_grey_theme"
-                android:ems="10"
-                android:hint="Phone Number"
-                android:inputType="phone"
-                android:paddingLeft="10dp"
-                android:paddingTop="1dp"
-                android:paddingRight="15dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView_editCountryCode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView_editCountryCode"
-                app:layout_constraintVertical_bias="0.521" />
-
-            <ImageView
-                android:id="@+id/imageView_editCountryFlag"
-                android:layout_width="46dp"
-                android:layout_height="37dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.02"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.545"
-                app:srcCompat="@drawable/palestine" />
-
-            <TextView
-                android:id="@+id/textView_editCountryCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+970"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView_editCountryFlag"
-                app:layout_constraintEnd_toEndOf="@+id/editText_editPhoneNumber"
-                app:layout_constraintHorizontal_bias="0.166"
-                app:layout_constraintStart_toStartOf="@+id/imageView_editCountryFlag"
-                app:layout_constraintTop_toTopOf="@+id/imageView_editCountryFlag" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintVertical_bias="0.622"
+            tools:layout="@layout/fragment_sign_up" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

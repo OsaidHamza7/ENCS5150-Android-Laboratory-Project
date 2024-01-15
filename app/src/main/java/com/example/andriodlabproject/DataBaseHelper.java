@@ -36,7 +36,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     private static final String CREATE_RESERVATION_TABLE = "CREATE TABLE Reservation (" +
             "ReservationID INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "Email INTEGER," +
+            "Email TEXT," +
             "CarID INTEGER," +
             "ReservationDate TEXT," +
             "FOREIGN KEY(Email) REFERENCES User(Email) ON DELETE CASCADE," +
@@ -44,7 +44,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     private static final String CREATE_FAVORITES_TABLE = "CREATE TABLE Favorites (" +
             "FavoriteID INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "Email INTEGER," +
+            "Email TEXT," +
             "CarID INTEGER," +
             "FOREIGN KEY(Email) REFERENCES User(Email) ON DELETE CASCADE," +
             "FOREIGN KEY(CarID) REFERENCES Car(CarID));";
@@ -254,7 +254,14 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
 
 
-
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
+    }
 
 
     public DataBaseHelper(Context context) {
