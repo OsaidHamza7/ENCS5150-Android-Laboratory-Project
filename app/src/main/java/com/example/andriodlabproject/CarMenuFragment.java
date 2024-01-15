@@ -543,10 +543,12 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             String carFuelType = car.getFuelType().toLowerCase().trim();
             int carMileage = Integer.parseInt(car.getMileage());
             if (!filter.contains("automatic") && !filter.contains("manual")){ // if the user didn't choose any transmission type
-                carTransmission = "";
+                carTransmission = "a";
+                filter.add("a");
             }
             if (!filter.contains("diesel") && !filter.contains("petrol") && !filter.contains("electric") && !filter.contains("hybrid")){ // if the user didn't choose any fuel type
-                carFuelType = "";
+                carFuelType = "b";
+                filter.add("b");
             }
 
 
