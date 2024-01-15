@@ -3,12 +3,15 @@ package com.example.andriodlabproject;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,10 +24,12 @@ import java.util.List;
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     private List<Car> carList;
     private LayoutInflater inflater;
+    private final Context context;
 
     public CarAdapter(Context context, List<Car> carList) {
         this.inflater = LayoutInflater.from(context);
         this.carList = carList;
+        this.context = context;
     }
 
 
@@ -44,6 +49,28 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.reserve.setVisibility(currentCar.getVisibleReserveButton());
         holder.viewDate.setVisibility(currentCar.getVisibleDate());
         holder.viewDate.setText(currentCar.getDate());
+
+        if(context instanceof HomeAdminActivity){
+            // remove the favorite button from the admin view
+            holder.favLayout.removeView(holder.imgFav);
+            // remove the reserve button from the admin view
+            holder.mainLayout.removeView(holder.reserve);
+            TextView textView = new TextView(holder.itemView.getContext());
+            textView.setText("Test User Email");
+            textView.setTextColor(Color.BLACK);
+            textView.setTextSize(15);
+            textView.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            holder.userInfoLayout.removeAllViews();
+            holder.userInfoLayout.addView(textView);
+
+
+
+
+
+        }
+
     }
 
     @Override
@@ -58,6 +85,11 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         private TextView viewDate;
         private ImageButton imgFav;
         private Button reserve;
+        private LinearLayout userInfoLayout;
+        private LinearLayout mainLayout;
+        private LinearLayout favLayout;
+        private Space space_carItem;
+        //private TextView userEmail;
         public CarViewHolder(View itemView) {
             super(itemView);
             carImage = itemView.findViewById(R.id.imgCar);
@@ -66,6 +98,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             imgFav = itemView.findViewById(R.id.imgFav);
             reserve=itemView.findViewById(R.id.button_reserve);
             viewDate=itemView.findViewById(R.id.viewDate);
+            userInfoLayout=itemView.findViewById(R.id.Linear_userInfo);
+            mainLayout=itemView.findViewById(R.id.linear_carItem);
+            favLayout=itemView.findViewById(R.id.favLayout);
+            space_carItem=itemView.findViewById(R.id.space_carItem);
+
+
             imgFav.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

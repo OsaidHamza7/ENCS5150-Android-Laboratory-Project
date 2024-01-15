@@ -58,6 +58,11 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
             toolbar.setTitle("DELETE CUSTOMERS");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_admin,new DeleteCustomersFragment()).commit();
         }
+        if (item.getItemId()==R.id.navAdmin_viewAllReserves){
+            toolbar.setTitle("VIEW ALL RESERVES");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_admin,new ViewAllReservesFragment()).commit();
+        }
+
         if (item.getItemId()==R.id.navAdmin_logout){
             Intent intent = new Intent(HomeAdminActivity.this, SignInActivity.class);
             HomeAdminActivity.this.startActivity(intent);

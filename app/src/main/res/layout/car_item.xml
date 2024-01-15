@@ -1,12 +1,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_carItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
     <LinearLayout
+        android:id="@+id/Linear_userInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/favLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/plaintext_grey_theme"
@@ -30,6 +38,7 @@
             app:srcCompat="@drawable/ic_favorite_border" />
 
         <Space
+            android:id="@+id/space_carItem"
             android:layout_width="50dp"
             android:layout_height="84dp"
             android:layout_weight="1"
@@ -69,6 +78,7 @@
             android:textColor="#3E3C3C"
             android:visibility="visible" />
     </LinearLayout>
+
     <Button
         android:id="@+id/button_reserve"
         android:layout_width="180dp"

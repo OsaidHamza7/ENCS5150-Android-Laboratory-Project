@@ -1,11 +1,14 @@
 package com.example.andriodlabproject;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,8 +17,10 @@ import androidx.fragment.app.Fragment;
  */
 public class ViewAllReservesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private RecyclerView recyclerView;
+    private CarAdapter adapter;
+    private DataBaseHelper dataBaseHelper;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -54,10 +59,26 @@ public class ViewAllReservesFragment extends Fragment {
         }
     }
 
-//    public void onResume() {
-//        super.onResume();
-//
-//    }
+    public void onResume() {
+        super.onResume();
+        recyclerView = getActivity().findViewById(R.id.recycler_all_reserved_cars);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+
+        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
+        recyclerView.setAdapter(adapter);
+
+
+        dataBaseHelper = new DataBaseHelper(getActivity());
+        // get all reservations from the database
+
+    }
+
+    private void getAllReservation(){
+        Cursor cursor = dataBaseHelper.getAllReservationsWithCarInfoAndUserInfo();
+
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -40,6 +40,9 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
     public static FragmentActivity activity;
     private DataBaseHelper dataBaseHelper;
 
+    private List<Car> filteredCars = new ArrayList<>();
+    private boolean filterApplied = false;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -117,6 +120,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
         Button button_tesla =(Button) getActivity().findViewById(R.id.button_tesla);
         Button button_toyota =(Button) getActivity().findViewById(R.id.button_toyota);
 
+        EditText searchField = getActivity().findViewById(R.id.editText_search);
+
         ImageButton OpenBottomSheet =(ImageButton) getActivity().findViewById(R.id.button_filter);
 
         lastButtonPressed = button_all;
@@ -126,6 +131,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in all cars");
 
                 if(lastButtonPressed.equals(button_all)){
                     return;
@@ -141,6 +148,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(), HomeNormalCustomerActivity.chevroletCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Chevrolet cars");
 
                 if (lastButtonPressed.equals(button_chevrolet)){
                     return;
@@ -157,6 +166,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.fordCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Ford cars");
 
                 if (lastButtonPressed.equals(button_ford)){
                     return;
@@ -172,6 +183,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.dodgeCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Dodge cars");
 
                 if (lastButtonPressed.equals(button_dodge)){
                     return;
@@ -187,6 +200,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.hondaCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Honda cars");
 
                 if (lastButtonPressed.equals(button_honda)){
                     return;
@@ -203,6 +218,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.jeepCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Jeep cars");
 
                 if (lastButtonPressed.equals(button_jeep)){
                     return;
@@ -219,6 +236,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.lamborghiniCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Lamborghini cars");
 
                 if (lastButtonPressed.equals(button_lamborghini)){
                     return;
@@ -234,6 +253,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.koenigseggCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Koenigsegg cars");
 
                 if (lastButtonPressed.equals(button_koenigsegg)){
                     return;
@@ -249,6 +270,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.teslaCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Tesla cars");
 
                 if (lastButtonPressed.equals(button_tesla)){
                     return;
@@ -265,6 +288,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View view) {
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.toyotaCars);
                 recyclerView.setAdapter(adapter);
+                filterApplied = false;
+                searchField.setHint("Search in Toyota cars");
 
                 if (lastButtonPressed.equals(button_toyota)){
                     return;
@@ -322,12 +347,13 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
                         }
 
                         // set the adapter to the recycler view
-                        List<Car> filteredCars = new ArrayList<>();
 
                         // find the current array based on the last button pressed
                         List<Car> currentArray = findCurrentArray(lastButtonPressed);
-
+                        filteredCars.clear();
                         filteredCars = applyFilter(currentArray, clickedButtons, spin, priceFrom, priceTo);
+                        filterApplied = true;
+                        searchField.setHint("Search in filtered cars");
 
                         adapter = new CarAdapter(getActivity(), filteredCars);
                         recyclerView.setAdapter(adapter);
@@ -449,6 +475,25 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             }
         });
 
+        searchField.setOnKeyListener( new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, android.view.KeyEvent event) {
+                //if (event.getAction() == android.view.KeyEvent.ACTION_DOWN) {
+                    List<Car> cars = new ArrayList<>();
+                    if (filterApplied){
+                        // if the user applied a filter (search in the filtered cars)
+                        cars = searchForCarByType(searchField.getText().toString(), filteredCars);
+                    } else {
+                        // if the user didn't apply a filter (search in the current array selected)
+                        cars = searchForCarByType(searchField.getText().toString(), findCurrentArray(lastButtonPressed));
+                    }
+                    adapter = new CarAdapter(getActivity(), cars);
+                    recyclerView.setAdapter(adapter);
+                //}
+                return false;
+            }
+        });
+
 
         // transition animation for textview_favourite_alert
         textView_favourite_alert = getActivity().findViewById(R.id.textView_favouriteAlert);
@@ -465,6 +510,22 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
         recyclerView.setAdapter(adapter);
 
 
+    }
+
+    // function to search for a car by its type
+    public List<Car> searchForCarByType(String key, List<Car> cars){
+        List<Car> searchedCars = new ArrayList<>();
+        for (Car car : cars) {
+            String carType = car.getType().toLowerCase().trim() + car.getFactoryName().toLowerCase().trim();
+            String carType2 = car.getFactoryName().toLowerCase().trim() + car.getType().toLowerCase().trim();
+            carType = carType.replaceAll(" ", "");
+            carType2 = carType2.replaceAll(" ", "");
+            String filteredKey = key.toLowerCase().trim().replaceAll(" ", "");
+            if (carType.contains(filteredKey) || carType2.contains(filteredKey)) {
+                searchedCars.add(car);
+            }
+        }
+        return searchedCars;
     }
 
     // function to find the current array based on the last button pressed

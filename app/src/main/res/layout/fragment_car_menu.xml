@@ -11,6 +11,7 @@
         android:id="@+id/recycler_car_menu"
         android:layout_width="415dp"
         android:layout_height="612dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
@@ -18,41 +19,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.759" />
 
-    <ImageButton
-        android:id="@+id/button_filter"
-        android:layout_width="46dp"
-        android:layout_height="42dp"
-        android:src="@android:drawable/ic_menu_sort_by_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/textView_favouriteAlert"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginTop="7dp"
         android:background="#CB000000"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Added to Favourite"
+        android:text="Welcome To Car Menu"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.118" />
+        app:layout_constraintVertical_bias="0.124" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="438dp"
         android:layout_height="42dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.833"
@@ -234,6 +225,41 @@
         </LinearLayout>
 
     </HorizontalScrollView>
+
+    <EditText
+        android:id="@+id/editText_search"
+        android:layout_width="420dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/plaintext_grey_theme"
+        android:drawableStart="@drawable/ic_search"
+        android:ems="10"
+        android:hint="Search in all cars"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:textColor="#000000"
+        android:textColorHint="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01" />
+
+    <ImageButton
+        android:id="@+id/button_filter"
+        android:layout_width="38dp"
+        android:layout_height="37dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/ic_filter"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText_search"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
