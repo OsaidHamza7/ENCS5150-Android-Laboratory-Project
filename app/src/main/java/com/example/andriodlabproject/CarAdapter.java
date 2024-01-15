@@ -4,6 +4,7 @@ package com.example.andriodlabproject;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +24,20 @@ import java.util.List;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     private List<Car> carList;
+    private List<User> userList;
     private LayoutInflater inflater;
     private final Context context;
 
     public CarAdapter(Context context, List<Car> carList) {
         this.inflater = LayoutInflater.from(context);
         this.carList = carList;
+        this.context = context;
+    }
+
+    public CarAdapter(Context context, List<Car> carList, List<User> userList) {
+        this.inflater = LayoutInflater.from(context);
+        this.carList = carList;
+        this.userList = userList;
         this.context = context;
     }
 
@@ -51,23 +60,45 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.viewDate.setText(currentCar.getDate());
 
         if(context instanceof HomeAdminActivity){
-            // remove the favorite button from the admin view
+            // remove the favorite button and space from the admin view
             holder.favLayout.removeView(holder.imgFav);
+            holder.favLayout.removeView(holder.space_carItem);
+
             // remove the reserve button from the admin view
             holder.mainLayout.removeView(holder.reserve);
+            holder.mainLayout.removeView(holder.carInfoLayout);
+
+            User currentUser = userList.get(position);
+
+            // split the date and time
+            String[] dateTime = currentCar.getDate().split("T");
+            String date = dateTime[0];
+            String time = dateTime[1];
+
             TextView textView = new TextView(holder.itemView.getContext());
-            textView.setText("Test User Email");
+            TextView textView2 = new TextView(holder.itemView.getContext());
+            String text = currentCar.getFactoryName()+" "+currentCar.getType()+"\n"+currentCar.getPrice();
+            String text2 = "Reserved by:\n"+currentUser.getFirstName()+" "+currentUser.getLastName()+"\n"+currentUser.getEmail()+"\n"+date+"\n"+time;
+
+            LinearLayout linearLayout = new LinearLayout(holder.itemView.getContext());
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setPadding(20, 20, 20, 20);
+
+
+            textView.setTypeface(null, Typeface.BOLD);
             textView.setTextColor(Color.BLACK);
             textView.setTextSize(15);
-            textView.setLayoutParams(new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            holder.userInfoLayout.removeAllViews();
-            holder.userInfoLayout.addView(textView);
+            textView.setText(text);
 
+            textView2.setTextColor(Color.BLACK);
+            textView2.setTextSize(15);
+            textView2.setText(text2);
 
+            linearLayout.addView(textView);
+            linearLayout.addView(textView2);
 
-
+            holder.favLayout.removeView(linearLayout);
+            holder.favLayout.addView(linearLayout);
 
         }
 
@@ -85,11 +116,10 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         private TextView viewDate;
         private ImageButton imgFav;
         private Button reserve;
-        private LinearLayout userInfoLayout;
         private LinearLayout mainLayout;
         private LinearLayout favLayout;
         private Space space_carItem;
-        //private TextView userEmail;
+        private LinearLayout carInfoLayout;
         public CarViewHolder(View itemView) {
             super(itemView);
             carImage = itemView.findViewById(R.id.imgCar);
@@ -98,11 +128,10 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             imgFav = itemView.findViewById(R.id.imgFav);
             reserve=itemView.findViewById(R.id.button_reserve);
             viewDate=itemView.findViewById(R.id.viewDate);
-            userInfoLayout=itemView.findViewById(R.id.Linear_userInfo);
             mainLayout=itemView.findViewById(R.id.linear_carItem);
             favLayout=itemView.findViewById(R.id.favLayout);
             space_carItem=itemView.findViewById(R.id.space_carItem);
-
+            carInfoLayout=itemView.findViewById(R.id.carInfoLayout);
 
             imgFav.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -8,12 +8,6 @@
     android:padding="5dp">
 
     <LinearLayout
-        android:id="@+id/Linear_userInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
-
-    <LinearLayout
         android:id="@+id/favLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +42,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/carInfoLayout"
         android:layout_width="258dp"
         android:layout_height="63dp"
         android:orientation="vertical">

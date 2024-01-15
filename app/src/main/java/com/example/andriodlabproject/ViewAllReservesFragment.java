@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ViewAllReservesFragment#newInstance} factory method to
@@ -61,21 +64,53 @@ public class ViewAllReservesFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
+        dataBaseHelper = new DataBaseHelper(getActivity());
+
         recyclerView = getActivity().findViewById(R.id.recycler_all_reserved_cars);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
+        List <Car> allCarsReserved = new ArrayList<>();
+        List <User> allUsersReserved = new ArrayList<>();
+
+        // get all reservations from the database
+        getAllReservation(allCarsReserved, allUsersReserved);
+
+        adapter = new CarAdapter(getActivity(), allCarsReserved, allUsersReserved);
         recyclerView.setAdapter(adapter);
 
 
-        dataBaseHelper = new DataBaseHelper(getActivity());
-        // get all reservations from the database
 
     }
 
-    private void getAllReservation(){
+    private void getAllReservation(List<Car> allCars, List<User> allUsers) {
         Cursor cursor = dataBaseHelper.getAllReservationsWithCarInfoAndUserInfo();
+        while (cursor.moveToNext()){
+            Car car = new Car();
+            car.setID(cursor.getInt(2));
+            car.setDate(cursor.getString(3));
+            car.setFactoryName(cursor.getString(5));
+            car.setType(cursor.getString(6));
+            car.setPrice(cursor.getString(7));
+            car.setFuelType(cursor.getString(8));
+            car.setTransmission(cursor.getString(9));
+            car.setMileage(cursor.getString(10));
+            car.setImgCar(cursor.getInt(11));
 
+            User user = new User();
+            user.setEmail(cursor.getString(1));
+            user.setFirstName(cursor.getString(12));
+            user.setLastName(cursor.getString(13));
+            user.setGender(cursor.getString(14));
+            user.setCountry(cursor.getString(17));
+            user.setCity(cursor.getString(18));
+            user.setPhoneNumber(cursor.getString(19));
+
+            System.out.println("first name: " + user.getFirstName());
+            System.out.println("last name: " + user.getLastName());
+
+            allCars.add(car);
+            allUsers.add(user);
+        }
 
 
     }

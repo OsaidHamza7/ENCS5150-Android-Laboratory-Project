@@ -82,7 +82,7 @@ public class User {
     }
 
     public void setFirstName(String firstName) {
-        firstName = firstName;
+        this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
