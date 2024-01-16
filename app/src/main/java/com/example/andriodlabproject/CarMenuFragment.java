@@ -1,5 +1,6 @@
 package com.example.andriodlabproject;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,6 +41,23 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
     public static FragmentActivity activity;
     private DataBaseHelper dataBaseHelper;
 
+    private ProgressBar progressBar;
+    private Button button_all;
+    private Button button_chevrolet;
+    private Button button_ford;
+    private Button button_dodge;
+    private Button button_honda;
+    private Button button_jeep;
+    private Button button_lamborghini;
+    private Button button_koenigsegg;
+    private  Button button_tesla;
+    private Button button_toyota;
+    private EditText searchField;
+    private Button lastFuelTypeButtonPressed;
+    private List<Button> factoryButtons = new ArrayList<>();
+
+    private ImageButton OpenBottomSheet;
+
     private List<Car> filteredCars = new ArrayList<>();
     private boolean filterApplied = false;
 
@@ -68,15 +86,7 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CarMenuFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static CarMenuFragment newInstance(String param1, String param2) {
         CarMenuFragment fragment = new CarMenuFragment();
         Bundle args = new Bundle();
@@ -100,414 +110,49 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-
-
     @Override
     public void onResume(){
         super.onResume();
-        dataBaseHelper = ((HomeNormalCustomerActivity)getActivity()).getDatabaseHelper();
+        // initialize the layout
+        initializeLayout();
+
+        showProgressBar(true);
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
 
-        Button button_all =(Button) getActivity().findViewById(R.id.button_all);
-        Button button_chevrolet =(Button) getActivity().findViewById(R.id.button_chevrolet);
-        Button button_ford =(Button) getActivity().findViewById(R.id.button_ford);
-        Button button_dodge =(Button) getActivity().findViewById(R.id.button_dodge);
-        Button button_honda =(Button) getActivity().findViewById(R.id.button_honda);
-        Button button_jeep =(Button) getActivity().findViewById(R.id.button_jeep);
-        Button button_lamborghini =(Button) getActivity().findViewById(R.id.button_lamborghini);
-        Button button_koenigsegg =(Button) getActivity().findViewById(R.id.button_koenigsegg);
-        Button button_tesla =(Button) getActivity().findViewById(R.id.button_tesla);
-        Button button_toyota =(Button) getActivity().findViewById(R.id.button_toyota);
-
-        EditText searchField = getActivity().findViewById(R.id.editText_search);
-
-        ImageButton OpenBottomSheet =(ImageButton) getActivity().findViewById(R.id.button_filter);
-
         lastButtonPressed = button_all;
 
-        button_all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        // set the listener for the factory buttons
+        setListenerForFactoryButtons();
+
+        // set the listener for the filter button
+        setListenerForFilterButton(bottomSheetDialog);
+
+        // set the listener for the search field
+        setListenerForSearchField();
+
+
+        new Thread(() -> {
+
+            // transition animation for textview_favourite_alert
+            textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.favourite_alert_initial));
+            activity = getActivity();
+
+
+            // Update UI on the main thread
+            getActivity().runOnUiThread(() -> {
+                recyclerView = getActivity().findViewById(R.id.recycler_car_menu);
+                recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                checkFavoriteCarsList();
+
                 adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
                 recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in all cars");
 
-                if(lastButtonPressed.equals(button_all)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_all);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_all;
-
-            }
-        });
-        button_chevrolet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(), HomeNormalCustomerActivity.chevroletCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Chevrolet cars");
-
-                if (lastButtonPressed.equals(button_chevrolet)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_chevrolet);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_chevrolet;
-
-            }
-        });
-
-        button_ford.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.fordCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Ford cars");
-
-                if (lastButtonPressed.equals(button_ford)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_ford);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_ford;
-            }
-        });
-
-        button_dodge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.dodgeCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Dodge cars");
-
-                if (lastButtonPressed.equals(button_dodge)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_dodge);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_dodge;
-            }
-        });
-
-        button_honda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.hondaCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Honda cars");
-
-                if (lastButtonPressed.equals(button_honda)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_honda);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_honda;
-            }
-        });
+                showProgressBar(false); // Hide progress bar
+            });
+        }).start();
 
 
-        button_jeep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.jeepCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Jeep cars");
-
-                if (lastButtonPressed.equals(button_jeep)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_jeep);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_jeep;
-
-            }
-        });
-
-        button_lamborghini.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.lamborghiniCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Lamborghini cars");
-
-                if (lastButtonPressed.equals(button_lamborghini)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_lamborghini);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_lamborghini;
-            }
-        });
-
-        button_koenigsegg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.koenigseggCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Koenigsegg cars");
-
-                if (lastButtonPressed.equals(button_koenigsegg)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_koenigsegg);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_koenigsegg;
-            }
-        });
-
-        button_tesla.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.teslaCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Tesla cars");
-
-                if (lastButtonPressed.equals(button_tesla)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_tesla);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_tesla;
-
-            }
-        });
-
-        button_toyota.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.toyotaCars);
-                recyclerView.setAdapter(adapter);
-                filterApplied = false;
-                searchField.setHint("Search in Toyota cars");
-
-                if (lastButtonPressed.equals(button_toyota)){
-                    return;
-                }
-                makeTextWhiteAndMakeBackgroundBlack(button_toyota);
-                makeTextBlackMakeBackgroundWhite(lastButtonPressed);
-                lastButtonPressed=button_toyota;
-            }
-        });
-
-        OpenBottomSheet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                View bottomSheetView = LayoutInflater.from(getActivity())
-                        .inflate(R.layout.modal_bottom_sheet,
-                                (LinearLayout) getActivity().findViewById(R.id.modalBottomSheetContainer));
-                List<Button> clickedButtons = new ArrayList<>();
-
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
-                Button btn_auto = bottomSheetView.findViewById(R.id.btn_automatic);
-                Button btn_manual = bottomSheetView.findViewById(R.id.btn_manual);
-
-                Button btn_diesel = bottomSheetView.findViewById(R.id.btn_diesel);
-                Button btn_petrol = bottomSheetView.findViewById(R.id.btn_petrol);
-                Button btn_electric = bottomSheetView.findViewById(R.id.btn_electric);
-                Button btn_hybrid = bottomSheetView.findViewById(R.id.btn_hybrid);
-
-                Button btn_apply = bottomSheetView.findViewById(R.id.btn_apply);
-                Button btn_reset = bottomSheetView.findViewById(R.id.btn_reset);
-
-                EditText priceFrom = bottomSheetView.findViewById(R.id.editTextNumber_priceFrom);
-                EditText priceTo = bottomSheetView.findViewById(R.id.editTextNumber_priceTo);
-
-                Spinner spin = bottomSheetView.findViewById(R.id.fromPrice);
-                spin.setOnItemSelectedListener(CarMenuFragment.this);
-
-
-                ArrayAdapter ad = new ArrayAdapter(getActivity(),
-                        android.R.layout.simple_spinner_item, RangeMilages);
-
-                ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spin.setAdapter(ad);
-
-                btn_apply.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ProgressBar pb = (ProgressBar) bottomSheetView.findViewById(R.id.progressBar);
-                        prog(pb);
-
-                        // check the validity of the price range
-                        if (!checkPriceRangeValidity(priceFrom, priceTo)){
-                            return;
-                        }
-
-                        // set the adapter to the recycler view
-
-                        // find the current array based on the last button pressed
-                        List<Car> currentArray = findCurrentArray(lastButtonPressed);
-                        filteredCars.clear();
-                        filteredCars = applyFilter(currentArray, clickedButtons, spin, priceFrom, priceTo);
-                        filterApplied = true;
-                        searchField.setHint("Search in filtered cars");
-
-                        adapter = new CarAdapter(getActivity(), filteredCars);
-                        recyclerView.setAdapter(adapter);
-
-                        bottomSheetDialog.dismiss();
-                    }
-
-                });
-
-                btn_auto.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(clickedButtons.contains(btn_manual)){
-                            makeTextBlackMakeBackgroundWhite(btn_manual);
-                            clickedButtons.remove(btn_manual);
-                        }
-                        checkClickedButtons(clickedButtons,btn_auto);
-
-                    }
-                });
-
-
-                btn_manual.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(clickedButtons.contains(btn_auto)){
-                            makeTextBlackMakeBackgroundWhite(btn_auto);
-                            clickedButtons.remove(btn_auto);
-                        }
-                        checkClickedButtons(clickedButtons,btn_manual);
-                    }
-                });
-
-                btn_diesel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(clickedButtons.contains(btn_petrol)){
-                            makeTextBlackMakeBackgroundWhite(btn_petrol);
-                            clickedButtons.remove(btn_petrol);
-                        }
-                        if(clickedButtons.contains(btn_electric)){
-                            makeTextBlackMakeBackgroundWhite(btn_electric);
-                            clickedButtons.remove(btn_electric);
-                        }
-                        if(clickedButtons.contains(btn_hybrid)){
-                            makeTextBlackMakeBackgroundWhite(btn_hybrid);
-                            clickedButtons.remove(btn_hybrid);
-                        }
-                        checkClickedButtons(clickedButtons,btn_diesel);
-                    }
-                });
-
-                btn_petrol.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(clickedButtons.contains(btn_diesel)){
-                            makeTextBlackMakeBackgroundWhite(btn_diesel);
-                            clickedButtons.remove(btn_diesel);
-                        }
-                        if(clickedButtons.contains(btn_electric)){
-                            makeTextBlackMakeBackgroundWhite(btn_electric);
-                            clickedButtons.remove(btn_electric);
-                        }
-                        if(clickedButtons.contains(btn_hybrid)){
-                            makeTextBlackMakeBackgroundWhite(btn_hybrid);
-                            clickedButtons.remove(btn_hybrid);
-                        }
-                        checkClickedButtons(clickedButtons,btn_petrol);
-                    }
-                });
-
-                btn_electric.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(clickedButtons.contains(btn_diesel)){
-                            makeTextBlackMakeBackgroundWhite(btn_diesel);
-                            clickedButtons.remove(btn_diesel);
-                        }
-                        if(clickedButtons.contains(btn_petrol)){
-                            makeTextBlackMakeBackgroundWhite(btn_petrol);
-                            clickedButtons.remove(btn_petrol);
-                        }
-                        if(clickedButtons.contains(btn_hybrid)){
-                            makeTextBlackMakeBackgroundWhite(btn_hybrid);
-                            clickedButtons.remove(btn_hybrid);
-                        }
-                        checkClickedButtons(clickedButtons,btn_electric);
-                    }
-                });
-
-                btn_hybrid.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(clickedButtons.contains(btn_diesel)){
-                            makeTextBlackMakeBackgroundWhite(btn_diesel);
-                            clickedButtons.remove(btn_diesel);
-                        }
-                        if(clickedButtons.contains(btn_petrol)){
-                            makeTextBlackMakeBackgroundWhite(btn_petrol);
-                            clickedButtons.remove(btn_petrol);
-                        }
-                        if(clickedButtons.contains(btn_electric)){
-                            makeTextBlackMakeBackgroundWhite(btn_electric);
-                            clickedButtons.remove(btn_electric);
-                        }
-                        checkClickedButtons(clickedButtons,btn_hybrid);
-                    }
-                });
-
-                btn_reset.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for(int i=0;i<clickedButtons.size();i++){
-                            makeTextBlackMakeBackgroundWhite(clickedButtons.get(i));
-                        }
-                        clickedButtons.clear();
-                    }
-                });
-            }
-        });
-
-        searchField.setOnKeyListener( new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, android.view.KeyEvent event) {
-                //if (event.getAction() == android.view.KeyEvent.ACTION_DOWN) {
-                    List<Car> cars = new ArrayList<>();
-                    if (filterApplied){
-                        // if the user applied a filter (search in the filtered cars)
-                        cars = searchForCarByType(searchField.getText().toString(), filteredCars);
-                    } else {
-                        // if the user didn't apply a filter (search in the current array selected)
-                        cars = searchForCarByType(searchField.getText().toString(), findCurrentArray(lastButtonPressed));
-                    }
-                    adapter = new CarAdapter(getActivity(), cars);
-                    recyclerView.setAdapter(adapter);
-                //}
-                return false;
-            }
-        });
-
-
-        // transition animation for textview_favourite_alert
-        textView_favourite_alert = getActivity().findViewById(R.id.textView_favouriteAlert);
-        textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.favourite_alert_initial));
-        activity = getActivity();
-        //adapter.notifyDataSetChanged();
-
-
-        recyclerView = getActivity().findViewById(R.id.recycler_car_menu);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        checkFavoriteCarsList();
-
-        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
-        recyclerView.setAdapter(adapter);
 
 
     }
@@ -700,6 +345,65 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
         return true;
     }
 
+    // function to set the listener for the factory buttons
+    private void setListenerForFactoryButtons(){
+
+        for (Button button : factoryButtons) {
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showProgressBar(true);
+                    if (button.getText().toString().equals("All")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.allCars);
+                        searchField.setHint("Search in all cars");
+                    } else if (button.getText().toString().equals("Chevrolet")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.chevroletCars);
+                        searchField.setHint("Search in Chevrolet cars");
+                    } else if (button.getText().toString().equals("Ford")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.fordCars);
+                        searchField.setHint("Search in Ford cars");
+                    } else if (button.getText().toString().equals("Dodge")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.dodgeCars);
+                        searchField.setHint("Search in Dodge cars");
+                    } else if (button.getText().toString().equals("Honda")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.hondaCars);
+                        searchField.setHint("Search in Honda cars");
+                    } else if (button.getText().toString().equals("Jeep")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.jeepCars);
+                        searchField.setHint("Search in Jeep cars");
+                    } else if (button.getText().toString().equals("Lamborghini")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.lamborghiniCars);
+                        searchField.setHint("Search in Lamborghini cars");
+                    } else if (button.getText().toString().equals("Koenigsegg")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.koenigseggCars);
+                        searchField.setHint("Search in Koenigsegg cars");
+                    } else if (button.getText().toString().equals("Tesla")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.teslaCars);
+                        searchField.setHint("Search in Tesla cars");
+                    } else if (button.getText().toString().equals("Toyota")){
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.toyotaCars);
+                        searchField.setHint("Search in Toyota cars");
+                    }
+
+                    new Thread(() -> {
+                        // Update UI on the main thread
+                        getActivity().runOnUiThread(() -> {
+                            recyclerView.setAdapter(adapter);
+                            filterApplied = false;
+                            showProgressBar(false);
+                        });
+                    }).start();
+                    if(lastButtonPressed.equals(button)){
+                        return;
+                    }
+                    makeTextWhiteAndMakeBackgroundBlack(button);
+                    makeTextBlackMakeBackgroundWhite(lastButtonPressed);
+                    lastButtonPressed=button;
+                }
+            });
+        }
+    }
+
 
 
     public void makeTextBlackMakeBackgroundWhite(Button button){
@@ -739,6 +443,170 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             }
         };
         t.schedule(tt, 0, 50);
+    }
+
+    public void initializeLayout(){
+        button_all =(Button) getActivity().findViewById(R.id.button_all);
+        button_chevrolet =(Button) getActivity().findViewById(R.id.button_chevrolet);
+        button_ford =(Button) getActivity().findViewById(R.id.button_ford);
+        button_dodge =(Button) getActivity().findViewById(R.id.button_dodge);
+        button_honda =(Button) getActivity().findViewById(R.id.button_honda);
+        button_jeep =(Button) getActivity().findViewById(R.id.button_jeep);
+        button_lamborghini =(Button) getActivity().findViewById(R.id.button_lamborghini);
+        button_koenigsegg =(Button) getActivity().findViewById(R.id.button_koenigsegg);
+        button_tesla =(Button) getActivity().findViewById(R.id.button_tesla);
+        button_toyota =(Button) getActivity().findViewById(R.id.button_toyota);
+        searchField = getActivity().findViewById(R.id.editText_search);
+        OpenBottomSheet =(ImageButton) getActivity().findViewById(R.id.button_filter);
+        textView_favourite_alert = getActivity().findViewById(R.id.textView_favouriteAlert);
+        progressBar = getActivity().findViewById(R.id.progressBar_carMenu);
+        progressBar.setProgressTintList(ColorStateList.valueOf(Color.BLACK));
+
+
+        textView_favourite_alert.setText("Welcome to Car Menu");
+
+        factoryButtons.add(button_all);
+        factoryButtons.add(button_chevrolet);
+        factoryButtons.add(button_ford);
+        factoryButtons.add(button_dodge);
+        factoryButtons.add(button_honda);
+        factoryButtons.add(button_jeep);
+        factoryButtons.add(button_lamborghini);
+        factoryButtons.add(button_koenigsegg);
+        factoryButtons.add(button_tesla);
+        factoryButtons.add(button_toyota);
+
+        dataBaseHelper = ((HomeNormalCustomerActivity)getActivity()).getDatabaseHelper();
+
+    }
+
+    // function to set the listener for the search field
+    private void setListenerForSearchField(){
+        searchField.setOnKeyListener((v, keyCode, event) -> {
+            List<Car> cars;
+            if (filterApplied){
+                // if the user applied a filter (search in the filtered cars)
+                cars = searchForCarByType(searchField.getText().toString(), filteredCars);
+            } else {
+                // if the user didn't apply a filter (search in the current array selected)
+                cars = searchForCarByType(searchField.getText().toString(), findCurrentArray(lastButtonPressed));
+            }
+            adapter = new CarAdapter(getActivity(), cars);
+            recyclerView.setAdapter(adapter);
+            return false;
+        });
+    }
+
+    private void setListenerForFilterButton(BottomSheetDialog bottomSheetDialog){
+        // set the listener for the filter button
+        OpenBottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                View bottomSheetView = LayoutInflater.from(getActivity())
+                        .inflate(R.layout.modal_bottom_sheet,
+                                (LinearLayout) getActivity().findViewById(R.id.modalBottomSheetContainer));
+                List<Button> clickedButtons = new ArrayList<>();
+                List<Button> fuelTypeButtons = new ArrayList<>();
+                lastFuelTypeButtonPressed = null;
+
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+                Button btn_auto = bottomSheetView.findViewById(R.id.btn_automatic);
+                Button btn_manual = bottomSheetView.findViewById(R.id.btn_manual);
+
+                Button btn_diesel = bottomSheetView.findViewById(R.id.btn_diesel);
+                Button btn_petrol = bottomSheetView.findViewById(R.id.btn_petrol);
+                Button btn_electric = bottomSheetView.findViewById(R.id.btn_electric);
+                Button btn_hybrid = bottomSheetView.findViewById(R.id.btn_hybrid);
+
+                Button btn_apply = bottomSheetView.findViewById(R.id.btn_apply);
+                Button btn_reset = bottomSheetView.findViewById(R.id.btn_reset);
+
+                EditText priceFrom = bottomSheetView.findViewById(R.id.editTextNumber_priceFrom);
+                EditText priceTo = bottomSheetView.findViewById(R.id.editTextNumber_priceTo);
+
+                Spinner spin = bottomSheetView.findViewById(R.id.fromPrice);
+                spin.setOnItemSelectedListener(CarMenuFragment.this);
+
+                fuelTypeButtons.add(btn_diesel);
+                fuelTypeButtons.add(btn_petrol);
+                fuelTypeButtons.add(btn_electric);
+                fuelTypeButtons.add(btn_hybrid);
+
+
+                ArrayAdapter ad = new ArrayAdapter(getActivity(),
+                        android.R.layout.simple_spinner_item, RangeMilages);
+
+                ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spin.setAdapter(ad);
+
+                btn_apply.setOnClickListener(v1 -> {
+                    ProgressBar pb = (ProgressBar) bottomSheetView.findViewById(R.id.progressBar);
+                    prog(pb);
+
+                    // check the validity of the price range
+                    if (!checkPriceRangeValidity(priceFrom, priceTo)){
+                        return;
+                    }
+
+                    // find the current array based on the last button pressed
+                    List<Car> currentArray = findCurrentArray(lastButtonPressed);
+                    filteredCars.clear();
+                    filteredCars = applyFilter(currentArray, clickedButtons, spin, priceFrom, priceTo);
+                    filterApplied = true;
+                    searchField.setHint("Search in filtered cars");
+
+                    adapter = new CarAdapter(getActivity(), filteredCars);
+                    recyclerView.setAdapter(adapter);
+
+                    bottomSheetDialog.dismiss();
+                });
+
+                for (Button button : fuelTypeButtons) {
+                    button.setOnClickListener(v12 -> {
+                        if(lastFuelTypeButtonPressed!=null && !lastFuelTypeButtonPressed.equals(button)){
+                            checkClickedButtons(clickedButtons,lastFuelTypeButtonPressed);
+                        }
+                        checkClickedButtons(clickedButtons,button);
+                        lastFuelTypeButtonPressed = button;
+                    });
+                }
+
+                btn_auto.setOnClickListener(v12 -> {
+                    if(clickedButtons.contains(btn_manual)){
+                        makeTextBlackMakeBackgroundWhite(btn_manual);
+                        clickedButtons.remove(btn_manual);
+                    }
+                    checkClickedButtons(clickedButtons,btn_auto);
+
+                });
+
+
+                btn_manual.setOnClickListener(v13 -> {
+                    if(clickedButtons.contains(btn_auto)){
+                        makeTextBlackMakeBackgroundWhite(btn_auto);
+                        clickedButtons.remove(btn_auto);
+                    }
+                    checkClickedButtons(clickedButtons,btn_manual);
+                });
+
+                btn_reset.setOnClickListener(v18 -> {
+                    for(int i=0;i<clickedButtons.size();i++){
+                        makeTextBlackMakeBackgroundWhite(clickedButtons.get(i));
+                    }
+                    clickedButtons.clear();
+                });
+            }
+        });
+    }
+
+    private void showProgressBar(boolean show) {
+        if (show) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override

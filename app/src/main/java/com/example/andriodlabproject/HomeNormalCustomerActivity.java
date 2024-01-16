@@ -110,7 +110,12 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
         }
         if (item.getItemId()==R.id.nav_carMenu){
             toolbar.setTitle("CAR MENU");
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CarMenuFragment()).commit();
+            drawer.closeDrawer(GravityCompat.START);
+
+            // thread to not make the app freeze
+            new Thread(() -> runOnUiThread(()->{
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CarMenuFragment()).commit();
+            })).start();
         }
         if (item.getItemId()==R.id.nav_yourFavorites){
             toolbar.setTitle("FAVORITE CARS");
