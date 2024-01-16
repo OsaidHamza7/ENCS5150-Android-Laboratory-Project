@@ -17,27 +17,6 @@ import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    public static String permission = "User";
-    private Button button_signup;
-    private EditText editText_firstName;
-    private EditText editText_lastName;
-    private EditText editText_email;
-    private EditText editText_password;
-    private EditText editText_confirmPassword;
-    private EditText editText_phoneNumber;
-
-    private Spinner countrySpinner;
-    private Spinner citySpinner;
-    private Spinner genderSpinner;
-    private String[] cities = null;
-    private ImageView imageViewCountryFlag;
-    private TextView textViewCountryCode;
-    private boolean firstCountry = true;
-    private boolean firstGender = true;
-    private boolean firstCity = true;
-    private int previousCountry = 1;
-    private int previousCity = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

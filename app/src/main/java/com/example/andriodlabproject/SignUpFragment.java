@@ -312,7 +312,7 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
 
                 }
                 ArrayAdapter<String> objCityArr = new
-                        ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item, cities);
+                        ArrayAdapter<>(getActivity(), R.layout.spinner_layout, cities);
                 citySpinner.setAdapter(objCityArr);
                 previousCountry = pos;
                 firstCity = true;
@@ -381,20 +381,20 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
 
         // set the gender spinner
         ArrayAdapter<String> objGenderArr = new
-                ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, genders);
+                ArrayAdapter<>(getActivity(), R.layout.spinner_layout, genders);
         genderSpinner.setAdapter(objGenderArr);
         genderSpinner.setOnItemSelectedListener(this);
 
         // set the country spinner
         countrySpinner = (Spinner) getActivity().findViewById(R.id.spinner_registerCountry);
         ArrayAdapter<String> objCountryArr = new
-                ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, countries);
+                ArrayAdapter<>(getActivity(), R.layout.spinner_layout, countries);
         countrySpinner.setAdapter(objCountryArr);
 
         // set the city spinner
         cities = new String[]{"City"};
         ArrayAdapter<String> objCityArr = new
-                ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, cities);
+                ArrayAdapter<>(getActivity(), R.layout.spinner_layout, cities);
         citySpinner.setAdapter(objCityArr);
 
         // set the listener for the country spinner to change the cities when the country is changed
