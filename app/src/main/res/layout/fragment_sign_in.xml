@@ -12,13 +12,13 @@
         android:layout_width="308dp"
         android:layout_height="58dp"
         android:background="@drawable/plaintext_grey_theme"
+        android:drawableStart="@drawable/baseline_email_24"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingLeft="10dp"
-        android:drawableStart="@drawable/baseline_email_24"
-        android:drawableLeft="@drawable/baseline_email_24"
-        android:drawablePadding="10dp"
         android:paddingRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,8 +30,8 @@
         android:id="@+id/checkBox_rememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remember Me"
         android:buttonTint="@color/black"
+        android:text="Remember Me"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -51,13 +51,13 @@
         android:inputType="textPassword"
         android:paddingLeft="10dp"
         android:paddingRight="15dp"
-        app:passwordToggleEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.245" />
+
+        app:layout_constraintVertical_bias="0.245"
+        app:passwordToggleEnabled="true" />
 
 
     <Button
@@ -74,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.528" />
+        app:layout_constraintVertical_bias="0.487" />
 
     <Button
         android:id="@+id/bottun_OpenSignUp"
@@ -87,10 +87,10 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.648"
+        app:layout_constraintHorizontal_bias="0.688"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.607" />
+        app:layout_constraintVertical_bias="0.568" />
 
     <TextView
         android:id="@+id/text"
@@ -99,10 +99,10 @@
         android:text="Don't have an account?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintHorizontal_bias="0.401"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.607" />
+        app:layout_constraintVertical_bias="0.568" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

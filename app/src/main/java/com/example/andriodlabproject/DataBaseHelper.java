@@ -75,15 +75,21 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.execSQL(CREATE_CAR_DEALER_TABLE);
         //db.execSQL(CREATE_SPECIAL_OFFERS_TABLE);
 
-        // add a static admin user using insertInto query
-        db.execSQL("INSERT INTO User (FirstName, LastName, Gender, Email, Password, Country, City, PhoneNumber, Permission) VALUES ('Admin','Admin','Male','admin@gmail.com','"+User.hashPassword("admin@123")+ "','Palestine','Tulkarm','0599999999','Admin')");
         db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (-1,'NoDealer')");
         db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (1,'Dealer1')");
         db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (2,'Dealer2')");
         db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (3,'Dealer3')");
+
+        // add a static admin user
+        db.execSQL("INSERT INTO User (FirstName, LastName, Gender, Email, Password, Country, City, PhoneNumber, Permission, DealerID) VALUES ('Admin','Admin','Male','admin@gmail.com','"+User.hashPassword("admin@123")+ "','Palestine','Tulkarm','0599999999','Admin','-1')");
+        // add a static admin for car Dealers 1,2 and 3
+        db.execSQL("INSERT INTO User (FirstName, LastName, Gender, Email, Password, Country, City, PhoneNumber, Permission, DealerID) VALUES ('Dealer','1','Male','d1@gmail.com','"+User.hashPassword("d@123")+ "','Palestine','Ramallah','0599999999','Admin','1')");
+        db.execSQL("INSERT INTO User (FirstName, LastName, Gender, Email, Password, Country, City, PhoneNumber, Permission, DealerID) VALUES ('Dealer','2','Male','d2@gmail.com','"+User.hashPassword("d@123")+ "','Palestine','Ramallah','0599999999','Admin','2')");
+        db.execSQL("INSERT INTO User (FirstName, LastName, Gender, Email, Password, Country, City, PhoneNumber, Permission, DealerID) VALUES ('Dealer','3','Male','d3@gmail.com','"+User.hashPassword("d@123")+ "','Palestine','Ramallah','0599999999','Admin','3')");
+
     }
 
-    // create a new user account in the database assuming that there is User class
+    // create a new user account in the database
     public boolean insertUser(User user){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -218,6 +224,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     public Cursor getAllReservationsWithCarInfoAndUserInfo(){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         return sqLiteDatabase.rawQuery("SELECT * FROM Reservation INNER JOIN Car ON Reservation.CarID = Car.CarID INNER JOIN User ON Reservation.Email = User.Email",null);
+    }
+
+    // get all reservation for a dealer with car info and user info from the database
+    public Cursor getAllReservationsWithCarInfoAndUserInfoByDealerID(int dealerID){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Reservation INNER JOIN Car ON Reservation.CarID = Car.CarID INNER JOIN User ON Reservation.Email = User.Email WHERE Car.DealerID = '"+dealerID+"'",null);
     }
 
     // get reservation with car info by user email

@@ -77,7 +77,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
             TextView textView = new TextView(holder.itemView.getContext());
             TextView textView2 = new TextView(holder.itemView.getContext());
-            String text = currentCar.getFactoryName()+" "+currentCar.getType()+"\n"+currentCar.getPrice();
+            String text = currentCar.getFactoryName()+" "+currentCar.getType()+"\n"+currentCar.getPrice() +"\n"+currentCar.getDealerName();
             String text2 = "Reserved by:\n"+currentUser.getFirstName()+" "+currentUser.getLastName()+"\n"+currentUser.getEmail()+"\n"+date+"\n"+time;
 
             LinearLayout linearLayout = new LinearLayout(holder.itemView.getContext());
@@ -213,6 +213,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                         details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
                         details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
                         details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
+                        details.append("Dealer ID: ").append(currentCar.getDealerID()).append("\n");
+                        details.append("Dealer Name: ").append(currentCar.getDealerName()).append("\n");
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                         builder.setTitle("Car Details")

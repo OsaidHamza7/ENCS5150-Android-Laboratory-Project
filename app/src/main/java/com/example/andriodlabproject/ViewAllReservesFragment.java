@@ -83,7 +83,13 @@ public class ViewAllReservesFragment extends Fragment {
     }
 
     private void getAllReservation(List<Car> allCars, List<User> allUsers) {
-        Cursor cursor = dataBaseHelper.getAllReservationsWithCarInfoAndUserInfo();
+        int dealerID = User.currentUser.getInt(10);
+        Cursor cursor = null;
+        if (dealerID == -1){ // global admin
+            cursor = dataBaseHelper.getAllReservationsWithCarInfoAndUserInfo();
+        } else { // dealer admin
+            cursor = dataBaseHelper.getAllReservationsWithCarInfoAndUserInfoByDealerID(dealerID);
+        }
         while (cursor.moveToNext()){
             Car car = new Car();
             car.setID(cursor.getInt(2));
@@ -95,18 +101,24 @@ public class ViewAllReservesFragment extends Fragment {
             car.setTransmission(cursor.getString(9));
             car.setMileage(cursor.getString(10));
             car.setImgCar(cursor.getInt(11));
+            car.setDealerID(cursor.getInt(12));
+
+            Cursor tempDealer = dataBaseHelper.getDealerByID(cursor.getInt(12));
+            tempDealer.moveToNext();
+            car.setDealerName(tempDealer.getString(1));
 
             User user = new User();
             user.setEmail(cursor.getString(1));
-            user.setFirstName(cursor.getString(12));
-            user.setLastName(cursor.getString(13));
-            user.setGender(cursor.getString(14));
-            user.setCountry(cursor.getString(17));
-            user.setCity(cursor.getString(18));
-            user.setPhoneNumber(cursor.getString(19));
+            user.setFirstName(cursor.getString(13));
+            user.setLastName(cursor.getString(14));
+            user.setGender(cursor.getString(15));
+            user.setCountry(cursor.getString(18));
+            user.setCity(cursor.getString(19));
+            user.setPhoneNumber(cursor.getString(20));
 
-            System.out.println("first name: " + user.getFirstName());
-            System.out.println("last name: " + user.getLastName());
+
+
+
 
             allCars.add(car);
             allUsers.add(user);
