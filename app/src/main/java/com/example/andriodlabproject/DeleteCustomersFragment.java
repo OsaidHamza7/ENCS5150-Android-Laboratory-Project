@@ -67,8 +67,9 @@ public class DeleteCustomersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        textView_delete_customer_alert.setText("Delete Customer By Email");
         textView_delete_customer_alert = getActivity().findViewById(R.id.textView_deleteCustomerAlert);
+        textView_delete_customer_alert.setText("Delete Customer By Email");
+
         textView_delete_customer_alert.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.favourite_alert_initial));
         activity = getActivity();
 
