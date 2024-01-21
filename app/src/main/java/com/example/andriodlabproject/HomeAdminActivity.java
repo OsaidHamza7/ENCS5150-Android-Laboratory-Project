@@ -2,6 +2,7 @@ package com.example.andriodlabproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +33,12 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
         TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
         navUsername.setText(User.currentUser.getString(0) +" " +User.currentUser.getString(1));
         navEmail.setText(User.currentUser.getString(3));
+
+        // Get the Menu from the NavigationView
+        Menu menu = navigationView.getMenu();
+
+        // Remove the item by its ID
+        menu.removeItem(R.id.navAdmin_deleteCustomers);
 
         toolbar=findViewById(R.id.toolbarAdmin);
         toolbar.setTitle("PROFILE");
