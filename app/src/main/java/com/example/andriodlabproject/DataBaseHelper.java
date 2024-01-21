@@ -22,7 +22,9 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "City TEXT," +
             "PhoneNumber TEXT," +
             "Permission TEXT," +
-            "ProfilePicture BLOB);";
+            "ProfilePicture BLOB,"+
+            "DealerID INTEGER," +
+            "FOREIGN KEY(DealerID) REFERENCES CarDealer(DealerID));";
 
     private static final String CREATE_CAR_TABLE = "CREATE TABLE Car (" +
             "CarID INTEGER PRIMARY KEY," +
@@ -32,7 +34,9 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "FuelType TEXT," +
             "TransmissionType TEXT," +
             "Mileage TEXT," +
-            "Image INTEGER);";
+            "Image INTEGER," +
+            "DealerID INTEGER," +
+            "FOREIGN KEY(DealerID) REFERENCES CarDealer(DealerID));";
 
     private static final String CREATE_RESERVATION_TABLE = "CREATE TABLE Reservation (" +
             "ReservationID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -49,6 +53,10 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "FOREIGN KEY(Email) REFERENCES User(Email) ON DELETE CASCADE," +
             "FOREIGN KEY(CarID) REFERENCES Car(CarID));";
 
+    private static final String CREATE_CAR_DEALER_TABLE = "CREATE TABLE CarDealer (" +
+            "DealerID INTEGER PRIMARY KEY," +
+            "DealerName TEXT);";
+
     private static final String CREATE_SPECIAL_OFFERS_TABLE = "CREATE TABLE SpecialOffers (" +
             "OfferID INTEGER PRIMARY KEY AUTOINCREMENT," +
             "CarID INTEGER," +
@@ -64,6 +72,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.execSQL(CREATE_CAR_TABLE);
         db.execSQL(CREATE_RESERVATION_TABLE);
         db.execSQL(CREATE_FAVORITES_TABLE);
+        db.execSQL(CREATE_CAR_DEALER_TABLE);
         //db.execSQL(CREATE_SPECIAL_OFFERS_TABLE);
 
         // add a static admin user using insertInto query
@@ -85,11 +94,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         contentValues.put("PhoneNumber", user.getPhoneNumber());
         contentValues.put("Permission", user.getPermission());
         contentValues.put("ProfilePicture", user.getProfilePicture());
+        contentValues.put("DealerID", user.getDealerID());
         if (sqLiteDatabase.insert("User",null,contentValues) == -1)
+
             return false;
         else
             return true;
-
     }
 
     /*
@@ -158,6 +168,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         contentValues.put("TransmissionType", car.getTransmission());
         contentValues.put("Mileage", car.getMileage());
         contentValues.put("Image", car.getImgCar());
+        contentValues.put("DealerID", car.getDealerID());
         if (sqLiteDatabase.insert("Car",null,contentValues) == -1)
             return false;
         else
@@ -249,6 +260,23 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    /*
+    Car Dealer Queries
+     */
+
+    // add a new car dealer to the database
+    public boolean insertCarDealer(CarDealer carDealer){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("DealerID",carDealer.getID());
+        contentValues.put("DealerName",carDealer.getName());
+        if (sqLiteDatabase.insert("CarDealer",null,contentValues) == -1)
+            return false;
+        else
+            return true;
+
     }
 
 

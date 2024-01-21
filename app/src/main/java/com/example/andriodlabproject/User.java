@@ -22,6 +22,8 @@ public class User {
     private String permission;
     private byte[] profilePicture;
 
+    private int dealerID;
+
     public User() {
     }
 
@@ -119,6 +121,14 @@ public class User {
 
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public int getDealerID() {
+        return dealerID;
+    }
+
+    public void setDealerID(int dealerID) {
+        this.dealerID = dealerID;
     }
 
     @Override
