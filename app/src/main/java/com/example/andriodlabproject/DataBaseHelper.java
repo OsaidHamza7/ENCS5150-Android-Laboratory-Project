@@ -281,6 +281,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     }
 
+    // get dealer by id
+    public Cursor getDealerByID(int id){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM CarDealer WHERE DealerID = '"+id+"'",null);
+    }
+
 
 
 

@@ -183,6 +183,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                         details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
                         details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
                         details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
+                        details.append("Dealer ID: ").append(currentCar.getDealerID()).append("\n");
+                        details.append("Dealer Name: ").append(currentCar.getDealerName()).append("\n");
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                         builder.setTitle("Car Details")

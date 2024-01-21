@@ -11,6 +11,7 @@ public class Car {
     private String transmission;
     private String mileage;
     private int dealerID;
+    private String dealerName;
     private int imgCar; // Assuming drawable IDs will be used for car images
     private int imgFavButton;
     private int visibleReserveButton= View.VISIBLE;
@@ -104,6 +105,14 @@ public class Car {
     public int getDealerID() {return dealerID;}
 
     public void setDealerID(int dealerID) {this.dealerID = dealerID;}
+
+    public String getDealerName() {
+        return dealerName;
+    }
+
+    public void setDealerName(String dealerName) {
+        this.dealerName = dealerName;
+    }
 
     public String getDate() {
         return date;

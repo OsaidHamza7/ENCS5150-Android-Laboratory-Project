@@ -58,6 +58,9 @@ public class CarJsonParser {
                 String randomTransmissionType = transmissionTypes.get(random.nextInt(transmissionTypes.size()));
                 CAR.setTransmission(randomTransmissionType);
                 CAR.setImgFavButton(R.drawable.ic_favorite_border);
+                CAR.setDealerID(i%3+1);
+
+
 
                 // check the factory name and set the image of the car
                 for (Map.Entry<String, List<String>> entry : cars.entrySet()) {
