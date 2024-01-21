@@ -1,14 +1,15 @@
 package com.example.andriodlabproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -35,9 +36,23 @@ public class SignInActivity extends AppCompatActivity {
         backToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                SignInActivity.this.startActivity(intent);
-                finish();
+                StringBuilder details = new StringBuilder();
+                details.append("Are you sure you want to disconnect to the server?");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(SignInActivity.this);
+                builder.setTitle("Confirm Disconnect")
+                        .setMessage(details.toString())
+                        .setNegativeButton("cancel",null)
+                        .setPositiveButton("sure", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                SignInActivity.this.startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .create()
+                        .show();
+
             }
         });
 
