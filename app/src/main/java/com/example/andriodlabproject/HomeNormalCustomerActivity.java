@@ -1,5 +1,6 @@
 package com.example.andriodlabproject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -100,9 +102,22 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeCustomerFragment()).commit();
         }
         if (item.getItemId()==R.id.nav_logout){
-            Intent intent = new Intent(HomeNormalCustomerActivity.this, SignInActivity.class);
-            HomeNormalCustomerActivity.this.startActivity(intent);
-            finish();
+            StringBuilder details = new StringBuilder();
+            details.append("Are you sure you want to logout?");
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomeNormalCustomerActivity.this);
+            builder.setTitle("Confirm Logout")
+                    .setMessage(details.toString())
+                    .setNegativeButton("cancel",null)
+                    .setPositiveButton("sure", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(HomeNormalCustomerActivity.this, SignInActivity.class);
+                            HomeNormalCustomerActivity.this.startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .create()
+                    .show();
         }
         if (item.getItemId()==R.id.nav_call_find_us){
             toolbar.setTitle("CALL US OR FIND US");
