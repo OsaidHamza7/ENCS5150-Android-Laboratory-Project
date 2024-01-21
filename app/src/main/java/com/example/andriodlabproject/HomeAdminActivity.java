@@ -40,7 +40,9 @@ public class HomeAdminActivity extends AppCompatActivity implements NavigationVi
         Menu menu = navigationView.getMenu();
 
         // Remove the item by its ID
-        menu.removeItem(R.id.navAdmin_deleteCustomers);
+        if (User.currentUser.getInt(10) != -1){
+            menu.removeItem(R.id.navAdmin_deleteCustomers);
+        }
 
         toolbar=findViewById(R.id.toolbarAdmin);
         toolbar.setTitle("PROFILE");
