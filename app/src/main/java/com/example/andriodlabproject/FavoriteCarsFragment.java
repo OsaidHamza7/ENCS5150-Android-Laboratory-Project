@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ public class FavoriteCarsFragment extends Fragment {
     private String mParam2;
     private RecyclerView recyclerView;
     private CarAdapter adapter;
+    private ProgressBar progressBar;
 
     public FavoriteCarsFragment() {
         // Required empty public constructor
@@ -68,14 +70,26 @@ public class FavoriteCarsFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        progressBar = getActivity().findViewById(R.id.progressBar_favorite);
         recyclerView = getActivity().findViewById(R.id.recycler_favorite_cars);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        // get the favorite cars from the database
-        getFavoriteCars();
-
-        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.favCars);
-        recyclerView.setAdapter(adapter);
+        progressBar.setVisibility(View.VISIBLE);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getFavoriteCars();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.favCars);
+                        recyclerView.setAdapter(adapter);
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
+        thread.start();
     }
 
     // function to get the favorite cars from the database

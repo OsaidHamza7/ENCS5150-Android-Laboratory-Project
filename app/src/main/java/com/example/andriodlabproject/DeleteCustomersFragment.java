@@ -83,13 +83,18 @@ public class DeleteCustomersFragment extends Fragment {
                 } else {
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
                     Cursor cursor = dataBaseHelper.getUserByEmail(email);
+                    cursor.moveToFirst();
                     // check if the email is found in the database
                     if (cursor.getCount() == 0) {
                         Toast.makeText(getActivity(), "Email is not found", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                    else if (cursor.getString(3).equals(User.currentUser.getString(3))) {
+                        Toast.makeText(getActivity(), "You can't delete your account", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
                         //delete the customer
                         dataBaseHelper.deleteUserByEmail(email);
-                        makeDeleteCustomerAlertAnimation("customer deleted successfully");
+                        makeDeleteCustomerAlertAnimation("User deleted successfully");
                     }
                 }
             }

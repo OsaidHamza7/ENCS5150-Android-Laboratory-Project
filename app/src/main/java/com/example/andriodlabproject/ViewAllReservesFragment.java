@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -23,6 +24,7 @@ public class ViewAllReservesFragment extends Fragment {
     private RecyclerView recyclerView;
     private CarAdapter adapter;
     private DataBaseHelper dataBaseHelper;
+    private ProgressBar progressBar;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -66,17 +68,33 @@ public class ViewAllReservesFragment extends Fragment {
         super.onResume();
         dataBaseHelper = new DataBaseHelper(getActivity());
 
+        progressBar = getActivity().findViewById(R.id.progressBar3);
         recyclerView = getActivity().findViewById(R.id.recycler_all_reserved_cars);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
         List <Car> allCarsReserved = new ArrayList<>();
         List <User> allUsersReserved = new ArrayList<>();
 
-        // get all reservations from the database
-        getAllReservation(allCarsReserved, allUsersReserved);
+        progressBar.setVisibility(View.VISIBLE);
 
-        adapter = new CarAdapter(getActivity(), allCarsReserved, allUsersReserved);
-        recyclerView.setAdapter(adapter);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // get all reservations from the database
+                getAllReservation(allCarsReserved, allUsersReserved);
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        adapter = new CarAdapter(getActivity(), allCarsReserved, allUsersReserved);
+                        recyclerView.setAdapter(adapter);
+                        progressBar.setVisibility(View.GONE);
+
+                    }
+                });
+            }
+        });
+        thread.start();
+
 
 
 

@@ -235,11 +235,22 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                         currentCar0.setVisibleDate(View.VISIBLE);
                                         currentCar0.setDate(dtf.format(now));
                                         CarMenuFragment.makeFavouriteAlertAnimation("Car has been reserved successfully");
+
                                         notifyDataSetChanged();
                                         // add reservation to database
                                         addReservationToDatabase(currentCar0, now);
 
+                                        // remove the car from the list of all cars
+                                        HomeNormalCustomerActivity.allCars.remove(currentCar);
+                                        // remove the car from the factory list
+                                        removeCarFromFactory(currentCar);
+                                        // remove the car from the favorite cars list for all users
+                                        removeCarFromAllUsersFavorites(currentCar);
+                                        // remove the car from the list of favorite cars
+                                        HomeNormalCustomerActivity.favCars.remove(currentCar);
+                                        // add the car to the list of reserved cars
                                         HomeNormalCustomerActivity.reserveCars.add(currentCar0);
+                                        notifyDataSetChanged();
                                     }
                                 })
                                 .setNegativeButton("CANCEL", null)
@@ -285,6 +296,45 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                 dataBaseHelper.deleteFavorite(User.currentUser.getString(3), carID);
             }
 
+        }
+
+        // function to remove a car from the favorite cars list for all users
+        public void removeCarFromAllUsersFavorites(Car car){
+            DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();
+            dataBaseHelper.deleteCarFromAllFavorites(car.getID());
+        }
+
+        // function to remove the car from the factory list
+        public void removeCarFromFactory(Car car){
+            switch (car.getFactoryName()) {
+                case "Chevrolet":
+                    HomeNormalCustomerActivity.chevroletCars.remove(car);
+                    break;
+                case "Jeep":
+                    HomeNormalCustomerActivity.jeepCars.remove(car);
+                    break;
+                case "Ford":
+                    HomeNormalCustomerActivity.fordCars.remove(car);
+                    break;
+                case "Dodge":
+                    HomeNormalCustomerActivity.dodgeCars.remove(car);
+                    break;
+                case "Lamborghini":
+                    HomeNormalCustomerActivity.lamborghiniCars.remove(car);
+                    break;
+                case "Tesla":
+                    HomeNormalCustomerActivity.teslaCars.remove(car);
+                    break;
+                case "Honda":
+                    HomeNormalCustomerActivity.hondaCars.remove(car);
+                    break;
+                case "Toyota":
+                    HomeNormalCustomerActivity.toyotaCars.remove(car);
+                    break;
+                case "Koenigsegg":
+                    HomeNormalCustomerActivity.koenigseggCars.remove(car);
+                    break;
+            }
         }
 
 

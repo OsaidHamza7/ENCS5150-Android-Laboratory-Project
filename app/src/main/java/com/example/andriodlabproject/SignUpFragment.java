@@ -137,8 +137,14 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
                     firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
                     lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
 
+                    int dealerID = -1;
+                    if(User.currentUser != null){
 
-                    User user = new User(firstName, lastName, gender, email, password, country, city, phoneNumber, permission, null, -1);
+                        dealerID = User.currentUser.getInt(10);
+
+                    }
+
+                    User user = new User(firstName, lastName, gender, email, password, country, city, phoneNumber, permission, null, dealerID);
                     // add the user to the database
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
 

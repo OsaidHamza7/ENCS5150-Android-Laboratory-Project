@@ -196,6 +196,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM Car",null);
     }
 
+    // get all cars that not reserved from the database
+    public Cursor getAllCarsNotReserved(){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Car WHERE CarID NOT IN (SELECT CarID FROM Reservation)",null);
+    }
+
     /*
     Reservation Queries
      */
@@ -258,6 +264,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     public void deleteFavorite(String userEmail, int carID){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         sqLiteDatabase.delete("Favorites","Email = '"+userEmail+"' AND CarID = '"+carID+"'",null);
+    }
+
+    // delete a car from favorite lists for all users
+    public void deleteCarFromAllFavorites(int carID){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.delete("Favorites","CarID = '"+carID+"'",null);
     }
 
     // get favorites with car info by user email

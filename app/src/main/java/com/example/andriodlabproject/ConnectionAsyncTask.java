@@ -56,8 +56,8 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
                 dataBaseHelper.insertCar(car);
             }
 
-            // get all cars from the database
-            Cursor cursor = dataBaseHelper.getAllCars();
+            // get all cars not reserved
+            Cursor cursor = dataBaseHelper.getAllCarsNotReserved();
             while (cursor.moveToNext()) {
                 Car car = new Car();
                 car.setID(cursor.getInt(0));

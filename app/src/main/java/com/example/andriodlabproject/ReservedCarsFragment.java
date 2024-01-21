@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,6 +30,8 @@ public class ReservedCarsFragment extends Fragment {
     private String mParam2;
     private RecyclerView recyclerView;
     private CarAdapter adapter;
+    private ProgressBar progressBar;
+
     public ReservedCarsFragment() {
         // Required empty public constructor
     }
@@ -63,14 +66,27 @@ public class ReservedCarsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        progressBar = getActivity().findViewById(R.id.progressBar_reserved);
         recyclerView = getActivity().findViewById(R.id.recycler_reserved_cars);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        // get the reserved cars from the database
-        getReservedCars();
+        progressBar.setVisibility(View.VISIBLE);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getReservedCars();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.reserveCars);
+                        recyclerView.setAdapter(adapter);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        });
+        thread.start();
 
-        adapter = new CarAdapter(getActivity(),HomeNormalCustomerActivity.reserveCars);
-        recyclerView.setAdapter(adapter);
     }
 
     // function to get the reserved cars from the database
