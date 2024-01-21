@@ -138,7 +138,7 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
                     lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
 
 
-                    User user = new User(firstName, lastName, gender, email, password, country, city, phoneNumber, permission, null);
+                    User user = new User(firstName, lastName, gender, email, password, country, city, phoneNumber, permission, null, -1);
                     // add the user to the database
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
 

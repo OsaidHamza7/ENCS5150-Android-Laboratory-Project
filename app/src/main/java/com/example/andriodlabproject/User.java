@@ -28,7 +28,8 @@ public class User {
     }
 
     public User(String firstName, String lastName, String gender, String email, String password,
-                String country, String city, String phoneNumber, String permission, byte[] profilePicture) {
+                String country, String city, String phoneNumber, String permission, byte[] profilePicture,
+                int dealerID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -39,8 +40,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.permission = permission;
         this.profilePicture = profilePicture;
-
-
+        this.dealerID = dealerID;
     }
 
     public String getFirstName() {

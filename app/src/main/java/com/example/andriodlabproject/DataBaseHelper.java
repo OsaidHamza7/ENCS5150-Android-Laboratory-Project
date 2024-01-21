@@ -77,7 +77,9 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
         // add a static admin user using insertInto query
         db.execSQL("INSERT INTO User (FirstName, LastName, Gender, Email, Password, Country, City, PhoneNumber, Permission) VALUES ('Admin','Admin','Male','admin@gmail.com','"+User.hashPassword("admin@123")+ "','Palestine','Tulkarm','0599999999','Admin')");
-
+        db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (1,'Dealer1')");
+        db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (2,'Dealer2')");
+        db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (3,'Dealer3')");
     }
 
     // create a new user account in the database assuming that there is User class
