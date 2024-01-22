@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskCallback
 
 
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        startService(new Intent(this, NotificationService.class));
+    }
 
     @Override
     public void onTaskComplete(boolean success) {
