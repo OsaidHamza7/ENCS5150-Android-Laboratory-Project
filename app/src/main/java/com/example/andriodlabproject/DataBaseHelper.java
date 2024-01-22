@@ -62,7 +62,8 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "CarID INTEGER," +
             "StartDate TEXT," +
             "EndDate TEXT," +
-            "FOREIGN KEY(CarID) REFERENCES Car(CarID)) ON DELETE CASCADE;";
+            "Discount TEXT," +
+            "FOREIGN KEY(CarID) REFERENCES Car(CarID) ON DELETE CASCADE);";
 
 
 
@@ -73,7 +74,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         db.execSQL(CREATE_RESERVATION_TABLE);
         db.execSQL(CREATE_FAVORITES_TABLE);
         db.execSQL(CREATE_CAR_DEALER_TABLE);
-        //db.execSQL(CREATE_SPECIAL_OFFERS_TABLE);
+        db.execSQL(CREATE_SPECIAL_OFFERS_TABLE);
 
         db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (-1,'NoDealer')");
         db.execSQL("INSERT INTO CarDealer (DealerID, DealerName) VALUES (1,'Dealer1')");
@@ -202,6 +203,26 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM Car WHERE CarID NOT IN (SELECT CarID FROM Reservation)",null);
     }
 
+    // update car price
+    public void updateCarPrice(int id, String price){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Price",price);
+        sqLiteDatabase.update("Car",contentValues,"CarID = '"+id+"'",null);
+    }
+
+    // getl all cars that not on special offer and not reserved
+    public Cursor getAllCarsNotOnSpecialOfferAndNotReserved(){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM Car WHERE CarID NOT IN (SELECT CarID FROM SpecialOffers) AND CarID NOT IN (SELECT CarID FROM Reservation)",null);
+    }
+
+    // get the special offer for a car
+    public Cursor getSpecialOfferForCar(int carID){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM SpecialOffers WHERE CarID = '"+carID+"'",null);
+    }
+
     /*
     Reservation Queries
      */
@@ -311,6 +332,12 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         return sqLiteDatabase.rawQuery("SELECT * FROM CarDealer WHERE DealerID = '"+id+"'",null);
     }
 
+    // get the dealer of a car
+    public Cursor getDealerByCarID(int carID){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM CarDealer INNER JOIN Car ON CarDealer.DealerID = Car.DealerID WHERE Car.CarID = '"+carID+"'",null);
+    }
+
 
 
 
@@ -321,6 +348,43 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             // Enable foreign key constraints
             db.execSQL("PRAGMA foreign_keys=ON;");
         }
+    }
+
+    /*
+    Special Offers Queries
+     */
+
+    // add a new special offer to the database
+    public boolean insertSpecialOffer(SpecialOffer specialOffer){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("CarID",specialOffer.getCarID());
+        contentValues.put("StartDate",specialOffer.getStartDate());
+        contentValues.put("EndDate",specialOffer.getEndDate());
+        contentValues.put("Discount",specialOffer.getDiscount());
+        if (sqLiteDatabase.insert("SpecialOffers",null,contentValues) == -1)
+            return false;
+        else
+            return true;
+    }
+
+    // get all special offers with car info from the database
+    public Cursor getAllSpecialOffersWithCarInfo(){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM SpecialOffers INNER JOIN Car ON SpecialOffers.CarID = Car.CarID",null);
+    }
+
+    // get special offers with car info that not reserved
+    public Cursor getAllSpecialOffersWithCarInfoNotReserved(){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        return sqLiteDatabase.rawQuery("SELECT * FROM SpecialOffers INNER JOIN Car ON SpecialOffers.CarID = Car.CarID WHERE Car.CarID NOT IN (SELECT CarID FROM Reservation)",null);
+    }
+
+
+    // delete special offer by id
+    public void deleteSpecialOfferByID(int id){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.delete("SpecialOffers","OfferID = '"+id+"'",null);
     }
 
 

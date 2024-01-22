@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ConnectionAsyncTask extends AsyncTask<String, String,
@@ -45,8 +46,11 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
             callback.onTaskComplete(true);
 
             DataBaseHelper dataBaseHelper = ((MainActivity)activity).getDatabaseHelper();
+
+
             // insert all cars into the database
-            for (Car car : cars) {
+            for (int i = 0; i < cars.size(); i++) {
+                Car car = cars.get(i);
 
                 // check if the car is already in the database
                 Cursor cursor = dataBaseHelper.getCarByID(car.getID());
@@ -54,10 +58,15 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
                     continue;
 
                 dataBaseHelper.insertCar(car);
+
+                if (i/(double)cars.size()<=0.22){
+                    insertSpecialOffer(car);
+                }
             }
 
-            // get all cars not reserved
-            Cursor cursor = dataBaseHelper.getAllCarsNotReserved();
+
+            // get all cars not reserved and not on special offer
+            Cursor cursor = dataBaseHelper.getAllCarsNotOnSpecialOfferAndNotReserved();
             while (cursor.moveToNext()) {
                 Car car = new Car();
                 car.setID(cursor.getInt(0));
@@ -79,9 +88,31 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
 
                 addCarToCategory(car);
                 HomeNormalCustomerActivity.allCars.add(car);
+
             }
 
         }
+    }
+
+    // insert special offer for 22% of the cars
+    private void insertSpecialOffer(Car car) {
+        DataBaseHelper dataBaseHelper = ((MainActivity)weakActivity.get()).getDatabaseHelper();
+        SpecialOffer specialOffer = new SpecialOffer();
+        specialOffer.setCarID(car.getID());
+        // get the current date
+        Date date = new Date();
+        specialOffer.setStartDate(date.toString());
+
+        // select a random date between 2024-03-01 and 2024-12-31
+        int randomMonth = (int) (Math.random() * 10) + 3;
+        int randomDay = (int) (Math.random() * 30) + 1;
+        specialOffer.setEndDate("2024-" + randomMonth + "-" + randomDay);
+
+        // Select a random discount between 10% and 40%
+        int randomDiscount = (int) (Math.random() * 30) + 10;
+        specialOffer.setDiscount(randomDiscount + "%");
+
+        dataBaseHelper.insertSpecialOffer(specialOffer);
     }
 
     void addCarToCategory(Car car) {

@@ -107,16 +107,53 @@ public class FavoriteCarsFragment extends Fragment {
             car.setFactoryName(cursor.getString(4));
             car.setType(cursor.getString(5));
             car.setPrice(cursor.getString(6));
+
+            Cursor offer = dataBaseHelper.getSpecialOfferForCar(car.getID());
+            if (offer.getCount() > 0) {
+                SpecialOffer specialOffer = new SpecialOffer();
+                offer.moveToNext();
+                specialOffer.setDiscount(offer.getString(4));
+                car.setPrice(getNewPrice(car, specialOffer));
+            }
+
             car.setFuelType(cursor.getString(7));
             car.setTransmission(cursor.getString(8));
             car.setMileage(cursor.getString(9));
             car.setImgCar(cursor.getInt(10));
             car.setImgFavButton(R.drawable.ic_favorite);
+
+            // get the dealer name and id for the car
+            Cursor dealer = dataBaseHelper.getDealerByID(cursor.getInt(11));
+            if (dealer.getCount() > 0) {
+                dealer.moveToNext();
+                car.setDealerName(dealer.getString(1));
+                car.setDealerID(dealer.getInt(0));
+            }
+
+
             HomeNormalCustomerActivity.favCars.add(car);
+
+
 
         }
 
     }
+
+    public String getNewPrice(Car currentCar, SpecialOffer specialOffer){
+        // remove $ from price
+        String price = currentCar.getPrice();
+        price = price.substring(1, price.length());
+        int priceInt = Integer.parseInt(price);
+        // remove % from discount
+        String discount = specialOffer.getDiscount();
+        discount = discount.substring(0, discount.length() - 1);
+        int discountInt = Integer.parseInt(discount);
+        // calculate new price
+        int newPriceInt = priceInt - (priceInt * discountInt / 100);
+        String newPrice = Integer.toString(newPriceInt);
+        return newPrice;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

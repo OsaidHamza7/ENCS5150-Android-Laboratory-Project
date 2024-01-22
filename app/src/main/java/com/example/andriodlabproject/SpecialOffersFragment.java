@@ -1,13 +1,18 @@
 package com.example.andriodlabproject;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,8 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class SpecialOffersFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private ProgressBar progressBar;
+    public static List<Car> allCars = new ArrayList<>();
+    public static List<SpecialOffer> allSpecialOffers = new ArrayList<>();
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -59,13 +65,78 @@ public class SpecialOffersFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        progressBar = getActivity().findViewById(R.id.progressBar_specialOffers);
         recyclerView = getActivity().findViewById(R.id.recycler_special_offers);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        adapter = new CarAdapterSpecialOffers(getActivity(),HomeNormalCustomerActivity.carSpecialOffers);
-        recyclerView.setAdapter(adapter);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getSpecialOffersFromDB();
+                adapter = new CarAdapterSpecialOffers(getActivity(), allCars, allSpecialOffers);
+
+                getActivity().runOnUiThread(() -> {
+                    recyclerView.setAdapter(adapter);
+                    progressBar.setVisibility(View.INVISIBLE);
+                });
+            }
+        });
+        thread.start();
 
     }
+
+    // function to get all special offers from the database
+    private void getSpecialOffersFromDB() {
+        allCars.clear();
+        allSpecialOffers.clear();
+
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getActivity());
+        Cursor cursor = dataBaseHelper.getAllSpecialOffersWithCarInfoNotReserved();
+
+
+        while (cursor.moveToNext()) {
+            Car car = new Car();
+            car.setID(cursor.getInt(1));
+            car.setFactoryName(cursor.getString(6));
+            car.setType(cursor.getString(7));
+            car.setPrice(cursor.getString(8));
+            car.setFuelType(cursor.getString(9));
+            car.setTransmission(cursor.getString(10));
+            car.setMileage(cursor.getString(11));
+            car.setImgCar(cursor.getInt(12));
+            car.setDealerID(cursor.getInt(13));
+
+            // check if the car in fav list
+            boolean fav = dataBaseHelper.isFavorite(User.currentUser.getString(3), car.getID());
+            if (fav)
+                car.setImgFavButton(R.drawable.ic_favorite);
+            else
+                car.setImgFavButton(R.drawable.ic_favorite_border);
+
+
+            //find the dealer name
+            Cursor dealer = dataBaseHelper.getDealerByID(car.getDealerID());
+            if (dealer.getCount() > 0) {
+                dealer.moveToNext();
+                car.setDealerName(dealer.getString(1));
+            }
+
+            allCars.add(car);
+
+            // get special offer
+            SpecialOffer specialOffer = new SpecialOffer();
+            specialOffer.setID(cursor.getInt(0));
+            specialOffer.setCarID(cursor.getInt(1));
+            specialOffer.setStartDate(cursor.getString(2));
+            specialOffer.setEndDate(cursor.getString(3));
+            specialOffer.setDiscount(cursor.getString(4));
+            allSpecialOffers.add(specialOffer);
+
+        }
+
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -115,6 +115,15 @@ public class ReservedCarsFragment extends Fragment {
             car.setImgCar(cursor.getInt(11));
             car.setVisibleDate(View.VISIBLE);
             car.setVisibleReserveButton(View.INVISIBLE);
+
+            // get the dealer name and id from the database
+            Cursor dealer = dataBaseHelper.getDealerByID(cursor.getInt(12));
+            if (dealer.getCount() > 0) {
+                dealer.moveToNext();
+                car.setDealerName(dealer.getString(1));
+                car.setDealerID(dealer.getInt(0));
+            }
+
             HomeNormalCustomerActivity.reserveCars.add(car);
         }
 

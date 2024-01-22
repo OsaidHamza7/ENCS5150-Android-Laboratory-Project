@@ -146,9 +146,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                             currentCar.setImgFavButton(R.drawable.ic_favorite_border);
                             // remove the car from the favorite cars list in the database
                             removeCarFromFavorites(currentCar.getID());
-                            if(HomeNormalCustomerActivity.favCars.contains(currentCar)) {
-                                HomeNormalCustomerActivity.favCars.remove(currentCar);
-                            }
+
                         }
                         else{
                             imgFav.setImageResource(R.drawable.ic_favorite);
@@ -157,9 +155,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                             // add the car to the favorite cars list in the database
                             addCarToFavorites(currentCar.getID());
 
-                            if(!HomeNormalCustomerActivity.favCars.contains(currentCar)) {
-                                HomeNormalCustomerActivity.favCars.add(currentCar);
-                            }
 
                         }
                     }
@@ -175,16 +170,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                     if (position != RecyclerView.NO_POSITION) {
                      Car currentCar = carList.get(position);
 
-                        StringBuilder details = new StringBuilder();
-//                        details.append(currentCar.getImageResourceId()).append("\n");
-                        details.append("ID: ").append(currentCar.getID()).append("\n");
-                        details.append("Car Type: ").append(currentCar.getType()).append("\n");
-                        details.append("Price: ").append(currentCar.getPrice()).append("\n");
-                        details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
-                        details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
-                        details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
-                        details.append("Dealer ID: ").append(currentCar.getDealerID()).append("\n");
-                        details.append("Dealer Name: ").append(currentCar.getDealerName()).append("\n");
+                        StringBuilder details = addDetails(currentCar);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                         builder.setTitle("Car Details")
@@ -206,15 +192,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                     if (position != RecyclerView.NO_POSITION) {
                         Car currentCar = carList.get(position);
 
-                        StringBuilder details = new StringBuilder();
-                        details.append("ID:").append(currentCar.getID()).append("\n");
-                        details.append("Type: ").append(currentCar.getType()).append("\n");
-                        details.append("Price: ").append(currentCar.getPrice()).append("\n");
-                        details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
-                        details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
-                        details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
-                        details.append("Dealer ID: ").append(currentCar.getDealerID()).append("\n");
-                        details.append("Dealer Name: ").append(currentCar.getDealerName()).append("\n");
+                        StringBuilder details = addDetails(currentCar);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                         builder.setTitle("Car Details")
@@ -234,6 +212,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                         LocalDateTime now = LocalDateTime.now();
                                         currentCar0.setVisibleDate(View.VISIBLE);
                                         currentCar0.setDate(dtf.format(now));
+                                        currentCar0.setDealerID(currentCar.getDealerID());
+                                        currentCar0.setDealerName(currentCar.getDealerName());
                                         CarMenuFragment.makeFavouriteAlertAnimation("Car has been reserved successfully");
 
                                         notifyDataSetChanged();
@@ -266,6 +246,22 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             });
 
         }
+
+        // function to add the car details to the alert dialog
+        public StringBuilder addDetails(Car currentCar){
+            StringBuilder details = new StringBuilder();
+            details.append("ID:").append(currentCar.getID()).append("\n");
+            details.append("Type: ").append(currentCar.getType()).append("\n");
+            details.append("Price: ").append(currentCar.getPrice()).append("\n");
+            details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
+            details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
+            details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
+            details.append("Dealer ID: ").append(currentCar.getDealerID()).append("\n");
+            details.append("Dealer Name: ").append(currentCar.getDealerName()).append("\n");
+            return details;
+        }
+
+
 
         public void addReservationToDatabase(Car car, LocalDateTime now) {
             DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();

@@ -18,8 +18,10 @@ public class Car {
     private String date;
     private int visibleDate=View.INVISIBLE;
     private String offer;
-    public Car() {
 
+    private boolean isOnOffer;
+    public Car() {
+        isOnOffer=false;
     }
 
     public int getID() {
@@ -134,4 +136,7 @@ public class Car {
 
     public void setOffer(String offer) {this.offer = offer;}
 
+    public boolean getIsOnOffer() {return isOnOffer;}
+
+    public void setIsOnOffer(boolean isOnOffer) {this.isOnOffer = isOnOffer;}
 }
