@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
@@ -360,7 +361,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
-                CarMenuFragment.makeFavouriteAlertAnimation("Review Submitted Successfully");
+                Toast.makeText(((HomeNormalCustomerActivity)inflater.getContext()),"Review Submitted",Toast.LENGTH_SHORT).show();
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
