@@ -65,7 +65,7 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
             }
 
 
-            // get all cars not reserved and not on special offer
+            // get all cars not reserved and not on special offer.
             Cursor cursor = dataBaseHelper.getAllCarsNotOnSpecialOfferAndNotReserved();
             while (cursor.moveToNext()) {
                 Car car = new Car();

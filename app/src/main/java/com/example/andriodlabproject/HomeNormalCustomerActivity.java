@@ -26,7 +26,7 @@ public class HomeNormalCustomerActivity extends AppCompatActivity implements Nav
     private DrawerLayout drawer;
     public LinearLayout secondLinearLayout ;
     final Handler handler = new Handler();
-    private CarAdapter adapter;
+    private CarAdapter adapter;//
 
     private DataBaseHelper dataBaseHelper;
     public static List<Car> allCars = new ArrayList<>();

@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class SignInActivity extends AppCompatActivity {
-
+//
     static final SignInFragment signInFragment = new SignInFragment();
     static final SignInButtonFragment signInButtonFragment = new SignInButtonFragment();
     FragmentManager fragmentManager = getSupportFragmentManager();

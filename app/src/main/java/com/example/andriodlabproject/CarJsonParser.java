@@ -62,7 +62,7 @@ public class CarJsonParser {
 
 
 
-                // check the factory name and set the image of the car
+                // check the factory name and set the image of the car.
                 for (Map.Entry<String, List<String>> entry : cars.entrySet()) {
                     if (entry.getValue().contains(TYPE)) {
                         CAR.setFactoryName(entry.getKey());

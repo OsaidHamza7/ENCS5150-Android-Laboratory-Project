@@ -20,7 +20,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ViewAllReservesFragment extends Fragment {
-
+//
     private RecyclerView recyclerView;
     private CarAdapter adapter;
     private DataBaseHelper dataBaseHelper;

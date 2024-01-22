@@ -141,7 +141,7 @@ public class ProfileCustomerFragment extends Fragment {
 
                 User user = new User(firstName,lastName, gender, email, password, country, city, phoneNumber, permission, null, -1);
 
-                // check if all input fields are filled and the password and confirm password are the same
+                // check if all input fields are filled and the password and confirm password are the same.
                 if (!checkInputFields(user, confirmPassword)){
                     changePass = false;
                     return;

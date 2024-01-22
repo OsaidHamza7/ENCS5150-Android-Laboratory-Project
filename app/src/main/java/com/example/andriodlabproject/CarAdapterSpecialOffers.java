@@ -226,7 +226,7 @@ public class CarAdapterSpecialOffers extends RecyclerView.Adapter<CarAdapterSpec
             dataBaseHelper.deleteCarFromAllFavorites(car.getID());
         }
 
-        // function to add the car to the favorite cars list in the database
+        // function to add the car to the favorite cars list in the database.
         public void addCarToFavorites(int carID){
 
             DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();

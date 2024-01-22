@@ -364,6 +364,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                 Toast.makeText(context, "Review Submitted Successfully", Toast.LENGTH_SHORT).show();
             }
         });
+        //
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
