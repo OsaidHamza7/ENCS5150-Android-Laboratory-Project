@@ -18,6 +18,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -27,6 +29,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     private List<User> userList;
     private LayoutInflater inflater;
     private final Context context;
+
 
     public CarAdapter(Context context, List<Car> carList) {
         this.inflater = LayoutInflater.from(context);
@@ -51,6 +54,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     @Override
     public void onBindViewHolder(CarViewHolder holder, int position) {
         Car currentCar = carList.get(position);
+        DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();
         holder.carName.setText(currentCar.getFactoryName()+" "+currentCar.getType());
         holder.carPrice.setText(currentCar.getPrice());
         holder.carImage.setImageResource(currentCar.getImgCar());
@@ -58,7 +62,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.reserve.setVisibility(currentCar.getVisibleReserveButton());
         holder.viewDate.setVisibility(currentCar.getVisibleDate());
         holder.viewDate.setText(currentCar.getDate());
-
+        if (dataBaseHelper.isReserved(currentCar.getID())){
+            holder.reserve.setText("Leave a Review");
+        }
+        else{
+            holder.reserve.setText("Reserve");
+        }
         if(context instanceof HomeAdminActivity){
             // remove the favorite button and space from the admin view
             holder.favLayout.removeView(holder.imgFav);
@@ -184,10 +193,17 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                 }
             });
 
+
             reserve.setOnClickListener(new View.OnClickListener()
             {
+
                 @Override
                 public void onClick(View view) {
+                    if(reserve.getText().toString().equals("Leave a Review")){
+                        reviewCar();
+                        return;
+                    }
+
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         Car currentCar = carList.get(position);
@@ -201,8 +217,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                     public void onClick(DialogInterface dialog, int id) {
 
                                         Car currentCar0 = new Car() ;
-
-                                        currentCar0.setVisibleReserveButton(View.INVISIBLE);
+                                        currentCar0.setVisibleReserveButton(View.VISIBLE);
                                         currentCar0.setID(currentCar.getID());
                                         currentCar0.setType(currentCar.getType());
                                         currentCar0.setFactoryName(currentCar.getFactoryName()+" ");
@@ -215,10 +230,9 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                         currentCar0.setDealerID(currentCar.getDealerID());
                                         currentCar0.setDealerName(currentCar.getDealerName());
                                         CarMenuFragment.makeFavouriteAlertAnimation("Car has been reserved successfully");
-
                                         notifyDataSetChanged();
                                         // add reservation to database
-                                        addReservationToDatabase(currentCar0, now);
+                                        addReservationToDatabase(currentCar, now);
 
                                         // remove the car from the list of all cars
                                         HomeNormalCustomerActivity.allCars.remove(currentCar);
@@ -229,7 +243,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                                         // remove the car from the list of favorite cars
                                         HomeNormalCustomerActivity.favCars.remove(currentCar);
                                         // add the car to the list of reserved cars
-                                        HomeNormalCustomerActivity.reserveCars.add(currentCar0);
+                                        HomeNormalCustomerActivity.reserveCars.add(currentCar);
                                         notifyDataSetChanged();
                                     }
                                 })
@@ -335,6 +349,29 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
 
     }
+    public void reviewCar(){
+        View bottomSheetView = LayoutInflater.from(((HomeNormalCustomerActivity)inflater.getContext()))
+                .inflate(R.layout.review_car_bottom_sheet,
+                        (LinearLayout) ((HomeNormalCustomerActivity)inflater.getContext()).findViewById(R.id.modalBottomSheetContainer));
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(((HomeNormalCustomerActivity)inflater.getContext()), R.style.BottomSheetDialogTheme);
+        Button btn_submit = bottomSheetView.findViewById(R.id.btn_submit);
+        Button btn_cancel = bottomSheetView.findViewById(R.id.btn_cancel);
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+                CarMenuFragment.makeFavouriteAlertAnimation("Review Submitted Successfully");
+            }
+        });
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
 
+    }
 
 }

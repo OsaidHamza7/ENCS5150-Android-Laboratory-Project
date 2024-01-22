@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Console;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ReservedCarsFragment#newInstance} factory method to
@@ -114,7 +112,7 @@ public class ReservedCarsFragment extends Fragment {
             car.setMileage(cursor.getString(10));
             car.setImgCar(cursor.getInt(11));
             car.setVisibleDate(View.VISIBLE);
-            car.setVisibleReserveButton(View.INVISIBLE);
+            car.setVisibleReserveButton(View.VISIBLE);
 
             // get the dealer name and id from the database
             Cursor dealer = dataBaseHelper.getDealerByID(cursor.getInt(12));

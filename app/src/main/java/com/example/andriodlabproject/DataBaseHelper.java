@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Blob;
-
 public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     private static final String dbName = "CarRentalDB";
@@ -264,7 +262,15 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         return sqLiteDatabase.rawQuery("SELECT * FROM Reservation INNER JOIN Car ON Reservation.CarID = Car.CarID WHERE Email = '"+email+"'",null);
     }
-
+    //check if the car is reserved or not
+    public boolean isReserved(int carID){
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Reservation WHERE CarID = '"+carID+"'",null);
+        if (cursor.getCount() == 0)
+            return false;
+        else
+            return true;
+    }
 
     /*
     Favorites Queries
