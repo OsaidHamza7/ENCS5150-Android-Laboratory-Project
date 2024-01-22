@@ -20,7 +20,7 @@ public class SpecialOffer {
         this.EndDate = EndDate;
         this.Discount = Discount;
     }
-
+//
     public int getID() {
         return ID;
     }

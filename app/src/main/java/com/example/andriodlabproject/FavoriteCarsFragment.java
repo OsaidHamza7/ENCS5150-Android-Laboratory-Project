@@ -92,7 +92,7 @@ public class FavoriteCarsFragment extends Fragment {
         thread.start();
     }
 
-    // function to get the favorite cars from the database
+    // function to get the favorite cars from the database.
     public void getFavoriteCars(){
         HomeNormalCustomerActivity.favCars.clear();
         DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)getActivity()).getDatabaseHelper();

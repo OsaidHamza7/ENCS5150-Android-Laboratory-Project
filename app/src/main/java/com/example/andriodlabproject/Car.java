@@ -12,7 +12,7 @@ public class Car {
     private String mileage;
     private int dealerID;
     private String dealerName;
-    private int imgCar; // Assuming drawable IDs will be used for car images.
+    private int imgCar; // Assuming drawable IDs will be used for car images
     private int imgFavButton;
     private int visibleReserveButton= View.VISIBLE;
     private String date;
