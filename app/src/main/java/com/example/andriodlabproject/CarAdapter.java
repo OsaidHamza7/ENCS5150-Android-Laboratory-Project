@@ -3,6 +3,7 @@ package com.example.andriodlabproject;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +66,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.reserve.setVisibility(currentCar.getVisibleReserveButton());
         holder.viewDate.setVisibility(currentCar.getVisibleDate());
         holder.viewDate.setText(currentCar.getDate());
+        holder.textView_rating.setText(String.format("%.1f", currentCar.getRating()));
 
         if(context instanceof HomeAdminActivity){
             // remove the favorite button and space from the admin view
@@ -113,6 +116,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             }
             else{
                 holder.reserve.setText("Reserve");
+                holder.carInfoLayout.removeView(holder.viewDate);
+                //change the high of the carInfoLayout
+                holder.carInfoLayout.getLayoutParams().height = 158;
+                // padding bottom for the carInfoLayout
+                holder.carInfoLayout.setPadding(0,0,0,5);
+
             }
         }
 
@@ -136,6 +145,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         private LinearLayout favLayout;
         private Space space_carItem;
         private LinearLayout carInfoLayout;
+        private TextView textView_rating;
         public CarViewHolder(View itemView) {
             super(itemView);
             carImage = itemView.findViewById(R.id.imgCar);
@@ -148,6 +158,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             favLayout=itemView.findViewById(R.id.favLayout);
             space_carItem=itemView.findViewById(R.id.space_carItem);
             carInfoLayout=itemView.findViewById(R.id.carInfoLayout);
+            textView_rating = itemView.findViewById(R.id.textView_rating);
 
             imgFav.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -207,7 +218,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
                 @Override
                 public void onClick(View view) {
                     if(reserve.getText().toString().equals("Leave a Review")){
-                        reviewCar();
+                        reviewCar(carList.get(getAdapterPosition()).getID(), textView_rating);
                         return;
                     }
 
@@ -277,8 +288,10 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
             details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
             details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
+            details.append("Car Rating: ").append(String.format("%.1f", currentCar.getRating())).append("(").append(currentCar.getRatingCount()).append(")").append("\n");
             details.append("Dealer ID: ").append(currentCar.getDealerID()).append("\n");
             details.append("Dealer Name: ").append(currentCar.getDealerName()).append("\n");
+
             return details;
         }
 
@@ -356,26 +369,41 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
 
     }
-    public void reviewCar(){
+    public void reviewCar(int carID, TextView textView_rating){
         View bottomSheetView = LayoutInflater.from(((HomeNormalCustomerActivity)inflater.getContext()))
                 .inflate(R.layout.review_car_bottom_sheet,
                         (LinearLayout) ((HomeNormalCustomerActivity)inflater.getContext()).findViewById(R.id.modalBottomSheetContainer));
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(((HomeNormalCustomerActivity)inflater.getContext()), R.style.BottomSheetDialogTheme);
+        RatingBar ratingBar = bottomSheetView.findViewById(R.id.ratingBar);
         Button btn_submit = bottomSheetView.findViewById(R.id.btn_submit);
         Button btn_cancel = bottomSheetView.findViewById(R.id.btn_cancel);
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
-                Toast.makeText(context, "Review Submitted Successfully", Toast.LENGTH_SHORT).show();
+
+
+        btn_submit.setOnClickListener(v -> {
+
+            DataBaseHelper dataBaseHelper = null;
+            if(context instanceof HomeAdminActivity){
+                //dataBaseHelper = ((HomeAdminActivity)context).getDatabaseHelper();
             }
+            else{
+                dataBaseHelper = ((HomeNormalCustomerActivity)context).getDatabaseHelper();
+            }
+
+            Cursor carCursor = dataBaseHelper.getCarByID(carID);
+            carCursor.moveToNext();
+            double rating = carCursor.getDouble(9);
+            int ratingCount = carCursor.getInt(10);
+            double newRating = (ratingBar.getRating() + rating * ratingCount) / (ratingCount + 1);
+            dataBaseHelper.updateCarRating(carID, newRating, ratingCount + 1);
+            textView_rating.setText(String.format("%.1f", newRating));
+
+            bottomSheetDialog.dismiss();
+            Toast.makeText(context, "Review Submitted Successfully", Toast.LENGTH_SHORT).show();
         });
         //
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.dismiss();
-            }
+        btn_cancel.setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
+
         });
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();

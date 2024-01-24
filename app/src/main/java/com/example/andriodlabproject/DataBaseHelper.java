@@ -226,6 +226,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         sqLiteDatabase.update("Car",contentValues,"CarID = '"+id+"'",null);
     }
 
+
     // get the special offer for a car
     public Cursor getSpecialOfferForCar(int carID){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();

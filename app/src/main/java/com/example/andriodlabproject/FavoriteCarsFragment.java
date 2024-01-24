@@ -113,7 +113,7 @@ public class FavoriteCarsFragment extends Fragment {
                 SpecialOffer specialOffer = new SpecialOffer();
                 offer.moveToNext();
                 specialOffer.setDiscount(offer.getString(4));
-                car.setPrice(getNewPrice(car, specialOffer));
+                car.setPrice("$" + getNewPrice(car, specialOffer));
             }
 
             car.setFuelType(cursor.getString(7));

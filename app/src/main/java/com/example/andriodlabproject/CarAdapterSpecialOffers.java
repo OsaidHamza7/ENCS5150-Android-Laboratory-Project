@@ -261,11 +261,11 @@ public class CarAdapterSpecialOffers extends RecyclerView.Adapter<CarAdapterSpec
             details.append("Fuel Type: ").append(currentCar.getFuelType()).append("\n");
             details.append("Mileage: ").append(currentCar.getMileage()).append("\n");
             details.append("Transmission Type: ").append(currentCar.getTransmission()).append("\n");
+            details.append("Car Rating: ").append(String.format("%.1f", currentCar.getRating())).append("(").append(currentCar.getRatingCount()).append(")").append("\n");
             details.append("Dealer ID: ").append(currentCar.getDealerID()).append("\n");
             details.append("Dealer Name: ").append(currentCar.getDealerName()).append("\n");
 
             String newPrice = getNewPrice(currentCar, specialOffer);
-
 
             details.append("Price: ").append("$").append(newPrice).append("\n");
 

@@ -122,6 +122,9 @@ public class ReservedCarsFragment extends Fragment {
                 car.setDealerID(dealer.getInt(0));
             }
 
+            car.setRating(cursor.getDouble(13));
+            car.setRatingCount(cursor.getInt(14));
+
             HomeNormalCustomerActivity.reserveCars.add(car);
         }
 

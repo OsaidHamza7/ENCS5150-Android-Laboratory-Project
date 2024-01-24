@@ -78,7 +78,7 @@
                 app:srcCompat="@drawable/ic_half_star" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textView_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

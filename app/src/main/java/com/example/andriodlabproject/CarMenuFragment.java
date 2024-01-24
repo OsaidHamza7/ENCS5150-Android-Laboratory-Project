@@ -1,6 +1,7 @@
 package com.example.andriodlabproject;
 
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -138,6 +139,8 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
             textView_favourite_alert.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.favourite_alert_initial));
             activity = getActivity();
 
+            // get all cars from the database
+            getAllCarNotSpecialAndNotReserved();
 
             // Update UI on the main thread
             getActivity().runOnUiThread(() -> {
@@ -155,6 +158,67 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
 
 
 
+    }
+
+    // function to get all cars from the database
+    public void getAllCarNotSpecialAndNotReserved(){
+        HomeNormalCustomerActivity.allCars.clear();
+        HomeNormalCustomerActivity.chevroletCars.clear();
+        HomeNormalCustomerActivity.fordCars.clear();
+        HomeNormalCustomerActivity.dodgeCars.clear();
+        HomeNormalCustomerActivity.hondaCars.clear();
+        HomeNormalCustomerActivity.jeepCars.clear();
+        HomeNormalCustomerActivity.lamborghiniCars.clear();
+        HomeNormalCustomerActivity.koenigseggCars.clear();
+        HomeNormalCustomerActivity.teslaCars.clear();
+        HomeNormalCustomerActivity.toyotaCars.clear();
+
+
+        // get all cars not reserved and not on special offer.
+        Cursor cursor = dataBaseHelper.getAllCarsNotOnSpecialOfferAndNotReserved();
+        while (cursor.moveToNext()) {
+            Car car = new Car();
+            car.setID(cursor.getInt(0));
+            car.setFactoryName(cursor.getString(1));
+            car.setType(cursor.getString(2));
+            car.setPrice(cursor.getString(3));
+            car.setFuelType(cursor.getString(4));
+            car.setTransmission(cursor.getString(5));
+            car.setMileage(cursor.getString(6));
+            car.setImgCar(cursor.getInt(7));
+            car.setImgFavButton(R.drawable.ic_favorite_border);
+            car.setDealerID(cursor.getInt(8));
+            car.setRating(cursor.getDouble(9));
+            car.setRatingCount(cursor.getInt(10));
+
+            Cursor dealer = dataBaseHelper.getDealerByID(cursor.getInt(8));
+            if (dealer.getCount() > 0) {
+                dealer.moveToNext();
+                car.setDealerName(dealer.getString(1));
+            }
+
+            HomeNormalCustomerActivity.allCars.add(car);
+
+            if (car.getFactoryName().equals("Chevrolet")){
+                HomeNormalCustomerActivity.chevroletCars.add(car);
+            } else if (car.getFactoryName().equals("Ford")){
+                HomeNormalCustomerActivity.fordCars.add(car);
+            } else if (car.getFactoryName().equals("Dodge")){
+                HomeNormalCustomerActivity.dodgeCars.add(car);
+            } else if (car.getFactoryName().equals("Honda")){
+                HomeNormalCustomerActivity.hondaCars.add(car);
+            } else if (car.getFactoryName().equals("Jeep")){
+                HomeNormalCustomerActivity.jeepCars.add(car);
+            } else if (car.getFactoryName().equals("Lamborghini")){
+                HomeNormalCustomerActivity.lamborghiniCars.add(car);
+            } else if (car.getFactoryName().equals("Koenigsegg")){
+                HomeNormalCustomerActivity.koenigseggCars.add(car);
+            } else if (car.getFactoryName().equals("Tesla")){
+                HomeNormalCustomerActivity.teslaCars.add(car);
+            } else if (car.getFactoryName().equals("Toyota")){
+                HomeNormalCustomerActivity.toyotaCars.add(car);
+            }
+        }
     }
 
     // function to search for a car by its type.
