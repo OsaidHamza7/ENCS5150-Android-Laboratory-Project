@@ -120,6 +120,8 @@ public class ViewAllReservesFragment extends Fragment {
             car.setMileage(cursor.getString(10));
             car.setImgCar(cursor.getInt(11));
             car.setDealerID(cursor.getInt(12));
+            car.setRating(cursor.getDouble(13));
+            car.setRatingCount(cursor.getInt(14));
 
             Cursor tempDealer = dataBaseHelper.getDealerByID(cursor.getInt(12));
             tempDealer.moveToNext();
@@ -127,12 +129,12 @@ public class ViewAllReservesFragment extends Fragment {
 
             User user = new User();
             user.setEmail(cursor.getString(1));
-            user.setFirstName(cursor.getString(13));
-            user.setLastName(cursor.getString(14));
-            user.setGender(cursor.getString(15));
-            user.setCountry(cursor.getString(18));
-            user.setCity(cursor.getString(19));
-            user.setPhoneNumber(cursor.getString(20));
+            user.setFirstName(cursor.getString(15));
+            user.setLastName(cursor.getString(16));
+            user.setGender(cursor.getString(17));
+            user.setCountry(cursor.getString(20));
+            user.setCity(cursor.getString(21));
+            user.setPhoneNumber(cursor.getString(22));
 
 
 

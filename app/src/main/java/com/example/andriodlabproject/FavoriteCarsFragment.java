@@ -130,6 +130,8 @@ public class FavoriteCarsFragment extends Fragment {
                 car.setDealerID(dealer.getInt(0));
             }
 
+            car.setRating(cursor.getDouble(12));
+            car.setRatingCount(cursor.getInt(13));
 
             HomeNormalCustomerActivity.favCars.add(car);
 

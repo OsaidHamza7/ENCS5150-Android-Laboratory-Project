@@ -105,6 +105,8 @@ public class SpecialOffersFragment extends Fragment {
             car.setMileage(cursor.getString(11));
             car.setImgCar(cursor.getInt(12));
             car.setDealerID(cursor.getInt(13));
+            car.setRating(cursor.getDouble(14));
+            car.setRatingCount(cursor.getInt(15));
 
             // check if the car in fav list
             boolean fav = dataBaseHelper.isFavorite(User.currentUser.getString(3), car.getID());

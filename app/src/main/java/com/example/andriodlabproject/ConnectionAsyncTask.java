@@ -79,6 +79,8 @@ public class ConnectionAsyncTask extends AsyncTask<String, String,
                 car.setImgCar(cursor.getInt(7));
                 car.setImgFavButton(R.drawable.ic_favorite_border);
                 car.setDealerID(cursor.getInt(8));
+                car.setRating(cursor.getDouble(9));
+                car.setRatingCount(cursor.getInt(10));
 
                 Cursor dealer = dataBaseHelper.getDealerByID(car.getDealerID());
                 if (dealer.getCount() > 0) {

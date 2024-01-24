@@ -34,7 +34,9 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             "Mileage TEXT," +
             "Image INTEGER," +
             "DealerID INTEGER," +
-            "FOREIGN KEY(DealerID) REFERENCES CarDealer(DealerID));";
+            "Rating REAL DEFAULT 0," +
+            "NumberOfRatings INTEGER DEFAULT 0," +
+            "FOREIGN KEY(DealerID) REFERENCES CarDealer(DealerID))";
 
     private static final String CREATE_RESERVATION_TABLE = "CREATE TABLE Reservation (" +
             "ReservationID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -213,6 +215,15 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
     public Cursor getAllCarsNotOnSpecialOfferAndNotReserved(){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         return sqLiteDatabase.rawQuery("SELECT * FROM Car WHERE CarID NOT IN (SELECT CarID FROM SpecialOffers) AND CarID NOT IN (SELECT CarID FROM Reservation)",null);
+    }
+
+    // update car rating and number of ratings
+    public void updateCarRating(int id, double rating, int numberOfRatings){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Rating",rating);
+        contentValues.put("NumberOfRatings",numberOfRatings);
+        sqLiteDatabase.update("Car",contentValues,"CarID = '"+id+"'",null);
     }
 
     // get the special offer for a car

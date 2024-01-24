@@ -18,6 +18,8 @@ public class Car {
     private String date;
     private int visibleDate=View.INVISIBLE;
     private String offer;
+    private double rating;
+    private int ratingCount;
 
     private boolean isOnOffer;
     public Car() {
@@ -139,4 +141,14 @@ public class Car {
     public boolean getIsOnOffer() {return isOnOffer;}
 
     public void setIsOnOffer(boolean isOnOffer) {this.isOnOffer = isOnOffer;}
+
+    public double getRating() {return rating;}
+
+    public void setRating(double rating) {this.rating = rating;}
+
+    public int getRatingCount() {return ratingCount;}
+
+    public void setRatingCount(int ratingCount) {this.ratingCount = ratingCount;}
+
+
 }
