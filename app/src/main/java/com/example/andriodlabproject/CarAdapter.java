@@ -55,7 +55,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
     @Override
     public void onBindViewHolder(CarViewHolder holder, int position) {
         Car currentCar = carList.get(position);
-        DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();
+
+
         holder.carName.setText(currentCar.getFactoryName()+" "+currentCar.getType());
         holder.carPrice.setText(currentCar.getPrice());
         holder.carImage.setImageResource(currentCar.getImgCar());
@@ -63,12 +64,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         holder.reserve.setVisibility(currentCar.getVisibleReserveButton());
         holder.viewDate.setVisibility(currentCar.getVisibleDate());
         holder.viewDate.setText(currentCar.getDate());
-        if (dataBaseHelper.isReserved(currentCar.getID())){
-            holder.reserve.setText("Leave a Review");
-        }
-        else{
-            holder.reserve.setText("Reserve");
-        }
+
         if(context instanceof HomeAdminActivity){
             // remove the favorite button and space from the admin view
             holder.favLayout.removeView(holder.imgFav);
@@ -110,7 +106,17 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
             holder.favLayout.removeView(linearLayout);
             holder.favLayout.addView(linearLayout);
 
+        } else{
+            DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)inflater.getContext()).getDatabaseHelper();
+            if (dataBaseHelper.isReserved(currentCar.getID())){
+                holder.reserve.setText("Leave a Review");
+            }
+            else{
+                holder.reserve.setText("Reserve");
+            }
         }
+
+
 
     }
 
