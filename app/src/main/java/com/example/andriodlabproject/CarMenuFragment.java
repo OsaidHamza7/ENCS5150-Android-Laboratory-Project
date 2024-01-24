@@ -157,7 +157,7 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-    // function to search for a car by its type
+    // function to search for a car by its type.
     public List<Car> searchForCarByType(String key, List<Car> cars){
         List<Car> searchedCars = new ArrayList<>();
         for (Car car : cars) {

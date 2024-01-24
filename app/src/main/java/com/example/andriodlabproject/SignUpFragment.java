@@ -133,7 +133,7 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
                     return;
                 }
                 else{
-                    // convert first letter of first name and last name to upper case and the rest to lower case
+                    // convert first letter of first name and last name to upper case and the rest to lower case.
                     firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
                     lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
 

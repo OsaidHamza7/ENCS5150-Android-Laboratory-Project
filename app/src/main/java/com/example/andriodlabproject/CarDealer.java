@@ -5,6 +5,7 @@ public class CarDealer {
     private String name;
 
     public CarDealer() {
+        //
     }
 
     public CarDealer(int ID, String name) {

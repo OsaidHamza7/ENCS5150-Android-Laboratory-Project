@@ -19,7 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeAdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private DrawerLayout drawer;
+    private DrawerLayout drawer;//
     public Toolbar toolbar;
     public static NavigationView navigationView;
     @Override

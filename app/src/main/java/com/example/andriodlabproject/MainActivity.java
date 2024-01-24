@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskCallback
     private DataBaseHelper dataBaseHelper;
     private ProgressBar progressBar;
     private View screenOverlay;
-
+//
     String httpRequest="https://658582eb022766bcb8c8c86e.mockapi.io/api/mock/rest-apis/encs5150/car-types";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class SignInFragment extends Fragment {
-
+//
     private EditText editText_email;
     private EditText editText_password;
     private CheckBox checkBox_rememberMe;

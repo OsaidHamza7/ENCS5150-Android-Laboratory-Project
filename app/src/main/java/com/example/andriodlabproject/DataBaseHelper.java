@@ -239,7 +239,7 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
     }
 
-    // get all reservations from the database
+    // get all reservations from the database.
     public Cursor getAllReservations(){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         return sqLiteDatabase.rawQuery("SELECT * FROM Reservation",null);

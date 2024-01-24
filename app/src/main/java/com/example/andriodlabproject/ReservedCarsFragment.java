@@ -87,7 +87,7 @@ public class ReservedCarsFragment extends Fragment {
 
     }
 
-    // function to get the reserved cars from the database
+    // function to get the reserved cars from the database.
     public void getReservedCars(){
         // get the database helper
         DataBaseHelper dataBaseHelper = ((HomeNormalCustomerActivity)getActivity()).getDatabaseHelper();

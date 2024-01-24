@@ -24,7 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
         Button button_registerSignIn = (Button) findViewById(R.id.button_registerSignIn);
         ImageButton button_backToMain = (ImageButton) findViewById(R.id.button_registerBackToMain);
 
-        // set the listener for the sign in button
+        // set the listener for the sign in button.
         button_registerSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

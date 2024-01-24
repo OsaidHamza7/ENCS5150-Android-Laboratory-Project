@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpManager {
-
+    //
     public static String getData(String URL) {
         BufferedReader bufferedReader = null;
         try {
