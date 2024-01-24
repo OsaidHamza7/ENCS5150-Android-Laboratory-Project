@@ -111,6 +111,7 @@ public class NotificationService extends Service {
                 handler.post(new Runnable() {
                     public void run() {
                         createNotificationSpecialOffers(NOTIFICATION_SPECIAL_OFFERS_TITLE, NOTIFICATION_SPECIAL_OFFERS_BODY);
+                        stoptimertask();
                     }
                 });
             }
