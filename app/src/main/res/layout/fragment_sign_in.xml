@@ -13,7 +13,6 @@
         android:layout_height="58dp"
         android:background="@drawable/plaintext_grey_theme"
         android:drawableStart="@drawable/baseline_email_24"
-        android:drawableLeft="@drawable/baseline_email_24"
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Email"
@@ -103,6 +102,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.568" />
+
+    <ImageButton
+        android:id="@+id/imgBtn_visible"
+        android:layout_width="38dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="8dp"
+        android:background="#EEEEEE"
+        android:src="@drawable/ic_visible"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_password"
+        app:layout_constraintEnd_toEndOf="@+id/editText_password"
+        app:layout_constraintTop_toTopOf="@+id/editText_password"
+        app:layout_constraintVertical_bias="0.583" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

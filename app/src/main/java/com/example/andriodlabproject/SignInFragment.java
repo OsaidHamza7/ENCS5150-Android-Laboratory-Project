@@ -3,12 +3,14 @@ package com.example.andriodlabproject;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +27,7 @@ public class SignInFragment extends Fragment {
     private EditText editText_password;
     private CheckBox checkBox_rememberMe;
     private SharedPrefManager sharedPrefManager;
+    private ImageButton btn_visible_password;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -99,7 +102,7 @@ public class SignInFragment extends Fragment {
         editText_email = (EditText) getActivity().findViewById(R.id.editText_email);
         editText_password = (EditText) getActivity().findViewById(R.id.editText_password);
         checkBox_rememberMe = (CheckBox) getActivity().findViewById(R.id.checkBox_rememberMe);
-
+        btn_visible_password = (ImageButton) getActivity().findViewById(R.id.imgBtn_visible);
         sharedPrefManager = SharedPrefManager.getInstance(getActivity());
 
 
@@ -164,7 +167,19 @@ public class SignInFragment extends Fragment {
             }
         });
 
-
+        btn_visible_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (editText_password.getTransformationMethod() == null){
+                    editText_password.setTransformationMethod(new PasswordTransformationMethod());
+                    btn_visible_password.setImageResource(R.drawable.ic_visible);
+                } else {
+                    editText_password.setTransformationMethod(null);
+                    btn_visible_password.setImageResource(R.drawable.ic_invisible);
+                }
+            }
+        }
+        );
         btnOpenSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

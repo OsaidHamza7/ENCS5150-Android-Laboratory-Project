@@ -2,9 +2,7 @@ package com.example.andriodlabproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +33,8 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
     private EditText editText_password;
     private EditText editText_confirmPassword;
     private EditText editText_phoneNumber;
-
+    private ImageButton btn_visible_password;
+    private ImageButton btn_visible_confirm_password;
     private Spinner countrySpinner;
     private Spinner citySpinner;
     private Spinner genderSpinner;
@@ -172,6 +174,32 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
 
             }
         });
+        btn_visible_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (editText_password.getTransformationMethod() == null){
+                        editText_password.setTransformationMethod(new PasswordTransformationMethod());
+                        btn_visible_password.setImageResource(R.drawable.ic_visible);
+                    } else {
+                        editText_password.setTransformationMethod(null);
+                        btn_visible_password.setImageResource(R.drawable.ic_invisible);
+                    }
+                }
+            }
+        );
+        btn_visible_confirm_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (editText_confirmPassword.getTransformationMethod() == null){
+                        editText_confirmPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        btn_visible_confirm_password.setImageResource(R.drawable.ic_visible);
+                    } else {
+                        editText_confirmPassword.setTransformationMethod(null);
+                        btn_visible_confirm_password.setImageResource(R.drawable.ic_invisible);
+                    }
+                }
+            }
+        );
     }
 
 
@@ -384,6 +412,8 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
         imageViewCountryFlag = (ImageView) getActivity().findViewById(R.id.imageView_editCountryFlag);
         textViewCountryCode = (TextView) getActivity().findViewById(R.id.textView_editCountryCode);
         citySpinner = (Spinner) getActivity().findViewById(R.id.spinner_registerCity);
+        btn_visible_password = (ImageButton) getActivity().findViewById(R.id.imgBtn_visibility);
+        btn_visible_confirm_password = (ImageButton) getActivity().findViewById(R.id.imgBtn_confirm_visibility);
 
         // set the gender spinner
         ArrayAdapter<String> objGenderArr = new
