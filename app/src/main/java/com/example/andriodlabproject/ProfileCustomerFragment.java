@@ -1,6 +1,7 @@
 package com.example.andriodlabproject;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -154,57 +156,71 @@ public class ProfileCustomerFragment extends Fragment {
                     changePass = false;
                     return;
                 }
+                StringBuilder details = new StringBuilder();
+                details.append("Are you sure you want to save the changes?\n\n");
 
-                // Inside your onClickListener for the save button
-                if (isImageChanged && profileImage.getDrawable() != null) {
-                    BitmapDrawable drawable = (BitmapDrawable) profileImage.getDrawable();
-                    Bitmap bitmap = drawable.getBitmap();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-                    byte[] data = outputStream.toByteArray();
-                    dataBaseHelper.updateUserProfilePicture(email, data);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Confirm Changes")
+                        .setMessage(details.toString())
+                        .setNegativeButton("discard changes",null)
+                        .setPositiveButton("save", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-                }
+                                // Inside your onClickListener for the save button
+                                if (isImageChanged && profileImage.getDrawable() != null) {
+                                    BitmapDrawable drawable = (BitmapDrawable) profileImage.getDrawable();
+                                    Bitmap bitmap = drawable.getBitmap();
+                                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+                                    byte[] data = outputStream.toByteArray();
+                                    dataBaseHelper.updateUserProfilePicture(email, data);
 
-                if (changePass){
-                    // hash the password then update it in the database
-                    dataBaseHelper.updateUserPassword(email, User.hashPassword(password));
+                                }
 
-                }
+                                if (changePass){
+                                    // hash the password then update it in the database
+                                    dataBaseHelper.updateUserPassword(email, User.hashPassword(password));
 
-                // update the user info in the database ( First name, Last name, Phone)
-                dataBaseHelper.updateUserInfo(user);
+                                }
 
-                // update the current user info
-                currentUser = dataBaseHelper.getUserByEmail(email);
-                currentUser.moveToFirst();
-                User.currentUser = currentUser;
+                                // update the user info in the database ( First name, Last name, Phone)
+                                dataBaseHelper.updateUserInfo(user);
 
-                // assign the user info to Text fields
-                assignInfoToInputFields(currentUser);
+                                // update the current user info
+                                currentUser = dataBaseHelper.getUserByEmail(email);
+                                currentUser.moveToFirst();
+                                User.currentUser = currentUser;
 
-                Toast.makeText(getActivity(), "Profile Updated successfully", Toast.LENGTH_SHORT).show();
+                                // assign the user info to Text fields
+                                assignInfoToInputFields(currentUser);
+
+                                Toast.makeText(getActivity(), "Profile Updated successfully", Toast.LENGTH_SHORT).show();
 
 
-                //clear the passwords fields
-                editText_password.setText("");
-                editText_confirmPassword.setText("");
-                changePass = false;
-                //update nav header with the new (first name and last name)
-                currentUser=User.currentUser;
-                if (currentUser.getString(8).equals("User")){
-                    View headerView = HomeNormalCustomerActivity.navigationView.getHeaderView(0);
-                    TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
-                    TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
-                    navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
-                    navEmail.setText(User.currentUser.getString(3));
-                } else {
-                    View headerView = HomeAdminActivity.navigationView.getHeaderView(0);
-                    TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
-                    TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
-                    navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
-                    navEmail.setText(User.currentUser.getString(3));
-                }
+                                //clear the passwords fields
+                                editText_password.setText("");
+                                editText_confirmPassword.setText("");
+                                changePass = false;
+                                //update nav header with the new (first name and last name)
+                                currentUser=User.currentUser;
+                                if (currentUser.getString(8).equals("User")){
+                                    View headerView = HomeNormalCustomerActivity.navigationView.getHeaderView(0);
+                                    TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
+                                    TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
+                                    navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
+                                    navEmail.setText(User.currentUser.getString(3));
+                                } else {
+                                    View headerView = HomeAdminActivity.navigationView.getHeaderView(0);
+                                    TextView navUsername= (TextView) headerView.findViewById(R.id.view_name);
+                                    TextView navEmail= (TextView) headerView.findViewById(R.id.view_email);
+                                    navUsername.setText(currentUser.getString(0) +" " +currentUser.getString(1));
+                                    navEmail.setText(User.currentUser.getString(3));
+                                }
+
+                            }
+                        })
+                        .create()
+                        .show();
 
 
 

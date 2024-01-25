@@ -26,7 +26,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Meet the car of your dreams withe a few steps"
+        android:text="Meet the car of your dreams with a few steps"
         android:textColor="#9E9A9A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
