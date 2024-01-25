@@ -110,31 +110,32 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
             button_signup.setText("Add Admin");
             permission = "Admin";
         }
-
-        editText_password.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, android.view.KeyEvent keyEvent) {
-                if (editText_password.getText().toString().isEmpty()){
-                    btn_visible_password.setVisibility(View.INVISIBLE);
-                } else {
-                    btn_visible_password.setVisibility(View.VISIBLE);
+        btn_visible_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (editText_password.getTransformationMethod() == null){
+                        editText_password.setTransformationMethod(new PasswordTransformationMethod());
+                        btn_visible_password.setImageResource(R.drawable.ic_visible);
+                    } else {
+                        editText_password.setTransformationMethod(null);
+                        btn_visible_password.setImageResource(R.drawable.ic_invisible);
+                    }
                 }
-                return false;
             }
-        });
-
-        editText_confirmPassword.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, android.view.KeyEvent keyEvent) {
-                if (editText_confirmPassword.getText().toString().isEmpty()){
-                    btn_visible_confirm_password.setVisibility(View.INVISIBLE);
-                } else {
-                    btn_visible_confirm_password.setVisibility(View.VISIBLE);
+        );
+        btn_visible_confirm_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (editText_confirmPassword.getTransformationMethod() == null){
+                        editText_confirmPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        btn_visible_confirm_password.setImageResource(R.drawable.ic_visible);
+                    } else {
+                        editText_confirmPassword.setTransformationMethod(null);
+                        btn_visible_confirm_password.setImageResource(R.drawable.ic_invisible);
+                    }
                 }
-                return false;
             }
-        });
-
+        );
         button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -458,6 +459,31 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (editText_password.getText().toString().isEmpty()){
+                    btn_visible_password.setVisibility(View.INVISIBLE);
+                } else {
+                    btn_visible_password.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        editText_confirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                btn_visible_confirm_password.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editText_confirmPassword.getText().toString().isEmpty()){
+                    btn_visible_confirm_password.setVisibility(View.INVISIBLE);
+                } else {
+                    btn_visible_confirm_password.setVisibility(View.VISIBLE);
+                }
             }
         });
 

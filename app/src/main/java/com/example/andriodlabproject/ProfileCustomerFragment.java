@@ -9,11 +9,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +53,8 @@ public class ProfileCustomerFragment extends Fragment {
     private EditText editText_phoneNumber;
     private TextView textView_countryCode;
     private ImageView imageView_countryFlag;
+    private ImageButton btn_visible_password;
+    private ImageButton btn_visible_confirm_password;
     private Button button_save;
     private  boolean changePass = false;
     private ImageView profileImage;
@@ -114,6 +120,8 @@ public class ProfileCustomerFragment extends Fragment {
         button_save = getActivity().findViewById(R.id.button_saveEdit);
         profileImage = getActivity().findViewById(R.id.imageView_profileImage);
         changeProfileImage = getActivity().findViewById(R.id.imageView_changeProfileImage);
+        btn_visible_password = (ImageButton) getActivity().findViewById(R.id.imgBtn_makeVisible);
+        btn_visible_confirm_password = (ImageButton) getActivity().findViewById(R.id.imgBtn_makeVisible2);
 
         // get the current user
         currentUser = User.currentUser;
@@ -211,15 +219,73 @@ public class ProfileCustomerFragment extends Fragment {
                     .compress(1024)         // Final image size will be less than 1 MB
                     .maxResultSize(1080, 1080)  // Final image resolution
                     .createIntent(a->{
-                         startForProfileImageResult.launch(a);
+                        startForProfileImageResult.launch(a);
                         return Unit.INSTANCE;
                     });
 
         });
+        editText_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                btn_visible_password.setVisibility(View.VISIBLE);
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editText_password.getText().toString().isEmpty()){
+                    btn_visible_password.setVisibility(View.INVISIBLE);
+                } else {
+                    btn_visible_password.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        editText_confirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                btn_visible_confirm_password.setVisibility(View.VISIBLE);
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editText_confirmPassword.getText().toString().isEmpty()){
+                    btn_visible_confirm_password.setVisibility(View.INVISIBLE);
+                } else {
+                    btn_visible_confirm_password.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        btn_visible_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (editText_password.getTransformationMethod() == null){
+                        editText_password.setTransformationMethod(new PasswordTransformationMethod());
+                        btn_visible_password.setImageResource(R.drawable.ic_visible);
+                    } else {
+                        editText_password.setTransformationMethod(null);
+                        btn_visible_password.setImageResource(R.drawable.ic_invisible);
+                    }
+                }
+            });
+        btn_visible_confirm_password.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (editText_confirmPassword.getTransformationMethod() == null){
+                        editText_confirmPassword.setTransformationMethod(new PasswordTransformationMethod());
+                        btn_visible_confirm_password.setImageResource(R.drawable.ic_visible);
+                    } else {
+                        editText_confirmPassword.setTransformationMethod(null);
+                        btn_visible_confirm_password.setImageResource(R.drawable.ic_invisible);
+                    }
+                }
+            });
     }
 
 
@@ -247,24 +313,30 @@ public class ProfileCustomerFragment extends Fragment {
         if (!user.getPassword().replace(" ","").isEmpty()){
             if (user.getPassword().length() < 5) {
                 editText_password.setError("Password must contain at least 5 characters");
+                btn_visible_password.setVisibility(View.INVISIBLE);
                 isValid = false;
             } else if (!user.getPassword().matches(".*[a-zA-Z]+.*")) {
                 editText_password.setError("Password must contain at least 1 character");
+                btn_visible_password.setVisibility(View.INVISIBLE);
                 isValid = false;
             } else if (!user.getPassword().matches(".*[0-9]+.*")) {
                 editText_password.setError("Password must contain at least 1 number");
+                btn_visible_password.setVisibility(View.INVISIBLE);
                 isValid = false;
             } else if (!user.getPassword().matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+.*")) {
                 editText_password.setError("Password must contain at least 1 special character");
+                btn_visible_password.setVisibility(View.INVISIBLE);
                 isValid = false;
             }
 
             // check if the confirm password match the password
             if (editText_confirmPassword.getText().toString().isEmpty()){
                 editText_confirmPassword.setError("Please confirm your password");
+                btn_visible_confirm_password.setVisibility(View.INVISIBLE);
                 isValid = false;
             } else if (!confirmPassword.equals(user.getPassword())){
                 editText_confirmPassword.setError("Passwords doesn't match");
+                btn_visible_confirm_password.setVisibility(View.INVISIBLE);
                 isValid = false;
             }
             changePass = true;

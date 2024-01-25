@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,11 +120,13 @@ public class SignInFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (editText_password.getText().toString().isEmpty()){
+                    btn_visible_password.setVisibility(View.INVISIBLE);
+                } else {
+                    btn_visible_password.setVisibility(View.VISIBLE);
+                }
             }
         });
-
-
-
 
         button_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,8 +201,7 @@ public class SignInFragment extends Fragment {
                     btn_visible_password.setImageResource(R.drawable.ic_invisible);
                 }
             }
-        }
-        );
+        });
         btnOpenSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
