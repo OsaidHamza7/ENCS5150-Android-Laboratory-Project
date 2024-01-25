@@ -3,7 +3,10 @@ package com.example.andriodlabproject;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +109,24 @@ public class SignInFragment extends Fragment {
         sharedPrefManager = SharedPrefManager.getInstance(getActivity());
 
 
+        editText_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                btn_visible_password.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+
+
+
         button_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +148,7 @@ public class SignInFragment extends Fragment {
 
                     if (User.checkPassword(password, passwordFromDB) == false){
                         editText_password.setError("Password is incorrect");
+                        btn_visible_password.setVisibility(View.INVISIBLE);
                         return;
                     }
                 }

@@ -2,6 +2,8 @@ package com.example.andriodlabproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +111,30 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
             permission = "Admin";
         }
 
+        editText_password.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, android.view.KeyEvent keyEvent) {
+                if (editText_password.getText().toString().isEmpty()){
+                    btn_visible_password.setVisibility(View.INVISIBLE);
+                } else {
+                    btn_visible_password.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+
+        editText_confirmPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, android.view.KeyEvent keyEvent) {
+                if (editText_confirmPassword.getText().toString().isEmpty()){
+                    btn_visible_confirm_password.setVisibility(View.INVISIBLE);
+                } else {
+                    btn_visible_confirm_password.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+
         button_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,32 +200,7 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
 
             }
         });
-        btn_visible_password.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (editText_password.getTransformationMethod() == null){
-                        editText_password.setTransformationMethod(new PasswordTransformationMethod());
-                        btn_visible_password.setImageResource(R.drawable.ic_visible);
-                    } else {
-                        editText_password.setTransformationMethod(null);
-                        btn_visible_password.setImageResource(R.drawable.ic_invisible);
-                    }
-                }
-            }
-        );
-        btn_visible_confirm_password.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (editText_confirmPassword.getTransformationMethod() == null){
-                        editText_confirmPassword.setTransformationMethod(new PasswordTransformationMethod());
-                        btn_visible_confirm_password.setImageResource(R.drawable.ic_visible);
-                    } else {
-                        editText_confirmPassword.setTransformationMethod(null);
-                        btn_visible_confirm_password.setImageResource(R.drawable.ic_invisible);
-                    }
-                }
-            }
-        );
+
     }
 
 
@@ -231,26 +232,33 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
         // check if passowrd contain at least 5 characters and (1 character and 1 number and 1 special character)
         if (password.replaceAll(" ", "").isEmpty()) {
             editText_password.setError("Please enter your password");
+            btn_visible_password.setVisibility(View.INVISIBLE);
             isValid = false;
         } else if (password.length() < 5) {
             editText_password.setError("Password must contain at least 5 characters");
+            btn_visible_password.setVisibility(View.INVISIBLE);
             isValid = false;
         } else if (!password.matches(".*[a-zA-Z]+.*")) {
             editText_password.setError("Password must contain at least 1 character");
+            btn_visible_password.setVisibility(View.INVISIBLE);
             isValid = false;
         } else if (!password.matches(".*[0-9]+.*")) {
             editText_password.setError("Password must contain at least 1 number");
+            btn_visible_password.setVisibility(View.INVISIBLE);
             isValid = false;
         } else if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]+.*")) {
             editText_password.setError("Password must contain at least 1 special character");
+            btn_visible_password.setVisibility(View.INVISIBLE);
             isValid = false;
         }
         // check if the user confirmed the password and if it matches the password
         if (confirmPassword.replaceAll(" ", "").isEmpty()) {
             editText_confirmPassword.setError("Please confirm your password");
+            btn_visible_confirm_password.setVisibility(View.INVISIBLE);
             isValid = false;
         } else if (!confirmPassword.equals(password)) {
             editText_confirmPassword.setError("Passwords doesn't match");
+            btn_visible_confirm_password.setVisibility(View.INVISIBLE);
             isValid = false;
         }
 
@@ -437,6 +445,21 @@ public class SignUpFragment extends Fragment implements AdapterView.OnItemSelect
         countrySpinner.setOnItemSelectedListener(this);
         // set the listener for the city spinner
         citySpinner.setOnItemSelectedListener(this);
+
+        editText_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                btn_visible_password.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
     }
 

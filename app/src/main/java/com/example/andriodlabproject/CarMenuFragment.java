@@ -4,6 +4,8 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -544,21 +546,35 @@ public class CarMenuFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
+
+
     // function to set the listener for the search field
     private void setListenerForSearchField(){
-        searchField.setOnKeyListener((v, keyCode, event) -> {
-            List<Car> cars;
-            if (filterApplied){
-                // if the user applied a filter (search in the filtered cars)
-                cars = searchForCarByType(searchField.getText().toString(), filteredCars);
-            } else {
-                // if the user didn't apply a filter (search in the current array selected)
-                cars = searchForCarByType(searchField.getText().toString(), findCurrentArray(lastButtonPressed));
+
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
             }
-            adapter = new CarAdapter(getActivity(), cars);
-            recyclerView.setAdapter(adapter);
-            return false;
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                List<Car> cars;
+                if (filterApplied){
+                    // if the user applied a filter (search in the filtered cars)
+                    cars = searchForCarByType(searchField.getText().toString(), filteredCars);
+                } else {
+                    // if the user didn't apply a filter (search in the current array selected)
+                    cars = searchForCarByType(searchField.getText().toString(), findCurrentArray(lastButtonPressed));
+                }
+                adapter = new CarAdapter(getActivity(), cars);
+                recyclerView.setAdapter(adapter);
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+
         });
+
     }
 
     private void setListenerForFilterButton(BottomSheetDialog bottomSheetDialog){
