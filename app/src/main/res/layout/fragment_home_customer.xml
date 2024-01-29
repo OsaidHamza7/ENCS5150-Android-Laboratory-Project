@@ -4,17 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7CA884"
+    android:background="@drawable/gradient_black_background"
     tools:context=".HomeCustomerFragment">
 
 
     <TextView
         android:id="@+id/textView_history"
-        android:layout_width="436dp"
-        android:layout_height="406dp"
-        android:text="This app is for our car dealing company,with over 20 years of experience and high-quality services.\nWe hope that you will have a good experience with it."
+        android:layout_width="438dp"
+        android:layout_height="430dp"
+
+
+        android:padding="15dp"
+        android:text="\nThis app is for our car dealing company, with over 20 years of experience and high-quality services.\n\n\nWe hope that you will have a good experience with it."
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
