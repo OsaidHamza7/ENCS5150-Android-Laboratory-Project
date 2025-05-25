@@ -1,5 +1,8 @@
 # Car Dealer Android App
 
+## Promo Video
+https://github.com/OsaidHamza7/ENCS5150-Android-Laboratory-Project/assets/111658319/f63f4300-1acd-41cc-9d7f-a47bd5aec41c
+
 ## Project Overview
 "Advance Car Dealer" is an Android application designed to streamline the process of viewing and reserving cars. It offers a robust set of features that cater to both customers and administrators, enhancing the car dealership experience.
 
@@ -22,11 +25,6 @@
 
 ## Technical Details
 - Implements Android Layouts, Intents, SQLite, Animation, Fragments, Shared Preferences, and RESTful services.
-
-## Promo Video
-https://github.com/OsaidHamza7/ENCS5150-Android-Laboratory-Project/assets/111658319/f63f4300-1acd-41cc-9d7f-a47bd5aec41c
-
-
 
 ## Walkthrough Video
 https://github.com/OsaidHamza7/ENCS5150-Android-Laboratory-Project/assets/111658319/c9b6838b-0090-4047-8957-104579d4cf15
